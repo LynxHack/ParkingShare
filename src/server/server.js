@@ -7,7 +7,7 @@ server.use(express.static("public"));
 
 // Creating a single index route to server our React application from.
 server.get("/", (req, res) => {
-  res.render("../public/index.html");
+  res.render("../../public/index.html");
 });
 
 server.listen(port);
