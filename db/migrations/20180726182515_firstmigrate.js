@@ -7,18 +7,18 @@ exports.up = function(knex, Promise) {
         table.string('lastname');
         table.string('email');
         table.string('password');
-        table.integer('telephone');
+        table.bigInteger('telephone');
         table.string('picture');
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at').defaultTo(knex.fn.now());
     })
 
-    .createTable('type', function(table){
+    .createTable('types', function(table){
         table.increments();
         table.string('cartype');
     })
 
-    .createTable('parkingspot', function(table){
+    .createTable('parkingspots', function(table){
         table.increments();
         table.decimal('longitude');
         table.decimal('latitude');
@@ -29,14 +29,14 @@ exports.up = function(knex, Promise) {
         table.string('description');
         table.string('address');
         table.string('city');
-        table.string('postal code');
+        table.string('postalcode');
 
         table.integer('maxheight');
         table.timestamp('created_at').defaultTo(knex.fn.now());
         table.timestamp('updated_at').defaultTo(knex.fn.now());
 
         //Foreign Keys
-        table.bigInteger('typeid').unsigned().index().references('id').inTable('type');
+        table.bigInteger('typeid').unsigned().index().references('id').inTable('types');
         table.bigInteger('hostid').unsigned().index().references('id').inTable('users');
     })
 
@@ -45,17 +45,20 @@ exports.up = function(knex, Promise) {
         table.string('make');
         table.string('model');
         table.string('licenseplate');
-        table.string('string');
+        table.string('color');
 
         //Foreign Key
         table.bigInteger('userid').unsigned().index().references('id').inTable('users');
-        table.bigInteger('typeid').unsigned().index().references('id').inTable('type');
+        table.bigInteger('typeid').unsigned().index().references('id').inTable('types');
     })
     
     .createTable('reviews', function(table){
         table.increments();
         table.decimal('rating');
         table.string('description');
+
+        //FK
+        table.bigInteger('parkingid').unsigned().index().references('id').inTable('parkingspots');
     })
 
     .createTable('reservations', function(table){
@@ -63,7 +66,7 @@ exports.up = function(knex, Promise) {
         table.timestamp('starttime');
         table.timestamp('endtime');
 
-        table.bigInteger('parkingid').unsigned().index().references('id').inTable('parkingspot');
+        table.bigInteger('parkingid').unsigned().index().references('id').inTable('parkingspots');
         table.bigInteger('hostid').unsigned().index().references('id').inTable('users');
         table.bigInteger('clientid').unsigned().index().references('id').inTable('users');
     })
@@ -81,11 +84,12 @@ exports.down = function(knex, Promise) {
   return knex.schema
 
   .dropTable('vehicles')
-  .dropTable('reviews')  .dropTable('messages')
+  .dropTable('reviews')  
+  .dropTable('messages')
 
   .dropTable('reservations')
 
-  .dropTable('parkingspot')
-  .dropTable('type')
+  .dropTable('parkingspots')
+  .dropTable('types')
   .dropTable('users')
 };
