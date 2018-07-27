@@ -1,26 +1,86 @@
-#main {
-  background-image: url("http://www.hdwallpapers.in/walls/paris_night_sky-wide.jpg");
+body {
+  background-image: url('http://www.acsenda.com/wp-content/uploads/2015/03/vancouver-skyline.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+    width: 100%;
+    height: 600px;
 }
 
-#logo {
-  width: 30px;
-  height: 30px;
-  margin-top: 13px;
-  margin-left: 15px;
+#nav {
+  position: absolute;
+  width: 100%;
+  height: 50px;
 }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 60px;
+#logo_text {
+  position: absolute;
+  display: inline;
+  top: -13px;
+  left: 55px;
+  font-size: 22px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color : white;
+  font-weight: bold;
 }
 
-li a {
-  display: block;
-}
-
-li a:hover {
-  background-color: #555;
+#host_link {
+  display: inline;
+  text-decoration: none;
+  font-family: sans-serif;
   color: white;
+  float: right;
+  margin-top: 11px;
+  border: 2px solid #c4c4c4;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+#host_link:visited {
+  text-decoration: none;
+  color: black;
+  font-family: sans-serif;
+}
+
+#host_link:hover {
+  border: 2px solid gray;
+}
+
+.nav_links {
+  display: inline;
+  font-family: sans-serif;
+  color: white;
+  text-decoration: none;
+  float: right;
+  margin: 12px;
+  margin-top: 11px;
+  padding: 8px;
+}
+
+#welcome_text_div {
+  background-color: rgba;
+  width: 800px;
+  height: 300px;
+  position: absolute;
+  top: 45%;
+  margin-top: -150px;
+  left: 50%;
+  margin-left: -400px;
+}
+
+#welcome_text {
+  color: white;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 55px;
+  text-align: center;
+}
+
+#welcome_under_text {
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  font-weight: bold;
+  margin-top: -50px;
 }

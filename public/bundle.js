@@ -98,7 +98,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "#main {\n  background-image: url(\"http://www.hdwallpapers.in/walls/paris_night_sky-wide.jpg\"); }\n\n#logo {\n  width: 30px;\n  height: 30px;\n  margin-top: 13px;\n  margin-left: 15px; }\n\nul {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n  width: 60px; }\n\nli a {\n  display: block; }\n\nli a:hover {\n  background-color: #555;\n  color: white; }\n", ""]);
+exports.push([module.i, "body {\n  background-image: url(\"http://www.acsenda.com/wp-content/uploads/2015/03/vancouver-skyline.jpg\");\n  background-repeat: no-repeat;\n  background-size: 100% 100%;\n  position: relative;\n  width: 100%;\n  height: 600px; }\n\n#nav {\n  position: absolute;\n  width: 100%;\n  height: 50px; }\n\n#logo_text {\n  position: absolute;\n  display: inline;\n  top: -13px;\n  left: 55px;\n  font-size: 22px;\n  font-family: \"Comic Sans MS\", cursive, sans-serif;\n  color: white;\n  font-weight: bold; }\n\n#host_link {\n  display: inline;\n  text-decoration: none;\n  font-family: sans-serif;\n  color: white;\n  float: right;\n  margin-top: 11px;\n  border: 2px solid #c4c4c4;\n  padding: 5px;\n  border-radius: 2px; }\n\n#host_link:visited {\n  text-decoration: none;\n  color: black;\n  font-family: sans-serif; }\n\n#host_link:hover {\n  border: 2px solid gray; }\n\n.nav_links {\n  display: inline;\n  font-family: sans-serif;\n  color: white;\n  text-decoration: none;\n  float: right;\n  margin: 12px;\n  margin-top: 11px;\n  padding: 8px; }\n\n#welcome_text_div {\n  background-color: rgba;\n  width: 800px;\n  height: 300px;\n  position: absolute;\n  top: 45%;\n  margin-top: -150px;\n  left: 50%;\n  margin-left: -400px; }\n\n#welcome_text {\n  color: white;\n  font-family: sans-serif;\n  text-transform: uppercase;\n  font-weight: bold;\n  font-size: 55px;\n  text-align: center; }\n\n#welcome_under_text {\n  color: white;\n  font-family: sans-serif;\n  text-align: center;\n  font-weight: bold;\n  margin-top: -50px; }\n", ""]);
 
 // exports
 
@@ -20616,10 +20616,10 @@ __webpack_require__(/*! ./app.scss */ "./src/client/app.scss");
 var App = function (_Component) {
   _inherits(App, _Component);
 
-  function App(props) {
+  function App() {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
   }
 
   _createClass(App, [{
@@ -20628,44 +20628,50 @@ var App = function (_Component) {
       return _react2.default.createElement(
         "div",
         { id: "main" },
-        _react2.default.createElement("img", { src: "https://s5.postimg.cc/qqgj4taev/logo.png", id: "logo" }),
         _react2.default.createElement(
-          "ul",
+          "body",
           null,
           _react2.default.createElement(
-            "li",
-            null,
+            "div",
+            { id: "header" },
             _react2.default.createElement(
-              "a",
-              { href: "default.asp" },
-              "Home"
+              "div",
+              { id: "nav" },
+              _react2.default.createElement(
+                "p",
+                { id: "logo_text" },
+                "SpotSharer"
+              ),
+              _react2.default.createElement(
+                "a",
+                { href: "#", "class": "nav_links" },
+                "Log In"
+              ),
+              _react2.default.createElement(
+                "a",
+                { href: "#", "class": "nav_links" },
+                "Sign Up"
+              ),
+              _react2.default.createElement("a", { href: "#", "class": "nav_links" }),
+              _react2.default.createElement(
+                "a",
+                { href: "#", id: "host_link" },
+                "Share A Spot"
+              )
             )
           ),
           _react2.default.createElement(
-            "li",
-            null,
+            "div",
+            { id: "welcome_text_div" },
             _react2.default.createElement(
-              "a",
-              { href: "news.asp" },
-              "News"
-            )
-          ),
-          _react2.default.createElement(
-            "li",
-            null,
+              "p",
+              { id: "welcome_text" },
+              "Welcome To Your Spot"
+            ),
             _react2.default.createElement(
-              "a",
-              { href: "contact.asp" },
-              "Contact"
-            )
-          ),
-          _react2.default.createElement(
-            "li",
-            null,
-            _react2.default.createElement(
-              "a",
-              { href: "about.asp" },
-              "About"
+              "p",
+              { id: "welcome_under_text" },
+              "Rent out uninque parking spots all around the greatest city in the world."
             )
           )
         )
