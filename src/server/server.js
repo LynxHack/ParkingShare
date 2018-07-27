@@ -18,6 +18,7 @@ server.get("/", (req, res) => {
     <html>
       <head>
         <title>Spot Share</title>
+        <link rel="stylesheet" type="text/css" href="app.css">
         <script src="/bundle.js" defer></script>
         <script>window.__INITIAL_DATA__ = ${serialize(name)}</script>
       </head>
