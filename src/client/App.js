@@ -1,6 +1,7 @@
 // src/shared/App.js
 
 import React, { Component } from "react";
+require("./app.scss");
 
 class App extends Component {
   constructor(props) {

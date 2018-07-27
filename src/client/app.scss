@@ -1,0 +1,26 @@
+#main {
+  background-image: url("http://www.hdwallpapers.in/walls/paris_night_sky-wide.jpg");
+}
+
+#logo {
+  width: 30px;
+  height: 30px;
+  margin-top: 13px;
+  margin-left: 15px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+}
+
+li a {
+  display: block;
+}
+
+li a:hover {
+  background-color: #555;
+  color: white;
+}

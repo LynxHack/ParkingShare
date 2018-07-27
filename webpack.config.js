@@ -1,43 +1,26 @@
 const webpack = require("webpack");
-const nodeExternals = require("webpack-node-externals");
 const path = require("path");
 
-var browserConfig = {
-  mode: 'development',
+module.exports = {
+  mode: "development",
+  devtool: "source-map",
   entry: "./src/client/index.js",
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.join(__dirname, "public"),
     filename: "bundle.js",
-    publicPath: "/"
+    publicPath: "/build/"
   },
   module: {
-    rules: [{ test: /\.(js)$/, use: "babel-loader" }]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      __isBrowser__: "true"
-    })
-  ]
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loader: "babel-loader",
+        include: path.join(__dirname, "src")
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
+      }
+    ]
+  }
 };
-
-var serverConfig = {
-  mode: 'development',
-  entry: "./src/server/server.js",
-  target: "node",
-  externals: [nodeExternals()],
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "server.js",
-    publicPath: "/"
-  },
-  module: {
-    rules: [{ test: /\.(js)$/, use: "babel-loader" }]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      __isBrowser__: "false"
-    })
-  ]
-};
-
-module.exports = [browserConfig, serverConfig];
