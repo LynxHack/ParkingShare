@@ -1,29 +1,43 @@
-const webpack = require('webpack');
-const nodeExternals = require('webpack-node-externals');
-const path = require('path');
+const webpack = require("webpack");
+const nodeExternals = require("webpack-node-externals");
+const path = require("path");
 
-module.exports = {
-  entry: './src/server.js',
+var browserConfig = {
+  mode: 'development',
+  entry: "./src/client/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'server.js',
-    publicPath: '/'
+    path: path.resolve(__dirname, "public"),
+    filename: "bundle.js",
+    publicPath: "/"
   },
-  target: 'node',
-  externals: nodeExternals(),
+  module: {
+    rules: [{ test: /\.(js)$/, use: "babel-loader" }]
+  },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: `'production'`
-      }
+      __isBrowser__: "true"
     })
-  ],
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader'
-      }
-    ]
-  }
+  ]
 };
+
+var serverConfig = {
+  mode: 'development',
+  entry: "./src/server/server.js",
+  target: "node",
+  externals: [nodeExternals()],
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "server.js",
+    publicPath: "/"
+  },
+  module: {
+    rules: [{ test: /\.(js)$/, use: "babel-loader" }]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __isBrowser__: "false"
+    })
+  ]
+};
+
+module.exports = [browserConfig, serverConfig];
