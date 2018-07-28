@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var webpack = require('webpack');
 var config = require('./webpack.config.dev.js');
+require('dotenv').config()
 
 var app = express();
 var compiler = webpack(config);
@@ -29,5 +30,5 @@ app.listen(process.env.PORT || 8080, function(err) {
     return;
   }
 
-  console.log('Listening at http://localhost:8080');
+  console.log(`Listening at http://localhost:${process.env.PORT || 8080}`);
 });
