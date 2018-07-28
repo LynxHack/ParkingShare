@@ -1,9 +1,10 @@
-// src/shared/App.js
-
 import React, { Component } from "react";
-require("./app.scss");
+import { browserHistory } from 'react-router';
 
-class App extends Component {
+export default class Home extends Component {
+  componentDidMount() {
+    browserHistory.push('/');
+  }
   render() {
     return (
       <div id='main'>
@@ -23,8 +24,6 @@ class App extends Component {
       </div>     
       </body>
       </div>
-    )  
+    );
   }
 }
-
-export default App;
