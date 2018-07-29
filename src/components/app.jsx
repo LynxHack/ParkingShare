@@ -17,8 +17,8 @@ export default class App extends Component {
               <Link to="#" id="host_link">Share A Spot</Link>
             </div> 
           </div>   
-          <Route path="/" component={Home} />
-          <Route path="/contact" component={Contact} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/contact" component={Contact} />
         </div>
       </Router>
     );
