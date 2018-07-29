@@ -1,13 +1,15 @@
-var path = require('path');
-var bodyParser = require('body-parser');
-var express = require('express');
-var webpack = require('webpack');
-var config = require('./webpack.config.dev.js');
-require('dotenv').config()
+const path = require('path');
+const bodyParser = require('body-parser');
+const express = require('express');
+// const cors = require('cors')
+const webpack = require('webpack');
+const config = require('./webpack.config.dev.js');
+require('dotenv').config();
 
-var app = express();
-var compiler = webpack(config);
+const app = express();
+const compiler = webpack(config);
 
+// app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -20,9 +22,13 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use('/public', express.static('public'));
 
-app.get('*', function(req, res) {
+app.get('/', function(req, res) {
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
+
+app.get('/token', function(req, res) {
+  res.json(process.env.MB_TOKEN);
+})
 
 app.listen(process.env.PORT || 8080, function(err) {
   if (err) {
