@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
+  mode: "development",
   context: __dirname,
   entry: "./src/index.jsx",
   output: {
@@ -10,7 +11,7 @@ module.exports = {
     publicPath: '/public/'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js|.jsx?$/,
         exclude: /(node_modules)/,
