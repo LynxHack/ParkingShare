@@ -56,30 +56,6 @@ nav div:first-child {
         a {
           padding: 1.2rem 1rem;
         }
-        a::before {
-          left: 0;
-          content: "";
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 0%;
-          height: 2px;
-          background: red;
-          transition: .2s width ease-in-out;
-        }
-        a::after {
-          content: "";
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 0%;
-          height: 2px;
-          background: red;
-          transition: .2s width ease-in-out;
-        }
-        a:hover::before {
-          width: 50%;
-        }
       }
     }
     div:first-child {
@@ -93,3 +69,23 @@ nav div:first-child {
     }
   }
 }
+
+// Animation under nav buttons
+nav ul li a::before, nav ul li a::after{
+  content: "";
+  position: absolute;
+  bottom:0;
+  right: 0;
+  width:0%;
+  height: 2px;
+  background:red;
+  transition: .2s width ease-in-out;
+}
+
+nav ul li a::before{
+  left:0;
+}
+
+nav ul li a:hover::after,nav ul li a:hover::before{
+  width: 50%;
+} 
