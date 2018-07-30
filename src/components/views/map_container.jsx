@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Map from './map.jsx';
+import MapBox from './map.jsx';
 
 class MapContainer extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class MapContainer extends Component {
   }
   render() {
     return (
-      < Map height={this.state.width} width={this.state.height} />
+      < MapBox height={this.state.width} width={this.state.height} />
     )
   }
 }
