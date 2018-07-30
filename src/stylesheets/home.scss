@@ -1,11 +1,22 @@
-#welcome_text_div {
-  position: absolute;
+html{
   background-image: url('http://www.acsenda.com/wp-content/uploads/2015/03/vancouver-skyline.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
   height: 100%;
   z-index: 0;
+}
+
+.homefooter{
+  position: relative;
+  bottom: 0px;
+  width: 100%;
+  height: 30px;
+}
+
+#welcome_text_div {
+  position: relative;
+  margin: auto;
   
   h1 {
     color: white;
@@ -17,6 +28,8 @@
   }
 
   p {
+    position: relative;
+    top: -20px;
     color: white;
     font-family: sans-serif;
     text-align: center;
@@ -25,7 +38,9 @@
 }
 
 .search-container{
-  width: 490px;
+  position: relative;
+  top: 100px;
+  width: 80%;
   display: block;
   margin: 0 auto;
 }
@@ -63,8 +78,8 @@ input#search-bar{
   float: right;
   width: 75px;
   height: 75px;
-  top: 0px;
-  right: 0px;
+  top: -60px;
+  right: -10px;
 }
 
 
