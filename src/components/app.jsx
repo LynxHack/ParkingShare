@@ -11,7 +11,7 @@ export default class App extends Component {
         <main>
           <nav>
             <div>
-              <Link to="/"><h1>SpotSharer</h1></Link>
+              <Link to="/"><h1 class="logo">SpotSharer</h1></Link>
             </div>
             <ul>
               <li><Link to="#">Log In</Link></li>

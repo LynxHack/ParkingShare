@@ -3,6 +3,7 @@ body {
 }
 
 nav {
+  font-family: sans-serif;
   z-index: 1;
   ul {
     list-style: none;
@@ -32,6 +33,11 @@ nav div:first-child {
     text-align: center;
     margin: 0;
   }
+
+  .logo{
+    color:white;
+  }
+
   img {
     filter: contrast(0);
   }
