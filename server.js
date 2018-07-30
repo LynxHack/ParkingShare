@@ -26,6 +26,14 @@ app.get('/', function(req, res) {
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
 app.get('/token', function(req, res) {
   res.json(process.env.MB_TOKEN);
 })

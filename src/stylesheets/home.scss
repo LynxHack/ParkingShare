@@ -31,6 +31,7 @@
 }
 
 input#search-bar{
+  box-sizing: border-box;
   margin: 0 auto;
   width: 100%;
   height: 45px;
@@ -62,8 +63,8 @@ input#search-bar{
   float: right;
   width: 75px;
   height: 75px;
-  top: -62px;
-  right: -45px;
+  top: 0px;
+  right: 0px;
 }
 
 
