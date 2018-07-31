@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
-import requestToken from './../helpers/request_token.js';
 require('./../../stylesheets/map.scss');
 
 class MapBox extends Component {
@@ -12,15 +11,10 @@ class MapBox extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
 
-    await requestToken().then((token) => {
-      mapboxgl.accessToken = token;
-    }).catch((err) => {
-      console.log('failed ', err); // { error: 'Error in fetching token from server' }
-    });
-
-    this.map = await new mapboxgl.Map({
+    mapboxgl.accessToken = "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w";
+    this.map = new mapboxgl.Map({
       container: "map",
       center: [-123.1092519, 49.2696751],
       zoom: 13,

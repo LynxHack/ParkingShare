@@ -22,6 +22,14 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use('/public', express.static('public'));
 
+
+app.get('/token', function(req, res) {
+  console.log("*************************************TOKEN REQUESTED*************************************");
+  
+  res.json(process.env.MB_TOKEN);
+})
+
+
 app.get('/', function(req, res) {
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
@@ -34,9 +42,6 @@ app.get('/*', function(req, res) {
   })
 })
 
-app.get('/token', function(req, res) {
-  res.json(process.env.MB_TOKEN);
-})
 
 app.listen(process.env.PORT || 8080, function(err) {
   if (err) {
