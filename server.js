@@ -1,15 +1,12 @@
 const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
-// const cors = require('cors')
 const webpack = require('webpack');
 const config = require('./webpack.config.dev.js');
-require('dotenv').config();
 
 const app = express();
 const compiler = webpack(config);
 
-// app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -21,14 +18,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.use('/public', express.static('public'));
-
-
-app.get('/token', function(req, res) {
-  console.log("*************************************TOKEN REQUESTED*************************************");
-  
-  res.json(process.env.MB_TOKEN);
-})
-
 
 app.get('/', function(req, res) {
   res.sendFile(path.resolve(__dirname, 'index.html'));
