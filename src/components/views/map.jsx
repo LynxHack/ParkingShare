@@ -9,7 +9,8 @@ class MapBox extends Component {
     this.map;
     this.state = {
       longitude: this.props.location.state[0],
-      latitude: this.props.location.state[1]
+      latitude: this.props.location.state[1],
+      mapBounds: {}
     }
   }
 
@@ -24,6 +25,11 @@ class MapBox extends Component {
     });
 
     this.map.on('load', () => {
+      this.setState({
+        mapBounds: this.map.getBounds()
+      })
+      console.log(this.state.mapBounds);
+      
       this.map.loadImage('https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Cat_silhouette.svg/400px-Cat_silhouette.svg.png', (error, image) => {
         if (error) throw error;
         this.map.addImage('cat', image);
