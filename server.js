@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const webpack = require('webpack');
 const config = require('./webpack.config.dev.js');
-
+const bcrypt = require('bcrypt');
+const cookieSession = require('cookie-session') ;
 const app = express();
 const compiler = webpack(config);
 
