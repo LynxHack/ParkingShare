@@ -5,3 +5,12 @@
   width: 100%;
   z-index: -1;
 }
+
+
+.marker {
+  background-image: './../icons/park.png';
+  display: block;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
