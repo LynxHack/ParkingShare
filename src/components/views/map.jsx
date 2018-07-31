@@ -8,6 +8,8 @@ class MapBox extends Component {
     super(props);
     this.map;
     this.state = {
+      longitude: this.props.location.state[0],
+      latitude: this.props.location.state[1]
     }
   }
 
@@ -16,7 +18,7 @@ class MapBox extends Component {
     mapboxgl.accessToken = "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w";
     this.map = new mapboxgl.Map({
       container: "map",
-      center: [-123.1092519, 49.2696751],
+      center: [this.state.longitude, this.state.latitude],
       zoom: 13,
       style: "mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
     });
@@ -36,7 +38,7 @@ class MapBox extends Component {
                 "type": "Feature",
                 "geometry": {
                   "type": "Point",
-                  "coordinates": [-123.1092519, 49.2696751]
+                  "coordinates": [this.state.longitude, this.state.latitude]
                 }
               }]
             }

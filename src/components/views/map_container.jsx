@@ -4,10 +4,14 @@ import MapBox from './map.jsx';
 class MapContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      results: this.props.location.state
+    }
   }
   render() {
     return (
-      < MapBox />
+      <h1>{this.state.results}</h1>
+      // < MapBox />
     )
   }
 }
