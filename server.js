@@ -10,6 +10,8 @@ const compiler = webpack(config);
 const dbGet = require('./db/helpers/get_data.js');
 const dbPost = require('./db/helpers/post_data.js');
 
+var bcrypt = require('bcryptjs');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
