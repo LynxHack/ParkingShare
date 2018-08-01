@@ -44,6 +44,9 @@ app.post('/newspot', function(req, res){
   dbPost.insertNewSpot(req.body);
 })
 
+app.post('/login', function(req, res){
+  
+})
 
 app.listen(process.env.PORT || 8080, function(err) {
   if (err) {

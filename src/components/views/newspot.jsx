@@ -34,7 +34,7 @@ export default class Newspot extends Component {
 
   submitform(e){
     e.preventDefault();
-    api.getMapData(this.state.address)
+    api.getMapData(this.state.address + " " + this.state.city)
     .then((data) => {
         let postdata = Object.assign({}, this.state);
         postdata["longitude"] = data.results[0];
