@@ -3,10 +3,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const webpack = require('webpack');
 const config = require('./webpack.config.dev.js');
-<<<<<<< HEAD
-=======
 const bcrypt = require('bcryptjs');
->>>>>>> feature/userPage
 const cookieSession = require('cookie-session') ;
 const app = express();
 const compiler = webpack(config);
@@ -53,33 +50,9 @@ app.get('/*', function(req, res) {
   })
 })
 
-<<<<<<< HEAD
 app.post('/newspot', function(req, res){
   console.log(dbPost);
   dbPost.insertNewSpot(req.body);
-=======
-app.post("/login" , function (req, res) {
-  let userEmail = req.body.email ;
-  let userPassword = req.body.password ;
-  let user;
-  for(let userId in users) {
-    if(users[userId].email === req.body.email) {
-      user = users[userId] ;
-    }
-  }
-  if(user){
-
-    console.dir(user, { colors: true });
-    if(bcrypt.compareSync(userPassword , user.hashedPassword)){
-      req.session.user_id = user.id ;
-      res.redirect('/urls') ;
-    } else {
-      res.status(403).send('Invalid Login , Check your login info') ;
-    }
-    } else {
-        res.status(403).send('User does not exist , Check your login info') ;
-      }
->>>>>>> feature/userPage
 })
 
 
