@@ -40,7 +40,6 @@ export default class App extends Component {
             </div>
             <ul>
               <li><Link to="#" onClick={this.handleClick} >Login / Sign-Up</Link></li>
-              <li><Link to="/search">Search</Link></li>
               <li><Link to="/newspot">Share A Spot</Link></li>
             </ul> 
           </nav>   

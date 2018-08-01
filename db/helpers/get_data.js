@@ -6,18 +6,9 @@ const knex = require("knex")(knexConfig[ENV]);
 
 module.exports = {
 
-// MapBox boundsObject{…}
-// ​{ _ne: {  lng: , 
-//           lat:  },
-//   _sw: {  lng: , 
-//           lat:  }}
-  getAvailableSpots: function(boundsObject) {
+  getAvailableSpots: function() {
     return new Promise((resolve, reject) => {
       knex('parkingspots')
-      .where('longitude', '>=', boundsObject._sw.lng)
-      .andWhere('longitude', '<=', boundsObject._ne.lng)
-      .andWhere('latitude', '<=', boundsObject._ne.lat)
-      .andWhere('latitude', '>=', boundsObject._sw.lat)
       .then((result) => {
         if (result){
           return resolve(result);
