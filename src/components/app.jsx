@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from './views/home.jsx';
-import MapBox from './views/map.jsx';
+import MapContainer from './views/mapContainer.jsx';
 import Newspot from './views/newspot.jsx';
 require('./../stylesheets/app.scss');
 import Login from './views/login.jsx'
@@ -44,7 +44,7 @@ export default class App extends Component {
             </ul> 
           </nav>   
           <Route exact path="/" component={Home} />
-          <Route exact path="/search" component={MapBox} />
+          <Route exact path="/search" component={MapContainer} />
           <Route exact path="/newspot" component={Newspot} />
           {this.checkLogin()}
         </main>

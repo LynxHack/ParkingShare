@@ -3,7 +3,7 @@ import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
 import { getSpots } from "./../helpers/mapData.js";
 require('./../../stylesheets/map.scss');
 
-class MapBox extends Component {
+class MapContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -14,6 +14,7 @@ class MapBox extends Component {
       bounds: [],
       spots: []
     }
+    
   }
 
 
@@ -26,15 +27,18 @@ class MapBox extends Component {
             ...res.data
           }
         }));
-        console.log(this.state.spots);
+        console.log(this.state);
       })
   }
+
 
   render() {
     const Map = ReactMapboxGl({
       accessToken: "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w"
     });
-    const { spots, longitude, latitude } = this.state;
+    const { spots, spot, longitude, latitude } = this.state;
+    console.log(Map.defaultProps);
+    
     return (
       <Map
         style="mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
@@ -51,9 +55,16 @@ class MapBox extends Component {
             />
           ))}
         </Layer>
+        {spot && (
+          <Popup key={station.id} coordinates={[spot.longitude, spot.latitude]}>
+            <StyledPopup>
+              <div>{spot.address}</div>
+            </StyledPopup>
+          </Popup>
+        )}
       </Map>
     )
   }
 }
 
-export default MapBox;
+export default MapContainer;
