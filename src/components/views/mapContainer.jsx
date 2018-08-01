@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Popup } from "react-mapbox-gl";
+import styled from 'styled-components';
 import { getSpots } from "./../helpers/mapData.js";
 require('./../../stylesheets/map.scss');
+
+const StyledPopup = styled.div`
+  background: white;
+  color: #3f618c;
+  font-weight: 400;
+  padding: 5px;
+  border-radius: 2px;
+`;
 
 class MapContainer extends Component {
 
@@ -12,9 +21,12 @@ class MapContainer extends Component {
       longitude: this.props.location.state[0],
       latitude: this.props.location.state[1],
       bounds: [],
-      spots: []
+      spots: [],
+      zoom: [11]
     }
-    
+    this.onStyleLoad = this.onStyleLoad.bind(this);
+    this.onToggleHover = this.onToggleHover.bind(this);
+    this.markerClick = this.markerClick.bind(this);
   }
 
 
@@ -27,18 +39,32 @@ class MapContainer extends Component {
             ...res.data
           }
         }));
-        console.log(this.state);
       })
   }
+
+  onStyleLoad(map) {
+    const { onStyleLoad } = this.props;
+    return onStyleLoad && onStyleLoad(map);
+  };
+
+  onToggleHover(cursor, { map }) {
+    map.getCanvas().style.cursor = cursor;
+  };
+
+  markerClick(spot) {
+    console.log(this);
+    this.setState({
+      spot
+    })
+  };
 
 
   render() {
     const Map = ReactMapboxGl({
       accessToken: "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w"
     });
-    const { spots, spot, longitude, latitude } = this.state;
-    console.log(Map.defaultProps);
-    
+    const { spots, spot, longitude, latitude, zoom } = this.state;
+
     return (
       <Map
         style="mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
@@ -46,17 +72,23 @@ class MapContainer extends Component {
           height: '100vh',
           width: '100vw',
         }}
-        center={[longitude, latitude]}>
+        onStyleLoad={this.onStyleLoad}
+        center={[longitude, latitude]}
+        zoom={zoom}
+        >
         <Layer type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
           {Object.keys(spots).map((key, index) => (
             <Feature
               key={spots[key].id}
+              onMouseEnter={this.onToggleHover.bind(this, 'pointer')}
+              onMouseLeave={this.onToggleHover.bind(this, '')}
+              onClick={this.markerClick.bind(this, spots[key])}
               coordinates={[spots[key].longitude, spots[key].latitude]}
             />
           ))}
         </Layer>
         {spot && (
-          <Popup key={station.id} coordinates={[spot.longitude, spot.latitude]}>
+          <Popup key={spot.id} coordinates={[spot.longitude, spot.latitude]}>
             <StyledPopup>
               <div>{spot.address}</div>
             </StyledPopup>
