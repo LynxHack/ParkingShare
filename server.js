@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const webpack = require('webpack');
 const config = require('./webpack.config.dev.js');
-const bcrypt = require('bcryptjs');
 const cookieSession = require('cookie-session') ;
 const app = express();
 const compiler = webpack(config);
@@ -20,6 +19,8 @@ app.use(cookieSession({
 let printUsers = getUsers.getUsers();
 console.log('this is the email thins' , printUsers);
 
+
+var bcrypt = require('bcryptjs');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -55,6 +56,9 @@ app.post('/newspot', function(req, res){
   dbPost.insertNewSpot(req.body);
 })
 
+app.post('/login', function(req, res){
+  
+})
 
 app.listen(process.env.PORT || 8080, function(err) {
   if (err) {
