@@ -40,7 +40,8 @@ app.get('/*', function(req, res) {
 })
 
 app.post('/newspot', function(req, res){
-  console.log(req.body);
+  console.log(dbPost);
+  dbPost.insertNewSpot(req.body);
 })
 
 
