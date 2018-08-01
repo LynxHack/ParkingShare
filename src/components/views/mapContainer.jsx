@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapboxGl, { Layer, Feature, Popup } from "react-mapbox-gl";
+import mapboxgl from 'mapbox-gl';
 import styled from 'styled-components';
 import { getSpots } from "./../helpers/mapData.js";
 import Popups from './popups.jsx';
@@ -41,7 +42,10 @@ class MapContainer extends Component {
             ...res.data
           }
         }));
+        console.log(res.data);
       })
+      
+      
   }
 
   onStyleLoad = (map) => {
@@ -80,12 +84,16 @@ class MapContainer extends Component {
           height: '100vh',
           width: '100vw',
         }}
-        
+        onStyleLoad={(map) => {
+          map.loadImage('https://cdn2.iconfinder.com/data/icons/vehicle-type/1024/hatchback-512.png', (error, image) => {
+            map.addImage('spot', image);
+          });
+        }}
         center={[longitude, latitude]}
         zoom={zoom}
         flyToOptions={flyToOptions}
       >
-        <Layer key="Layers" type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
+        <Layer key="Layers" type="symbol" id="marker" layout={{ "icon-image": "spot" }}>
           {Object.keys(spots).map((key, index) => (
             <Feature
               key={spots[key].id}
