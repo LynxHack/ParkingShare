@@ -44,7 +44,7 @@ export default class App extends Component {
             </ul> 
           </nav>   
           <Route exact path="/" component={Home} />
-          <Route exact path="/search" component={MapContainer} />
+          <Route exact path="/search" component={MapContainer} key="search" />
           <Route exact path="/newspot" component={Newspot} />
           {this.checkLogin()}
         </main>
