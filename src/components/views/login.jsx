@@ -38,7 +38,6 @@ export default class Login extends React.Component {
     </label>
     <p className="forgot-pass">Forgot password?</p>
     <button type="button" className="submit">Sign In</button>
-    <button type="button" className="fb-btn">Connect with <span>facebook</span></button>
   </div>
   <div className="sub-cont">
     <div className="img">
@@ -70,7 +69,6 @@ export default class Login extends React.Component {
         <input type="password" />
       </label>
       <button type="button" className="submit">Sign Up</button>
-      <button type="button" className="fb-btn">Join with <span>facebook</span></button>
     </div>
   </div>
 </div>

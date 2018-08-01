@@ -1,0 +1,63 @@
+.userProfile{
+    background-color: whitesmoke;
+    width: 75%;
+    height: 500px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.userProfilePicture img{
+    margin-top: 20px;
+    margin-left: 57px;
+    border: 1px solid black;
+    background-color: #90ee9057;
+    border-radius: 10px;
+    padding: 2px;
+    height: 100px;
+}
+
+.userProfileInfo {
+    border-top: 3px dotted #D15153;;
+    border-bottom: 3px dotted #D15153;
+    width: 30%;
+    margin: 5px;
+    text-align: center;
+}
+
+.userProfile h3,h4 {
+    margin: 5px;
+}
+
+.userProfileVehicles{
+    border: 1px solid red;
+    width: 50%;
+    margin: 5px;
+    position: absolute;
+    top: 20%;
+    left: 35%;
+    width: 50%;
+    height: 100px;
+}
+
+.userProfileReservations{
+    border: 1px solid red;
+    width: 50%;
+    margin: 5px;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    width: 50%;
+    height: 100px;
+}
+
+.userProfileSpots{
+    border: 1px solid red;
+    width: 50%;
+    margin: 5px;
+    position: absolute;
+    top: 75%;
+    left: 35%;
+    width: 50%;
+    height: 100px;
+}
+
