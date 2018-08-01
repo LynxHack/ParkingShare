@@ -5,6 +5,7 @@ import MapBox from './views/map.jsx';
 import Newspot from './views/newspot.jsx';
 require('./../stylesheets/app.scss');
 import Login from './views/login.jsx'
+import userPage from './views/user.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -41,12 +42,14 @@ export default class App extends Component {
             <ul>
               <li><Link to="#" onClick={this.handleClick} >Login / Sign-Up</Link></li>
               <li><Link to="/search">Search</Link></li>
+              <li><Link to="/user">User</Link></li>
               <li><Link to="/newspot">Share A Spot</Link></li>
             </ul> 
           </nav>   
           <Route exact path="/" component={Home} />
           <Route exact path="/search" component={MapBox} />
           <Route exact path="/newspot" component={Newspot} />
+          <Route exact path="/user" component={userPage} />
           {this.checkLogin()}
         </main>
       </Router>
