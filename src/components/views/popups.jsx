@@ -11,24 +11,14 @@ const StyledPopup = styled.div`
   border-radius: 2px;
 `;
 
-class Popups extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-
-    return (
-      <Popup key={this.props.id} coordinates={[this.props.longitude, this.props.latitude]}>
-        <StyledPopup key="styledpopup">
-          <div>{this.props.address}</div>
-        </StyledPopup>
-      </Popup>
-
-
-    )
-  }
+const Popups = ({ spot }) => {
+  return (
+    <Popup key={spot.id} coordinates={[spot.longitude, spot.latitude]}>
+      <StyledPopup key="styledpopup">
+        <div>{spot.address}</div>
+      </StyledPopup>
+    </Popup>
+  )
 }
 
 export default Popups;

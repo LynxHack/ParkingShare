@@ -22,6 +22,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      fitBounds: undefined,
       longitude: this.props.location.state[0],
       latitude: this.props.location.state[1],
       bounds: [],
@@ -53,10 +54,12 @@ class MapContainer extends Component {
   };
 
   markerClick = (spot) => {
+    console.log(spot);
+    
     this.setState({
       longitude: spot.longitude,
       latitude: spot.latitude,
-      zoom: [14],
+      zoom: [13],
       spot: spot
     });
   };
@@ -66,17 +69,18 @@ class MapContainer extends Component {
     const Map = ReactMapboxGl({
       accessToken: "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w"
     });
-    const { spots, spot, longitude, latitude, zoom } = this.state;
+    const { fitBounds, spots, spot, longitude, latitude, zoom } = this.state;
 
     return (
       <Map
         key="mapboxComponent"
         style="mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
+        fitBounds={fitBounds}
         containerStyle={{
           height: '100vh',
           width: '100vw',
         }}
-        onStyleLoad={this.onStyleLoad}
+        
         center={[longitude, latitude]}
         zoom={zoom}
         flyToOptions={flyToOptions}
@@ -92,13 +96,7 @@ class MapContainer extends Component {
             />
           ))}
         </Layer>
-        {spot && (
-          <Popup key={spot.id} coordinates={[spot.longitude, spot.latitude]}>
-            <StyledPopup key="styledpopup">
-              <div>{spot.address}</div>
-            </StyledPopup>
-          </Popup>
-        )}
+        {this.state.spot && <Popups spot={this.state.spot}/>}
       </Map>
     )
   }
