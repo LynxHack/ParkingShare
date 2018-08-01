@@ -1,9 +1,7 @@
 require('./../../stylesheets/newspot.scss');
 import axios from 'axios';
-
-
-
 import React, { Component } from "react";
+import api from './../helpers/api.js'
 
 export default class Newspot extends Component {
   constructor(props){
@@ -20,8 +18,7 @@ export default class Newspot extends Component {
       address: '',
       city: '',
       postalcode: '',
-      maxheight: '',
-      image: null
+      maxheight: ''
     }
   }
 
@@ -37,14 +34,24 @@ export default class Newspot extends Component {
 
   submitform(e){
     e.preventDefault();
+    api.getMapData(this.state.address)
+    .then((data) => {
+        let postdata = Object.assign({}, this.state);
+        postdata["longitude"] = data.results[0];
+        postdata["latitude"] = data.results[1];
+
+        console.log(postdata);
+        axios.post('/newspot', postdata)
+        .then(function(response){
+          console.log(response);
+        })
+        .catch(function(err){
+          console.log(err);
+        })
+      }    
+    )
+    .catch((err) => console.log(err))
     console.log(this.state);
-    axios.post('/newspot', this.state)
-    .then(function(response){
-      console.log(response);
-    })
-    .catch(function(err){
-      console.log(err);
-    })
   }
 
   editform(e){
