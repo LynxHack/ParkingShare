@@ -39,6 +39,10 @@ app.get('/*', function(req, res) {
   })
 })
 
+app.post('/newspot', function(req, res){
+  console.log(req.body);
+})
+
 
 app.listen(process.env.PORT || 8080, function(err) {
   if (err) {

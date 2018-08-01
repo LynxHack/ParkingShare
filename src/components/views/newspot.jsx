@@ -1,4 +1,7 @@
 require('./../../stylesheets/newspot.scss');
+import axios from 'axios';
+
+
 
 import React, { Component } from "react";
 
@@ -32,6 +35,25 @@ export default class Newspot extends Component {
     }
   }
 
+  submitform(e){
+    e.preventDefault();
+    console.log(this.state);
+    axios.post('/newspot', this.state)
+    .then(function(response){
+      console.log(response);
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  }
+
+  editform(e){
+    const fieldname = e.target.getAttribute("name");
+    const value = e.target.value;
+    console.log("Field is ", fieldname, "value is ", value)
+    this.setState({[fieldname]: value })
+  }
+
   render() {
     return (
       <form id="sharespotform">
@@ -44,14 +66,14 @@ export default class Newspot extends Component {
         </div>
         <div id="msform">
           <h1 class="fs-title">Create your Spot</h1>
-          <input type="text" name="address" placeholder="Address" />
-          <input type="text" name="city" placeholder="City" />
-          <input type="text" name="postalcode" placeholder="Postal Code" />
-          <textarea type="text" name="description" placeholder="Description" />
-          <input type="text" name="buzzer" placeholder="Buzzer info (optional)" />
-          <input type="text" name="buzzer" placeholder="Maxheight (optional)" />
-
-          <input type="button" name="next" class="action-button" value="Next" />
+          <input type="text" name="address" placeholder="Address" onChange={this.editform.bind(this)}/>
+          <input type="text" name="city" placeholder="City" onChange={this.editform.bind(this)} />
+          <input type="text" name="postalcode" placeholder="Postal Code" onChange={this.editform.bind(this)}/>
+          <textarea type="text" name="description" placeholder="Description" onChange={this.editform.bind(this)}/>
+          <input type="text" name="buzzer" placeholder="Buzzer info (optional)" onChange={this.editform.bind(this)}/>
+          <input type="text" name="maxheight" placeholder="Maxheight (optional)" onChange={this.editform.bind(this)}/>
+          <input type="text" name="stall" placeholder="Stall" onChange={this.editform.bind(this)}/>
+          <input type="button" name="next" class="action-button" value="Next" onClick={this.submitform.bind(this)}/>
         </div>
       </form>
     );
