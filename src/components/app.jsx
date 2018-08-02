@@ -19,6 +19,7 @@ export default class App extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.checkLogin = this.checkLogin.bind(this);
     this.navlogincheck = this.navlogincheck.bind(this);
+    this.closeLogin =this.closeLogin.bind(this)
   }
   handleClick() {
     this.setState(prevState => ({
@@ -46,11 +47,19 @@ export default class App extends Component {
     })
   }
 
+  closeLogin(){
+    console.log("CLICKED")
+    this.setState(prevState => ({
+      showLoginform: !prevState.showLoginform
+    }));
+  }
+
   checkLogin() {
     if(this.state.showLoginform)
-      return(
+      return(<div>
         <Login attemptlogin={this.attemptlogin} />
-      )
+        <a class="backdrop" onClick={this.closeLogin}></a>
+      </div>)
   }
 
 

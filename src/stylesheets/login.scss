@@ -6,6 +6,7 @@
   }
 
 .fulllogin{
+    display: inline;
     position: absolute;
     left: 50px;
     bottom: 100px;
@@ -287,3 +288,38 @@
       transform: translate3d(0,0,0);
     }
   }
+
+
+
+
+
+
+  // .fulllogin {
+  //   display: none;
+  //   height: 80vh;
+  //   width: 80vw;
+  //   position: fixed;
+  //   top: 0; right: 0; bottom: 0; left: 0;
+  //   margin: auto;
+  //   padding: 1em;
+  //   background: #ddd;
+  //   border: 2px solid black;
+  //   z-index: 2;
+  // }
+  
+  // .fulllogin:target {
+  //   display: block;
+  // }
+  
+  .backdrop {
+    display: block;
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: black;
+    opacity: 0.56;
+    z-index: -1;
+  }
+  
+  // .fulllogin:target + .backdrop {
+  //   display: block;
+  // }
