@@ -6,7 +6,6 @@ import Newspot from './views/newspot.jsx';
 import axios from 'axios';
 import Login from './views/login.jsx'
 import UserPage from './views/user.jsx';
-import cookie from 'react-cookie';
 
 require('./../stylesheets/app.scss');
 
@@ -26,6 +25,7 @@ export default class App extends Component {
     this.attemptlogin = this.attemptlogin.bind(this);
     this.attemptlogout = this.attemptlogout.bind(this);
     this.loadpagecookiecheck = this.loadpagecookiecheck.bind(this);
+    this.closeLogin =this.closeLogin.bind(this)
   }
 
   handleClick() {
@@ -86,14 +86,6 @@ export default class App extends Component {
     })
   }
 
-  checkLogin() {
-    if(this.state.showLoginform){
-      return(
-        <Login attemptlogin={this.attemptlogin} />
-      )
-    }
-  }
-
   loadpagecookiecheck(){
       axios.post('/initiallog', {})
       .then((result) => {
@@ -108,7 +100,23 @@ export default class App extends Component {
         }
       })
       .catch((error) => console.log(error));
+    }
+    
+  closeLogin(){
+    console.log("CLICKED")
+    this.setState(prevState => ({
+      showLoginform: !prevState.showLoginform
+    }));
   }
+
+  checkLogin() {
+    if(this.state.showLoginform)
+      return(<div>
+        <Login attemptlogin={this.attemptlogin} />
+        <a class="backdrop" onClick={this.closeLogin}></a>
+      </div>)
+  }
+  
 
   componentDidMount(){
       this.loadpagecookiecheck();

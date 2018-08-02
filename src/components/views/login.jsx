@@ -7,6 +7,7 @@ export default class Login extends React.Component {
         super(props);
         this.state = {
           toggleClaas : true,
+          closeModal : false,
 
           // registration : {
             reg_firstname: '',
@@ -25,6 +26,13 @@ export default class Login extends React.Component {
         this.transition = this.transition.bind(this);
         this.register = this.register.bind(this);
         this.editregistration =this.editregistration.bind(this);
+        this.closeModal =this.closeModal.bind(this)
+    }
+
+    closeModal(){
+      this.setState(prevState => ({
+        closeModal: !prevState.closeModal
+      }));
     }
 
     changeForms() {

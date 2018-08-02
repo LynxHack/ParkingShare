@@ -1,103 +1,160 @@
 import React, { Component } from 'react';
-import ReactMapboxGl, { Layer, Feature, Popup } from "react-mapbox-gl";
+import mapboxgl from 'mapbox-gl';
 import styled from 'styled-components';
 import { getSpots } from "./../helpers/mapData.js";
-import Popups from './popups.jsx';
 require('./../../stylesheets/map.scss');
 
-const StyledPopup = styled.div`
-  background: white;
-  color: #3f618c;
-  font-weight: 400;
-  padding: 5px;
-  border-radius: 2px;
-`;
-
-const flyToOptions = {
-  speed: 0.8
-};
-
+var features = [];
 class MapContainer extends Component {
 
   constructor(props) {
     super(props);
+    this.map;
     this.state = {
-      fitBounds: undefined,
       longitude: this.props.location.state[0],
       latitude: this.props.location.state[1],
-      bounds: [],
-      spots: [],
-      zoom: [11],
+      mapBounds: {},
+      searchText: ''
+    }
+    this.renderListings = this.renderListings.bind(this);
+    this.filter = this.filter.bind(this);
+    this.searchText = this.searchText.bind(this);
+  }
+
+  async componentDidMount() {
+    //Initailiasing map in component
+    mapboxgl.accessToken = "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w";
+
+    this.map = new mapboxgl.Map({
+      container: "map",
+      center: [this.state.longitude, this.state.latitude],
+      zoom: 12,
+      style: "mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
+    });
+
+
+
+    await getSpots()
+      .then((res) => {
+        res.data.map(spot => {
+          features.push({
+            "id": spot.id,
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [spot.longitude, spot.latitude]
+            },
+            "properties": {
+              picture: spot.picture,
+              stall: spot.stall,
+              buzzer: spot.buzzer,
+              description: spot.description,
+              address: spot.address,
+              city: spot.city,
+              postalcode: spot.postalcode,
+              maxheight: spot.maxheight
+            },
+          })
+        });
+      })
+
+    var geojson = {
+      type: 'FeatureCollection',
+      features: features
+    }
+
+
+    await geojson.features.forEach((marker) => {
+      // create a HTML element for each feature
+      var el = document.createElement('div');
+      el.className = `${marker.id}`;
+      // make a marker for each feature and add to the map
+      new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(this.map);
+
+      new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+          .setHTML('<h3>' + marker.properties.address + '</h3><p>' + marker.properties.description + '</p>'))
+        .addTo(this.map);
+    });
+
+    this.map.on('load', () => {
+      var filterEl = document.getElementById('feature-filter');
+      var listingEl = document.getElementById('feature-listing');
+      this.renderListings(features, filterEl, listingEl);
+    })
+  }
+
+  renderListings = (features, filterEl, listingEl) => {
+    // Clear any existing listings
+    listingEl.innerHTML = '';
+    if (features.length) {
+      features.forEach(function (feature) {
+        var prop = feature.properties;
+        var item = document.createElement('a');
+        // SET HREF TO LISTING PAGE WHEN READY
+        item.href = "#";
+        item.target = '_blank';
+        item.textContent = prop.address;
+        listingEl.appendChild(item);
+      });
+
+      // Show the filter input
+      filterEl.parentNode.style.display = 'block';
+    } else {
+      var empty = document.createElement('p');
+      empty.textContent = 'Drag the map to populate results';
+      listingEl.appendChild(empty);
+
+      // Hide the filter input
+      filterEl.parentNode.style.display = 'none';
+
+      // remove features filter
+      this.map.setFilter('parkingSpots');
     }
   }
 
 
-  componentDidMount() {
-    getSpots()
-      .then((res) => {
-        this.setState(({ spots }) => ({
-          spots: {
-            ...spots,
-            ...res.data
-          }
-        }));
-      })
+  async searchText(data, evt) {
+    await this.setState({
+      searchText: data.target.value
+    });
   }
 
-  onStyleLoad = (map) => {
-    const { onStyleLoad } = this.props;
-    return onStyleLoad && onStyleLoad(map);
-  };
 
-  onToggleHover = ( cursor, { map }) => {
-    map.getCanvas().style.cursor = cursor;
-  };
-
-  markerClick = (spot) => {
-    console.log(spot);
+  filter = () => {
     
-    this.setState({
-      longitude: spot.longitude,
-      latitude: spot.latitude,
-      zoom: [13],
-      spot: spot
-    });
-  };
+    var value = this.state.searchText.trim().toLowerCase();
 
+    // Filter visible features that don't match the input value.
+    var filtered = features.filter(function (feature) {
+      var name = feature.properties.address.trim().toLowerCase();
+      return name.indexOf(value) > -1;
+    });
+
+    // Populate the sidebar with filtered results
+    this.renderListings(filtered);
+
+    // Set the filter to populate features into the layer.
+    this.map.setFilter('parkingSpots', filtered.map((feature) => {
+      return feature.address
+    }));
+  }
 
   render() {
-    const Map = ReactMapboxGl({
-      accessToken: "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w"
-    });
-    const { fitBounds, spots, spot, longitude, latitude, zoom } = this.state;
 
     return (
-      <Map
-        key="mapboxComponent"
-        style="mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
-        fitBounds={fitBounds}
-        containerStyle={{
-          height: '100vh',
-          width: '100vw',
-        }}
-        
-        center={[longitude, latitude]}
-        zoom={zoom}
-        flyToOptions={flyToOptions}
-      >
-        <Layer key="Layers" type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
-          {Object.keys(spots).map((key, index) => (
-            <Feature
-              key={spots[key].id}
-              onMouseEnter={this.onToggleHover.bind(this, 'pointer')}
-              onMouseLeave={this.onToggleHover.bind(this, '')}
-              onClick={this.markerClick.bind(this, spots[key])}
-              coordinates={[spots[key].longitude, spots[key].latitude]}
-            />
-          ))}
-        </Layer>
-        {this.state.spot && <Popups spot={this.state.spot}/>}
-      </Map>
+      <section>
+        <div id="map"></div>
+        {/* <div className='map-overlay'>
+          <fieldset onChange={this.searchText} onKeyDown={this.filter}>
+            <input id='feature-filter' type='text' placeholder='Filter results by name' />
+          </fieldset>
+          <div id='feature-listing' className='listing'></div>
+        </div> */}
+      </section>
     )
   }
 }

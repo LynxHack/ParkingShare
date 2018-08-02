@@ -69,13 +69,13 @@ export default class Newspot extends Component {
     }
     return (
       <form id="sharespotform">
-                {/* <div className="fu">
-          <div class="file-upload">
-          <label for="upload" class="file-upload__label">Upload A Picture Of Your Spot</label>
-          <input id="upload" class="file-upload__input" type="file" name="file-upload"/>
-          </div>
-          </div> */}
-          <img id="imgbox" src={this.state.image}/>
+      <div class="file-upload">
+      <h3>Dont forget to upload a picture of your spot</h3>
+    <label for="upload" class="file-upload__label">Upload A Picture Of Your Spot</label>
+    <input id="upload" class="file-upload__input" type="file" name="file-upload" onClick={this.onImageChange}/>
+    <img id="imgbox" src="http://www.slidesjs.com/examples/standard/img/example-slide-1.jpg" height="200px" width="200px"/>
+    </div>
+        
         <div id="msform">
           <h1 className="fs-title">Create your Spot</h1>
           <input type="text" name="address" placeholder="Address" onChange={this.editform.bind(this)}/>
