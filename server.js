@@ -6,19 +6,9 @@ const config = require('./webpack.config.dev.js');
 const cookieSession = require('cookie-session') ;
 const app = express();
 const compiler = webpack(config);
+
 const dbGet = require('./db/helpers/get_data.js');
 const dbPost = require('./db/helpers/post_data.js');
-const getUsers = require('./db/helpers/get_users.js');
-//use the cookiesession
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2']
-}))
-
-
-let printUsers = getUsers.getUsers();
-console.log('this is the email thins' , printUsers);
-
 
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
@@ -78,10 +68,11 @@ app.post('/newspot', function(req, res){
 
 app.post('/login', function(req, res){
   console.log(req.body);
-  dbGet.checkcredentials(req.body.email, req.body.password)
+  dbPost.checkcredentials(req.body.email, req.body.password)
   .then((result) => {
     if(result){
       req.session.email = req.body.email;
+      res.status(200).send("Successful credential check")
     }
   
     else {

@@ -32,13 +32,16 @@ module.exports = {
               if(result.length > 1){
                 throw new Error("Error: There are duplicate emails in database!")
               }  
-              data = result[0]; //take first and only result
-              //// need seeded data 
+              const data = result[0]; //take first and only result
+              console.log(data);
+              //// need seeded data s
               bcrypt.compare(password, data.password, function(err, res) {
                 if(res){
+                  console.log("passed bcrypt auth")
                   resolve(result);   
                 }
                 else{
+                  console.log("failed bcrypt auth")
                   reject("No user found with credentials given");
                 }
               });
