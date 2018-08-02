@@ -6,6 +6,7 @@ import Newspot from './views/newspot.jsx';
 import axios from 'axios';
 import Login from './views/login.jsx'
 import UserPage from './views/user.jsx';
+import MyReservations from './views/myreservations.jsx'
 
 require('./../stylesheets/app.scss');
 
@@ -39,6 +40,7 @@ export default class App extends Component {
       return (
         <ul>
           <li><Link to="/newspot">Share A Spot</Link></li>
+          <li><Link to="/myreservations">My Reservations</Link></li>
           <li><Link to="/user">Hi {this.state.userfirstname}!</Link></li>
           <li onClick={this.attemptlogout.bind(this)}><Link to="/">Logout</Link></li>
         </ul>
@@ -101,7 +103,7 @@ export default class App extends Component {
       })
       .catch((error) => console.log(error));
     }
-    
+  
   closeLogin(){
     console.log("CLICKED")
     this.setState(prevState => ({
@@ -130,12 +132,14 @@ export default class App extends Component {
             <div>
               <Link to="/"><h1 className="logo">SpotSharer</h1></Link>
             </div>
-              {this.navlogincheck()}
+            {this.navlogincheck()}
           </nav>   
-          <Route exact path="/"        render ={(defprops) => <Home isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/newspot" render ={(defprops) => <Newspot isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/user"    render ={(defprops) => <UserPage isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/search"  render ={(defprops) => <MapContainer isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          <Route exact path="/"                render ={(defprops) => <Home isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          <Route exact path="/newspot"         render ={(defprops) => <Newspot isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          <Route exact path="/user"            render ={(defprops) => <UserPage isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          <Route exact path="/search"          render ={(defprops) => <MapContainer isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          <Route exact path="/myreservations"  render ={(defprops) => <MyReservations isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          
           {this.checkLogin()}
         </main>
       </Router>
