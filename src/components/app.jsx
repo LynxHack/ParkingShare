@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from './views/home.jsx';
 import MapContainer from './views/mapContainer.jsx';
 import Newspot from './views/newspot.jsx';
+import axios from 'axios';
 require('./../stylesheets/app.scss');
 import Login from './views/login.jsx'
 
@@ -25,12 +26,6 @@ export default class App extends Component {
     }));
 
   }
-  checkLogin() {
-    if(this.state.showLoginform)
-      return(
-        <Login />
-      )
-  }
 
   navlogincheck(){
     if(this.state.isLoggedIn)
@@ -38,6 +33,25 @@ export default class App extends Component {
         <li><Link to="/newspot">Share A Spot</Link></li>
       )
   }
+
+  attemptlogin(email, password){
+    console.log(email, password);
+    axios.post('/login', {email: email, password: password})
+    .then(function(response){
+      console.log(response);
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  }
+
+  checkLogin() {
+    if(this.state.showLoginform)
+      return(
+        <Login attemptlogin={this.attemptlogin} />
+      )
+  }
+
 
   render() {
     return (
