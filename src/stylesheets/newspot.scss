@@ -1,13 +1,6 @@
 /*custom font*/
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-
-
-#sharespotform{
-	margin-top: 5% ;
-}
-
-
 #msform {
   float: left;
   width: 40%;
@@ -16,8 +9,6 @@
 	position: absolute;
 	left: 30px;
 }
-
-
 #msform fieldset {
 	background: white;
 	border: 0 none;
@@ -27,8 +18,7 @@
 	box-sizing: border-box;
 	width: 80%;
 	margin: 0 10%;
-	
-	/*stacking fieldsets above each other*/
+	top: 75px;
 	position: relative;
 }
 
@@ -64,6 +54,9 @@
 	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
 }
 
+.imageupload{
+	float: right;
+}
 /*picture buttons*/
 #formimagebox .action-button {
 	width: 100px;
@@ -89,31 +82,32 @@
 	margin-bottom: 10px;
 }
 
-.sharespotform .file-upload {
-	font-family: sans-serif;
-    margin-top: 45px;
-    margin-right: 15px;
-    position: absolute;
-    left: 28.5%;
-    top: 57%;
-    left: 46%;
+.file-upload {
+	position: relative;
+	display: inline-block;
+	left: 700px;
+    top: 175px;
 }
 
- .file-upload__label {
+.file-upload__label {
+	font-family: sans-serif;
+	margin-left: 35px;
   display: block;
   padding: 1em 2em;
   color: #fff;
-  background: #27AE60;
+  background:#27AE60;
   border-radius: .4em;
   transition: background .3s;
+  text-align: center;
+    width: 300px;
   
   &:hover {
      cursor: pointer;
-     background: #000;
+     box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
   }
 }
     
-.fu .file-upload__input {
+.file-upload__input {
     position: absolute;
     left: 0;
     top: 0;
@@ -124,3 +118,21 @@
     height: 100%;
     opacity: 0;
 }
+
+.file-upload h3 {
+	font-family: sans-serif;
+	margin-bottom: 10px;
+	color: whitesmoke
+}
+
+.file-upload img {
+	position: absolute;
+    margin-left: 80px;
+    margin-top: 30px;
+}
+
+
+
+
+
+
