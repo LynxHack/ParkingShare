@@ -6,9 +6,19 @@ const config = require('./webpack.config.dev.js');
 const cookieSession = require('cookie-session') ;
 const app = express();
 const compiler = webpack(config);
-
 const dbGet = require('./db/helpers/get_data.js');
 const dbPost = require('./db/helpers/post_data.js');
+const getUsers = require('./db/helpers/get_users.js');
+//use the cookiesession
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
+
+
+let printUsers = getUsers.getUsers();
+console.log('this is the email thins' , printUsers);
+
 
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;

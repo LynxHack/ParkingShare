@@ -6,6 +6,7 @@ import Newspot from './views/newspot.jsx';
 import axios from 'axios';
 require('./../stylesheets/app.scss');
 import Login from './views/login.jsx'
+import userPage from './views/user.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -69,6 +70,7 @@ export default class App extends Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/search" component={MapContainer} key="search" />
           <Route exact path="/newspot" component={Newspot} />
+          <Route exact path="/user" component={userPage} />
           {this.checkLogin()}
         </main>
       </Router>
