@@ -1,20 +1,47 @@
-require('./../../stylesheets/home.scss');
+import './../../stylesheets/home.scss';
+import './../../stylesheets/dateTime.scss';
 
+import ThemedStyleSheet from 'react-with-styles/lib/ThemedStyleSheet';
+import DefaultTheme from 'react-dates/lib/theme/DefaultTheme';
+ThemedStyleSheet.registerTheme(DefaultTheme);
+
+import 'react-dates/initialize';
 import React, { Component } from "react";
 import { Redirect } from 'react-router';
-import axios from 'axios';
-import api from './../helpers/api.js'
+import moment from 'moment';
+import { DateRangePicker } from 'react-dates';
+import api from './../helpers/api.js';
+import 'react-dates/lib/css/_datepicker.css';
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      startDate: moment(),
+      endDate: moment().add(1, 'd'),
+      date: moment(),
+      focusedInput: null,
+      startDateId: 'startdate',
+      endDateId: 'enddate',
       searchValue: '',
       results: [],
       fireRedirect: false
     }
+    this.handleChangeStart = this.handleChangeStart.bind(this);
+    this.handleChangeEnd = this.handleChangeEnd.bind(this);
     this.onText = this.onText.bind(this);
     this.submitForm = this.submitForm.bind(this);
+  }
+
+  handleChangeStart(date) {
+    this.setState({
+      startDate: date
+    });
+  }
+  handleChangeEnd(date) {
+    this.setState({
+      endDate: date
+    });
   }
 
   onText(evt) {
@@ -26,10 +53,10 @@ export default class Home extends Component {
   submitForm(evt) {
     evt.preventDefault();
     api.getMapData(this.state.searchValue)
-    .then((data) => {
-      this.setState(data);
-    })
-    .catch((error) => console.log(error));
+      .then((data) => {
+        this.setState(data);
+      })
+      .catch((error) => console.log(error));
   }
 
   render() {
@@ -37,17 +64,27 @@ export default class Home extends Component {
     const { fireRedirect } = this.state;
     return (
       <div id="welcome_text_div">
-        <h1>Welcome To Your Spot</h1>
-        <p>Rent out uninque parking spots all around the greatest city in the world.</p>
+        <h1 className="headertext">Welcome To Your Spot</h1>
+        <p className="welcometext">Rent out uninque parking spots all around the greatest city in the world.</p>
 
         <form className="search-container" onSubmit={this.submitForm}>
           <input type="text" id="search-bar" placeholder="Search for available locations here" onKeyDown={this.onText} />
           <img className="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" />
         </form>
         {fireRedirect && (<Redirect to={{ pathname: '/search', state: this.state.results }} />)}
-        <footer className='homefooter'>
-        </footer>
-      </div>
+        <div id="dateselect">
+          <DateRangePicker
+            startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+            startDateId={this.state.startDateId} // PropTypes.string.isRequired,
+            endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+            endDateId={this.state.endDateId} // PropTypes.string.isRequired,
+            onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+            focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+            onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+            regular={true}
+          />
+        </div>
+      </div >
     );
   }
 }
