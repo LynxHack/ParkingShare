@@ -64,15 +64,15 @@ export default class Newspot extends Component {
   render() {
     return (
       <form id="sharespotform">
-        <div id="formimagebox">
-          <label className ="action-button" onChange={this.onImageChange.bind(this)}>
-            <input type="file"/>
-            Parking Image
-          </label>
+                {/* <div className="fu">
+          <div class="file-upload">
+          <label for="upload" class="file-upload__label">Upload A Picture Of Your Spot</label>
+          <input id="upload" class="file-upload__input" type="file" name="file-upload"/>
+          </div>
+          </div> */}
           <img id="imgbox" src={this.state.image}/>
-        </div>
         <div id="msform">
-          <h1 class="fs-title">Create your Spot</h1>
+          <h1 className="fs-title">Create your Spot</h1>
           <input type="text" name="address" placeholder="Address" onChange={this.editform.bind(this)}/>
           <input type="text" name="city" placeholder="City" onChange={this.editform.bind(this)} />
           <input type="text" name="postalcode" placeholder="Postal Code" onChange={this.editform.bind(this)}/>
@@ -80,7 +80,7 @@ export default class Newspot extends Component {
           <input type="text" name="buzzer" placeholder="Buzzer info (optional)" onChange={this.editform.bind(this)}/>
           <input type="text" name="maxheight" placeholder="Maxheight (optional)" onChange={this.editform.bind(this)}/>
           <input type="text" name="stall" placeholder="Stall" onChange={this.editform.bind(this)}/>
-          <input type="button" name="next" class="action-button" value="Next" onClick={this.submitform.bind(this)}/>
+          <input type="button" name="next" className="action-button" value="Next" onClick={this.submitform.bind(this)}/>
         </div>
       </form>
     );

@@ -5,6 +5,7 @@ import MapContainer from './views/mapContainer.jsx';
 import Newspot from './views/newspot.jsx';
 require('./../stylesheets/app.scss');
 import Login from './views/login.jsx'
+import userPage from './views/user.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class App extends Component {
     // This binding is necessary to make `this` work in the callback
     this.handleClick = this.handleClick.bind(this);
     this.checkLogin = this.checkLogin.bind(this);
+    this.navlogincheck = this.navlogincheck.bind(this);
   }
   handleClick() {
     this.setState(prevState => ({
@@ -26,10 +28,18 @@ export default class App extends Component {
   }
   checkLogin() {
     if(this.state.showLoginform)
-    return(
-      <Login />
-    )
+      return(
+        <Login />
+      )
   }
+
+  navlogincheck(){
+    if(this.state.isLoggedIn)
+      return(
+        <li><Link to="/newspot">Share A Spot</Link></li>
+      )
+  }
+
   render() {
     return (
       <Router>
@@ -40,12 +50,13 @@ export default class App extends Component {
             </div>
             <ul>
               <li><Link to="#" onClick={this.handleClick} >Login / Sign-Up</Link></li>
-              <li><Link to="/newspot">Share A Spot</Link></li>
+              {this.navlogincheck()}
             </ul> 
           </nav>   
           <Route exact path="/" component={Home} />
           <Route exact path="/search" component={MapContainer} key="search" />
           <Route exact path="/newspot" component={Newspot} />
+          <Route exact path="/user" component={userPage} />
           {this.checkLogin()}
         </main>
       </Router>

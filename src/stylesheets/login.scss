@@ -14,7 +14,7 @@
     z-index: 2;
 }
 
-  input, button {
+  .fulllogin input, button {
     border: none;
     outline: none;
     background: none;
@@ -77,7 +77,7 @@
     }
   }
 
-  button {
+  .fulllogin button {
     display: block;
     margin: 0 auto;
     width: $inputW;
@@ -86,6 +86,7 @@
     color: #fff;
     font-size: 15px;
     cursor: pointer;
+    margin-top: 15px;
   }
 
   .img {
@@ -188,7 +189,7 @@
         border-radius: 30px;
       }
 
-      span {
+       span {
         position: absolute;
         left: 0;
         top: 0;
@@ -216,26 +217,26 @@
     }
   }
 
-  h2 {
+  .fullogin h2 {
     width: 100%;
     font-size: 26px;
     text-align: center;
   }
 
-  label {
+  .fulllogin label {
     display: block;
     width: $inputW;
     margin: 25px auto 0;
     text-align: center;
 
-    span {
+    .fulllogin span {
       font-size: 12px;
       color: #cfcfcf;
       text-transform: uppercase;
     }
   }
 
-  input {
+  .fulllogin input {
     display: block;
     width: 100%;
     margin-top: 5px;
@@ -263,7 +264,7 @@
     border: 2px solid #d3dae9;
     color: darken(#d3dae9, 20%);
 
-    span {
+    .fulllogin span {
       font-weight: bold;
       color: darken(#768cb6, 20%);
     }
@@ -284,22 +285,5 @@
 
     @include signUpActive {
       transform: translate3d(0,0,0);
-    }
-  }
-
-  .icon-link {
-    position: absolute;
-    left: 5px;
-    bottom: 5px;
-    width: 32px;
-
-    img {
-      width: 100%;
-      vertical-align: top;
-    }
-
-    &--twitter {
-      left: auto;
-      right: 5px;
     }
   }
