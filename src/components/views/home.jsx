@@ -32,7 +32,6 @@ export default class Home extends Component {
     .catch((error) => console.log(error));
   }
 
-
   render() {
     const { from } = this.props.location.state || '/';
     const { fireRedirect } = this.state;
