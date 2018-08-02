@@ -1,4 +1,4 @@
-html{
+html {
   background-image: url('http://www.acsenda.com/wp-content/uploads/2015/03/vancouver-skyline.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -7,18 +7,24 @@ html{
   z-index: 0;
 }
 
-.homefooter{
-  position: relative;
-  bottom: 0px;
-  width: 100%;
-  height: 30px;
+#dateselect{
+  height: 50px;
+  .dateheader{
+    margin: 0 auto;
+  }
+  .DateRangePicker {
+    position: relative;
+    margin: 43px 206px;
+    .DateInput{
+      height: 46px;
+    }
+}
 }
 
 #welcome_text_div {
   position: relative;
   margin: 11% auto;
-  
-  h1 {
+  .headertext {
     color: white;
     font-family: sans-serif;
     text-transform: uppercase;
@@ -27,8 +33,7 @@ html{
     text-align: center;
     margin-top: 30px;
   }
-
-  p {
+  .welcometext {
     position: relative;
     top: -20px;
     color: white;
@@ -39,7 +44,7 @@ html{
   }
 }
 
-.search-container{
+.search-container {
   position: relative;
   top: 100px;
   width: 80%;
@@ -47,7 +52,7 @@ html{
   margin: 0 auto;
 }
 
-input#search-bar{
+input#search-bar {
   box-sizing: border-box;
   margin: 0 auto;
   width: 100%;
@@ -58,26 +63,26 @@ input#search-bar{
   border: 1px solid #D0CFCE;
   outline: none;
   background-color: white;
-  &:focus{
+  &:focus {
     border: 1px solid #008ABF;
     transition: 0.35s ease;
     color: #008ABF;
-    &::-webkit-input-placeholder{
-      transition: opacity 0.45s ease; 
-  	  opacity: 0;
-     }
+    &::-webkit-input-placeholder {
+      transition: opacity 0.45s ease;
+      opacity: 0;
+    }
     &::-moz-placeholder {
-      transition: opacity 0.45s ease; 
-  	  opacity: 0;
-     }
+      transition: opacity 0.45s ease;
+      opacity: 0;
+    }
     &:-ms-placeholder {
-     transition: opacity 0.45s ease; 
-  	 opacity: 0;
-     }    
-   }
- }
+      transition: opacity 0.45s ease;
+      opacity: 0;
+    }
+  }
+}
 
-.search-icon{
+.search-icon {
   position: relative;
   float: right;
   width: 75px;
@@ -85,6 +90,3 @@ input#search-bar{
   top: -60px;
   right: -10px;
 }
-
-
-

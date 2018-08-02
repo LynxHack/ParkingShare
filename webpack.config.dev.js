@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   mode: "development",
   context: __dirname,
-  entry: ['babel-polyfill', "./src/index.jsx"],
+  entry: ["./src/index.jsx"],
   output: {
     path: path.resolve(__dirname, 'public/'),
     filename: "bundle.js",
@@ -24,6 +24,10 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: 'style-loader!css-loader!sass-loader?sourceMap'
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
       }
     ]
   },
