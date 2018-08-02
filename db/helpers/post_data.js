@@ -29,28 +29,47 @@ module.exports = {
         return new Promise((resolve, reject) => {
             knex('users').where({email: email})
             .then((result) => {
-              if(result.length > 1){
-                throw new Error("Error: There are duplicate emails in database!")
-              }  
-              const data = result[0]; //take first and only result
-              console.log(data);
-              //// need seeded data s
-              bcrypt.compare(password, data.password, function(err, res) {
-                if(res){
-                  console.log("passed bcrypt auth")
-                  resolve(result);   
-                }
-                else{
-                  console.log("failed bcrypt auth")
-                  reject("No user found with credentials given");
-                }
-              });
+                if(result.length > 1){
+                    throw new Error("Error: There are duplicate emails in database!")
+                }  
+                const data = result[0]; //take first and only result
+                console.log(data);
+                //// need seeded data s
+                bcrypt.compare(password, data.password, function(err, res) {
+                    if(res){
+                        console.log("passed bcrypt auth")
+                        console.log(result);
+                        resolve(result);   
+                    }
+                    else{
+                        console.log("failed bcrypt auth")
+                        reject("No user found with credentials given");
+                    }
+                });
             })
             .catch((err) => {
-              console.log(err); 
-              return null;
+                console.log(err); 
+                return null;
             })
-        })  
+        })        
+    },
+
+    checkid: function(id) {
+        return new Promise((resolve, reject) => {
+            if(id){
+                knex('users').where({id: id})
+                .then((result) => {
+                    resolve(result);   
+                })
+                .catch((err) => {
+                    console.log(err); 
+                    reject(err);
+                })
+            }
+            else{
+                reject("No user exist in such an id value")
+            }
+        })     
     },
 
     registerUser: function(formdata){

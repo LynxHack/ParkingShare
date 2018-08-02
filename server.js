@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const webpack = require('webpack');
 const config = require('./webpack.config.dev.js');
-const cookieSession = require('cookie-session') ;
 const app = express();
 const compiler = webpack(config);
 
@@ -13,13 +12,14 @@ const dbPost = require('./db/helpers/post_data.js');
 var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-
+var cookieSession = require('cookie-session')
 app.use(cookieSession({
+  httpOnly: false,
   name: 'session',
   keys: ['qyjlsfjlon', 'tqbqaqbiop', 'bcjnhmspaz'],
 
   // Cookie Options - set expirty
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  maxAge: 24 * 60 * 60 * 100000 // 24 hours
 }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,6 +40,7 @@ app.get('/db/spots', async function(req, res) {
 })
 
 app.get('/', function(req, res) {
+  console.log(req.session.user_id);
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
@@ -52,12 +53,13 @@ app.get('/*', function(req, res) {
 })
 
 // route for user logout
-app.get('/logout', (req, res) => {
-  if (req.session.user && req.cookies.user_sid) {
-      res.clearCookie('user_sid');
-      res.redirect('/');
+app.post('/logout', (req, res) => {
+  console.log("Attempt logout");
+  if (req.session.user_id) {
+      req.session = null;
+      res.status(200).send("Successfully logout of session")
   } else {
-      res.redirect('/login');
+      res.status(200).send("Successfully logged out. No cookies already.");
   }
 });
 
@@ -66,22 +68,43 @@ app.post('/newspot', function(req, res){
   dbPost.insertNewSpot(req.body);
 })
 
-app.post('/login', function(req, res){
-  console.log(req.body);
-  dbPost.checkcredentials(req.body.email, req.body.password)
+app.post('/initiallog', function(req, res){
+  console.log(req.session.user_id);
+  if(!req.session.user_id){
+    res.status(401).send("failed")
+  }
+
+  dbPost.checkid(req.session.user_id)
   .then((result) => {
     if(result){
-      req.session.email = req.body.email;
-      res.status(200).send("Successful credential check")
+      console.log(result);
+      res.status(200).send(result[0]);
     }
-  
-    else {
-      res.status(200).send("Authentication failed");
+    else{
+      res.status(401).send(result[0]);
     }
   })
   .catch((err) => {
     console.log(err);
-    res.status(200).send("Authentication failed");
+    res.status(401).send("failed");
+  })
+})
+
+app.post('/login', function(req, res){
+  dbPost.checkcredentials(req.body.email, req.body.password, "")
+  .then((result) => {
+    if(result){
+      console.log("Sending success to client");
+      req.session.user_id = result[0].id;
+      res.status(200).send(result);
+    }
+    else {
+      res.status(401).send(result);
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(401).send("failed");
   })
 })
 

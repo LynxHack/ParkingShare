@@ -2,6 +2,7 @@ require('./../../stylesheets/newspot.scss');
 import axios from 'axios';
 import React, { Component } from "react";
 import api from './../helpers/api.js'
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 export default class Newspot extends Component {
   constructor(props){
@@ -62,6 +63,10 @@ export default class Newspot extends Component {
   }
 
   render() {
+    if(!this.props.isLoggedIn){
+      console.log("user not logged in!")
+      return <Redirect to="/" />
+    }
     return (
       <form id="sharespotform">
                 {/* <div className="fu">
