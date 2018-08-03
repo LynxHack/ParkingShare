@@ -18,6 +18,7 @@ export default class App extends Component {
       isLoggedIn: false,
       showLoginform: false,
       userfirstname: "",
+      failedLoginAttempt: false
     };
 
     // This binding is necessary to make `this` work in the callback
@@ -27,7 +28,7 @@ export default class App extends Component {
     this.attemptlogin = this.attemptlogin.bind(this);
     this.attemptlogout = this.attemptlogout.bind(this);
     this.loadpagecookiecheck = this.loadpagecookiecheck.bind(this);
-    this.closeLogin =this.closeLogin.bind(this)
+    this.closeLogin = this.closeLogin.bind(this)
   }
 
   handleClick() {
@@ -36,8 +37,8 @@ export default class App extends Component {
     }));
   }
 
-  navlogincheck(){
-    if(this.state.isLoggedIn){
+  navlogincheck() {
+    if (this.state.isLoggedIn) {
       return (
         <ul>
           <li><Link to="/newspot">Share A Spot</Link></li>
@@ -48,7 +49,7 @@ export default class App extends Component {
         </ul>
       )
     }
-    else{
+    else {
       return (
         <ul>
           <li><Link to="#" onClick={this.handleClick} >Login / Sign-Up</Link></li>)
@@ -57,73 +58,75 @@ export default class App extends Component {
     }
   }
 
-  attemptlogin(email, password){
-    const state = this; //obtain 
-    axios.post('/login', {email: email, password: password})
-    .then(function(response){
-      if(response.status === 200){
-        state.setState({isLoggedIn: true});
-        console.log("Setting userfirstname to ", response.data[0].firstname);
-        state.setState({userfirstname: response.data[0].firstname})
-      }
-      else{ //401
-        state.setState({isLoggedIn: false});
-      }
-      console.log(response);
-    })
-    .catch(function(err){
-      console.log(err);
-    })
+  attemptlogin = (email, password) => {
+    axios.post('/login', { email: email, password: password })
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({
+            isLoggedIn: true,
+            userfirstname: response.data[0].firstname,
+            showLoginform: !prevState.showLoginform,
+            failedLoginAttempt: true
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(`ERROR CAUGHT${err}`);
+        this.setState({
+          isLoggedIn: false,
+          failedLoginAttempt: true,
+        });
+      })
   }
 
-  attemptlogout(){
+  attemptlogout() {
     console.log("Attempt logout");
     axios.post('/logout', {})
-    .then((result) => {
-      console.log(result);
-      if(result.status === 200){
-        this.setState({isLoggedIn: false});
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .then((result) => {
+        console.log(result);
+        if (result.status === 200) {
+          this.setState({ isLoggedIn: false });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
-  loadpagecookiecheck(){
-      axios.post('/initiallog', {})
+  loadpagecookiecheck() {
+    axios.post('/initiallog', {})
       .then((result) => {
-        if(result.status === 200){
+        if (result.status === 200) {
           console.log(result)
-          this.setState({isLoggedIn: true})
-          this.setState({userfirstname: result.data.firstname})
+          this.setState({ isLoggedIn: true })
+          this.setState({ userfirstname: result.data.firstname })
         }
-        else{
-          this.setState({isLoggedIn: false});
-          this.setState({userfirstname: ""});
+        else {
+          this.setState({ isLoggedIn: false });
+          this.setState({ userfirstname: "" });
         }
       })
       .catch((error) => console.log(error));
-    }
-  
-  closeLogin(){
-    console.log("CLICKED")
+  }
+
+  closeLogin() {
     this.setState(prevState => ({
       showLoginform: !prevState.showLoginform
     }));
   }
 
   checkLogin() {
-    if(this.state.showLoginform)
-      return(<div>
-        <Login attemptlogin={this.attemptlogin} />
-        <a className="backdrop" onClick={this.closeLogin}></a>
-      </div>)
+    if (this.state.showLoginform)
+      return (
+        <div>
+          <Login attemptlogin={this.attemptlogin} failedLoginAttempt={this.state.failedLoginAttempt} />
+          <a className="backdrop" onClick={this.closeLogin}></a>
+        </div>)
   }
-  
 
-  componentDidMount(){
-      this.loadpagecookiecheck();
+
+  componentDidMount() {
+    this.loadpagecookiecheck();
   }
 
   render() {
@@ -136,15 +139,15 @@ export default class App extends Component {
               <Link to="/"><h1 className="logo">SpotSharer</h1></Link>
             </div>
             {this.navlogincheck()}
-          </nav>   
+          </nav>
 
-          <Route exact path="/search" component={MapContainer} key="search" />  
+          <Route exact path="/search" component={MapContainer} key="search" />
 
-          <Route exact path="/"                render ={(defprops) => <Home isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/newspot"         render ={(defprops) => <Newspot isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/user"            render ={(defprops) => <UserPage isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/myreservations"  render ={(defprops) => <MyReservations isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/parkingdetail"   render ={(defprops) => <ParkingDetail isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          <Route exact path="/" render={(defprops) => <Home isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
+          <Route exact path="/newspot" render={(defprops) => <Newspot isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
+          <Route exact path="/user" render={(defprops) => <UserPage isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
+          <Route exact path="/myreservations" render={(defprops) => <MyReservations isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
+          <Route exact path="/parkingdetail" render={(defprops) => <ParkingDetail isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
           {this.checkLogin()}
         </main>
       </Router>
