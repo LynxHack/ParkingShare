@@ -7,7 +7,6 @@ module.exports = {
             .then((res) => {
             resolve({
                 results: [res.data.features[0].center[0], res.data.features[0].center[1]],
-                fireRedirect: true
             })
             })
             .catch(function (error) {
