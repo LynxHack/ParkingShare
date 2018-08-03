@@ -65,17 +65,13 @@ export default class App extends Component {
           this.setState({
             isLoggedIn: true,
             userfirstname: response.data[0].firstname,
-            showLoginform: !prevState.showLoginform,
+            showLoginform: false,
             failedLoginAttempt: true
           });
         }
       })
       .catch((err) => {
         console.log(`ERROR CAUGHT${err}`);
-        this.setState({
-          isLoggedIn: false,
-          failedLoginAttempt: true,
-        });
       })
   }
 
@@ -111,7 +107,7 @@ export default class App extends Component {
 
   closeLogin() {
     this.setState(prevState => ({
-      showLoginform: !prevState.showLoginform
+      showLoginform: false
     }));
   }
 
@@ -136,7 +132,7 @@ export default class App extends Component {
 
           <nav>
             <div>
-              <Link to="/"><h1 className="logo">SpotSharer</h1></Link>
+              <Link to="/"><img src={ require('./../stylesheets/SpotSharer.png') } /></Link>
             </div>
             {this.navlogincheck()}
           </nav>
