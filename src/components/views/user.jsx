@@ -8,40 +8,40 @@ export default class userPage extends Component {
 
   render() {
     return (
-      <div>
-          <div className="userProfile">
-          <h1>Welcome User</h1>
-            <div className="userProfilePicture">
-                <img src="https://i.stack.imgur.com/WmvM0.png" />
-            </div>
-            <div className="userProfileInfo">
-                <h4>Name :</h4>
-                <h3> John Doe </h3>
-                <h4>Email :</h4>
-                <h3> john.doe@example.com </h3>
-            </div>
-            <div className="userProfileVehicles">
-                <h5>Make : BMW </h5>
-                <h5>Model : X6  </h5>
-                <h5>License Plate # : 999-999  </h5>
-                <h5>Color : Black</h5>
-            </div>
-            <div className="userProfileReservations">
-                <h5>StartTime : 1 PM </h5>
-                <h5>EndTIme : 4 PM  </h5>
-                <h5>Location : GPS </h5>
-                <h5>Stall : 1 </h5>
-                <h5>Buzzer : XXXX  </h5>
-            </div>
-            <div className="userProfileSpots">
-                <h5>Address : 1092 Rockcliffe RD  </h5>
-                <h5>City : Vancouver </h5>
-                <h5>Postal Code : V0H1T0  </h5>
-                <h5>Stall : 1 </h5>
-                <h5>Buzzer : XXXX  </h5>
-            </div>
-          </div>
-      </div>
+    <div className='user'>
+    <main>
+  <input id="tab1" type="radio" name="tabs" checked/>
+  <label htmlFor="tab1">User Info</label>
+    
+  <input id="tab2" type="radio" name="tabs"/>
+  <label htmlFor="tab2">Your Reservations</label>
+    
+  <input id="tab3" type="radio" name="tabs"/>
+  <label htmlFor="tab3">Your Vehicles</label>
+    
+  <input id="tab4" type="radio" name="tabs"/>
+  <label htmlFor="tab4">Your Spots</label>
+    
+  <section id="content1">
+  <p>
+      Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+    </p>
+  </section>
+    
+  <section id="content2">
+
+  </section>
+    
+  <section id="content3">
+
+  </section>
+    
+  <section id="content4">
+
+  </section>
+    
+</main>
+</div>
     );
   }
 }

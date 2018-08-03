@@ -1,63 +1,104 @@
-.userProfile{
-    background-color: whitesmoke;
-    width: 75%;
-    height: 500px;
-    margin: auto;
-    border-radius: 10px;
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.user{
+    margin-top: 80px;
+    margin-left: 150px;
+}
+.user *, .user *:before, .user *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.userProfilePicture img{
-    margin-top: 20px;
-    margin-left: 57px;
-    border: 1px solid black;
-    background-color: #90ee9057;
-    border-radius: 10px;
-    padding: 2px;
-    height: 100px;
+.user html, body {
+    height: 100vh;
+  }
+  
+
+
+.user body {
+  font: 14px/1 'Open Sans', sans-serif;
+  color: #555;
+  background: #eee;
 }
 
-.userProfileInfo {
-    border-top: 3px dotted #D15153;;
-    border-bottom: 3px dotted #D15153;
-    width: 30%;
-    margin: 5px;
-    text-align: center;
+
+
+.user p {
+  margin: 0 0 20px;
+  line-height: 1.5;
 }
 
-.userProfile h3,h4 {
-    margin: 5px;
+.user main {
+  padding: 50px;
+  padding-top: 10px;
+  margin: 0 auto;
+  background: #fff;
 }
 
-.userProfileVehicles{
-    border: 1px solid red;
-    width: 50%;
-    margin: 5px;
-    position: absolute;
-    top: 20%;
-    left: 35%;
-    width: 50%;
-    height: 100px;
+.user section {
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid #ddd;
 }
 
-.userProfileReservations{
-    border: 1px solid red;
-    width: 50%;
-    margin: 5px;
-    position: absolute;
-    top: 50%;
-    left: 35%;
-    width: 50%;
-    height: 100px;
+.user input {
+  display: none;
 }
 
-.userProfileSpots{
-    border: 1px solid red;
-    width: 50%;
-    margin: 5px;
-    position: absolute;
-    top: 75%;
-    left: 35%;
-    width: 50%;
-    height: 100px;
+.user label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #bbb;
+  border: 1px solid transparent;
 }
 
+.user label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+.user label[for*='1']:before { content: '\f1cb'; }
+.user label[for*='2']:before { content: '\f17d'; }
+.user label[for*='3']:before { content: '\f16b'; }
+.user label[for*='4']:before { content: '\f1a9'; }
+
+.user label:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+.user input:checked + label {
+  color: #555;
+  border: 1px solid #ddd;
+  border-top: 2px solid orange;
+  border-bottom: 1px solid #fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4 {
+  display: block;
+}
+
+@media screen and (max-width: 650px) {
+    .user label {
+    font-size: 0;
+  }
+  .user label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+    .user label {
+    padding: 15px;
+  }
+}
