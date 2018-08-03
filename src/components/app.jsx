@@ -130,9 +130,9 @@ export default class App extends Component {
     return (
       <Router>
         <main>
-        <div class="container">
-          <div class="content">
-              <div id="large-header" class="large-header">
+        <div className="container">
+          <div className="content">
+              <div id="large-header" className="large-header">
                 <canvas id="demo-canvas"></canvas>              
               </div>
           </div>

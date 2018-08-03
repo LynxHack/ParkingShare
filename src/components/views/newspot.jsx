@@ -12,7 +12,7 @@ export default class Newspot extends Component {
       picture: '',
       stall: 0,
       buzzer: 0,
-
+      image: null, //not the url for database
       name: '',
       description: '',
 
@@ -21,6 +21,8 @@ export default class Newspot extends Component {
       postalcode: '',
       maxheight: ''
     }
+
+    this.onImageChange = this.onImageChange.bind(this)
   }
 
   onImageChange(event) {
@@ -63,17 +65,18 @@ export default class Newspot extends Component {
   }
 
   render() {
+    console.log(this.state);
     if(!this.props.isLoggedIn){
       console.log("user not logged in!")
       return <Redirect to="/" />
     }
     return (
       <form id="sharespotform">
-      <div class="file-upload">
+      <div className="file-upload">
       <h3>Dont forget to upload a picture of your spot</h3>
-    <label for="upload" class="file-upload__label">Upload A Picture Of Your Spot</label>
-    <input id="upload" class="file-upload__input" type="file" name="file-upload" onClick={this.onImageChange}/>
-    <img id="imgbox" src="http://www.slidesjs.com/examples/standard/img/example-slide-1.jpg" height="200px" width="200px"/>
+    <label for="upload" className="file-upload__label">Upload A Picture Of Your Spot</label>
+    <input id="upload" className="file-upload__input" type="file" name="file-upload" onClick={this.onImageChange.bind(this)}/>
+    <img id="imgbox" src={this.state.image} height="200px" width="200px"/>
     </div>
         
         <div id="msform">
