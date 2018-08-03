@@ -138,22 +138,21 @@ export default class App extends Component {
           </div>
         </div>
 
-        <nav>
-        <div>
-          <Link to="/"><h1 className="logo">SpotSharer</h1></Link>
-        </div>
-        {this.navlogincheck()}
-        </nav>  
+          <nav>
+            <div>
+              <Link to="/"><h1 className="logo">SpotSharer</h1></Link>
+            </div>
+            {this.navlogincheck()}
+          </nav>   
 
-        {this.checkLogin()}
+          <Route exact path="/search" component={MapContainer} key="search" />  
 
           <Route exact path="/"                render ={(defprops) => <Home isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
           <Route exact path="/newspot"         render ={(defprops) => <Newspot isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
           <Route exact path="/user"            render ={(defprops) => <UserPage isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          <Route exact path="/search"          render ={(defprops) => <MapContainer isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
           <Route exact path="/myreservations"  render ={(defprops) => <MyReservations isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
           <Route exact path="/parkingdetail"   render ={(defprops) => <ParkingDetail isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
-          
+          {this.checkLogin()}
         </main>
       </Router>
     );
