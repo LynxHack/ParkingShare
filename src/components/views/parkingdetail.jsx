@@ -15,7 +15,7 @@ export default class ParkingDetail extends Component {
       city: "Kelowna",
       province: "B.C.",
       postalcode: "V6W 7U5",
-      price: "5.00",
+      price: "5.00", //hourly
       picture: "http://www.jimmybeanswool.com/secure-html/onlineec/images/stars/4_5StarBlue09.gif",
       
       hostname: "John Smith",
@@ -23,6 +23,24 @@ export default class ParkingDetail extends Component {
       buzzer: "5010",
       maxheight: "250", //in cm for now
       cartypes: ["motorbike", "sedan/small pickup", "full pickup/SUV"]
+    }
+  }
+
+  componentDidMount(){
+    try{
+      this.setState({
+        address: this.props.location.state.data.properties.address,
+        buzzer: this.props.location.state.data.properties.buzzer,
+        city: this.props.location.state.data.properties.city,
+        maxheight: this.props.location.state.data.properties.maxheight,
+        picture: this.props.location.state.data.properties.picture,
+        postalcode: this.props.location.state.data.properties.postalcode,
+        stall: this.props.location.state.data.properties.stall,
+        description: this.props.location.state.data.properties.description
+      });
+    }
+    catch(err){
+      console.log("error, no state passed in, loading default placeholder");
     }
   }
 
@@ -75,7 +93,7 @@ export default class ParkingDetail extends Component {
                   <h3>Location Information</h3>
                   <ul className="specs">
                     <li><h5>Host Name:</h5> {this.state.hostname}</li>
-                    <li><h5>Car types:</h5> {this.state.cartypes}</li>
+                    <li><h5>Car types:</h5> {this.state.cartypes.join(", ")}</li>
                     <li><h5>Stall:</h5> #{this.state.stall}</li>
                     <li><h5>Buzzer:</h5> {this.state.buzzer}</li>
                     <li><h5>Address:</h5> {this.state.address}, {this.state.city}, {this.state.province}, {this.state.postalcode}</li>

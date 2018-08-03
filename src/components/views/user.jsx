@@ -8,40 +8,66 @@ export default class userPage extends Component {
 
   render() {
     return (
-    <div className='user'>
-    <main>
-  <input id="tab1" type="radio" name="tabs" checked/>
-  <label htmlFor="tab1">User Info</label>
-    
-  <input id="tab2" type="radio" name="tabs"/>
-  <label htmlFor="tab2">Your Reservations</label>
-    
-  <input id="tab3" type="radio" name="tabs"/>
-  <label htmlFor="tab3">Your Vehicles</label>
-    
-  <input id="tab4" type="radio" name="tabs"/>
-  <label htmlFor="tab4">Your Spots</label>
-    
-  <section id="content1">
-  <p>
-      Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
-    </p>
-  </section>
-    
-  <section id="content2">
+<div className="userSection">
+<section className="reservations">
+<h3> Your Reservations </h3>
+<div id="container">            
 
-  </section>
-    
-  <section id="content3">
+       <article class="new-tweet-article">
+      <header>
+        <h3>Reservation 1 </h3>
+        <h5> Start Time - End Time </h5>
+     </header>
+      <div class="tweet-body">
+      <p class ="message">     
+       <p class ="">Address : </p>
+      <p class ="">City : </p>
+      <p class ="">Postal Code : </p>
+      <p class ="">Stall #  : </p>
+      <p class ="">Buzzer #  : </p></p>
+      </div>
+    </article>
 
-  </section>
-    
-  <section id="content4">
+       <article class="new-tweet-article">
+      <header>
+        <h3>Reservation 2 </h3>
+        <h5> Start Time - End Time </h5>
+     </header>
+      <div class="tweet-body">
+      <p class ="message">     
+       <p class ="">Address : </p>
+      <p class ="">City : </p>
+      <p class ="">Postal Code : </p>
+      <p class ="">Stall #  : </p>
+      <p class ="">Buzzer #  : </p></p>
+      </div>
+    </article>
 
-  </section>
-    
-</main>
+        <article class="new-tweet-article">
+      <header>
+        <h3>Reservation 3 </h3>
+        <h5> Start Time - End Time </h5>
+     </header>
+      <div class="tweet-body">
+      <p class ="message">     
+       <p class ="">Address : </p>
+      <p class ="">City : </p>
+      <p class ="">Postal Code : </p>
+      <p class ="">Stall #  : </p>
+      <p class ="">Buzzer #  : </p></p>
+      </div>
+    </article>
+
+</div> 
+
+
+
+</section>
+
+
+
 </div>
+
     );
   }
 }

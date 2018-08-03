@@ -1,104 +1,135 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+.userSection {
+  margin-top: 50px;
+  margin-left: 4.5%;
+  background-color: green;
 
-.user{
-    margin-top: 80px;
-    margin-left: 150px;
-}
-.user *, .user *:before, .user *:after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
-.user html, body {
-    height: 100vh;
-  }
-  
-
-
-.user body {
-  font: 14px/1 'Open Sans', sans-serif;
-  color: #555;
-  background: #eee;
+.userSection h3 {
+  font-family: sans-serif;
+  padding: 10px;
+  font-style: oblique;
+  text-decoration: underline;
 }
 
 
-
-.user p {
-  margin: 0 0 20px;
-  line-height: 1.5;
-}
-
-.user main {
-  padding: 50px;
-  padding-top: 10px;
-  margin: 0 auto;
-  background: #fff;
-}
-
-.user section {
-  display: none;
-  padding: 20px 0 0;
-  border-top: 1px solid #ddd;
-}
-
-.user input {
-  display: none;
-}
-
-.user label {
-  display: inline-block;
-  margin: 0 0 -1px;
-  padding: 15px 25px;
-  font-weight: 600;
+.reservations {
+  border: 1px solid white;
+  border-radius: 25px;
+  background: #fc644def;
   text-align: center;
-  color: #bbb;
-  border: 1px solid transparent;
+  width: 400px;
+  height: 500px;
 }
 
-.user label:before {
-  font-family: fontawesome;
-  font-weight: normal;
+#container {
+  border: 1px solid white;
+  border-radius: 20px;
+  width: 90%;
+  background-color: gainsboro;
+  height: 85%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-left: 20px;
+}
+/*Set the container height to 100% of the page */
+.userSection .container {
+  height: 100%;
+}
+/*The following CSS helps style the containers that hold the tweets*/
+.userSection  .new-tweet-article {
+  height: 210px;
+  background-color: white;
+  border: 1px solid #d0d0d0;
+  margin-top: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px ;
+  border-bottom-left-radius: 10px ;
+}
+/*style the containers*/
+.userSection  .new-tweet-article img{
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: 1px solid black;
+  background-color: #90ee9057;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.userSection  .new-tweet-article:hover img{
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: 1px solid black;
+  background-color: lightgreen;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.userSection  .new-tweet-article header h3 {
+  float: left ;
+  padding-left: 10px;
+  margin-top: 10px;
+  color: grey ;
+ }
+
+ .userSection  .new-tweet-article header h5 {
+  float: right ;
   margin-right: 10px;
+  color: grey ;
+  margin-top: 50px;
+ }
+.userSection  .new-tweet-article:hover h3{
+    float: left ;
+  padding-left: 10px;
+  margin-top: 10px;
+  color: black ;
 }
 
-.user label[for*='1']:before { content: '\f1cb'; }
-.user label[for*='2']:before { content: '\f17d'; }
-.user label[for*='3']:before { content: '\f16b'; }
-.user label[for*='4']:before { content: '\f1a9'; }
 
-.user label:hover {
-  color: #888;
-  cursor: pointer;
+.userSection  .new-tweet-article header {
+  height: 70px;
+  background-color: #fc644dbd;
+  border: 1px solid #fc644dbd;
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
-.user input:checked + label {
-  color: #555;
-  border: 1px solid #ddd;
-  border-top: 2px solid orange;
-  border-bottom: 1px solid #fff;
+.userSection  .new-tweet-article:hover header {
+  height: 70px;
+  background-color: #fc644def;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
-#tab1:checked ~ #content1,
-#tab2:checked ~ #content2,
-#tab3:checked ~ #content3,
-#tab4:checked ~ #content4 {
+.userSection  .tweet-body p {
+  border-bottom: 1px solid #D0D0D0;
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+
+.userSection  .new-tweet-article footer {
+  width: 100%;
+  position: relative;
+  margin-left: 10px ;
+  float: left ;
+}
+.userSection  .icons {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+/*when hovering over the container show these buttons*/
+.userSection  .new-tweet-article:hover footer .icons{
   display: block;
 }
-
-@media screen and (max-width: 650px) {
-    .user label {
-    font-size: 0;
-  }
-  .user label:before {
-    margin: 0;
-    font-size: 18px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-    .user label {
-    padding: 15px;
-  }
+.userSection  .new-tweet-article footer p {
+  font-size: smaller ;
+  font-weight: bold;
 }
