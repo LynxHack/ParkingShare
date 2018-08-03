@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { getSpots } from "./../helpers/mapData.js";
+import { Redirect } from 'react-router';
+
 require('./../../stylesheets/map.scss');
 
 var features = [];
@@ -15,11 +17,15 @@ class MapContainer extends Component {
       startdate: this.props.location.state[2],
       enddate: this.props.location.state[3],
       mapBounds: {},
-      searchText: ''
+      searchText: '',
+      redirect: false
     }
     this.renderListings = this.renderListings.bind(this);
     this.filter = this.filter.bind(this);
     this.searchText = this.searchText.bind(this);
+    this.geolookup = {}
+    this.currselected = 0;
+
   }
 
   componentDidMount = async () => {
@@ -66,9 +72,12 @@ const { startdate, enddate } = this.state;
 
 
     await geojson.features.forEach((marker) => {
+      var self = this;
       // create a HTML element for each feature
       var el = document.createElement('div');
       el.className = `${marker.id}`;
+      this.geolookup[marker.id] = marker; //populate info lookup table
+
       // make a marker for each feature and add to the map
       new mapboxgl.Marker(el)
         .setLngLat(marker.geometry.coordinates)
@@ -79,6 +88,15 @@ const { startdate, enddate } = this.state;
         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
           .setHTML('<h3>' + marker.properties.address + '</h3><p>' + marker.properties.description + '</p>'))
         .addTo(this.map);
+
+
+      el.addEventListener('click', function(e){
+        const markerid = e.target.className.split(" ")[0];
+        self.currselected = markerid;
+        self.setState({redirect: true});
+        console.log(self.geolookup[markerid]);
+      })
+
     });
 
     this.map.on('load', () => {
@@ -145,7 +163,11 @@ const { startdate, enddate } = this.state;
   }
 
   render() {
-
+    if (this.state.redirect)
+            return (<Redirect to={{
+                pathname: '/parkingdetail',
+                state: { data: this.geolookup[this.currselected]}
+    }} />)
     return (
       <section>
         <div id="map"></div>
