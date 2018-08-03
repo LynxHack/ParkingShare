@@ -33,6 +33,27 @@ export default class Home extends Component {
     this.submitForm = this.submitForm.bind(this);
   }
 
+
+  new_script(src) {
+    return new Promise(function(resolve, reject){
+      var script = document.createElement('script');
+      script.src = src;
+      script.addEventListener('load', function () {
+        resolve();
+      });
+      script.addEventListener('error', function (e) {
+        reject(e);
+      });
+      document.body.appendChild(script);
+    })
+  };
+
+  componentDidMount(){
+    var my_script = this.new_script('https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/TweenLite.min.js');
+    var my_script2 = this.new_script('https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/EasePack.min.js');
+    var my_script3 = this.new_script('https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/demo.js')
+  }
+
   handleChangeStart(date) {
     this.setState({
       startDate: date
@@ -58,6 +79,7 @@ export default class Home extends Component {
       })
       .catch((error) => console.log(error));
   }
+
 
   render() {
     const { from } = this.props.location.state || '/';
