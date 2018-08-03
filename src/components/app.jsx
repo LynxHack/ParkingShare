@@ -62,12 +62,12 @@ export default class App extends Component {
     axios.post('/login', { email: email, password: password })
       .then((response) => {
         if (response.status === 200) {
-          this.setState({
+          this.setState((prevState) => ({
             isLoggedIn: true,
             userfirstname: response.data[0].firstname,
             showLoginform: !prevState.showLoginform,
             failedLoginAttempt: true
-          });
+          }));
         }
       })
       .catch((err) => {

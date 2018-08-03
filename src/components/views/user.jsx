@@ -1,9 +1,32 @@
 require('./../../stylesheets/user.scss');
 import React, { Component } from "react";
+import axios from 'axios';
+
+
+class userregistration{
+  constructor(address, city, postalcode, stall, buzzer){
+    this.address = address;
+    this.city = city;
+    this.postalcode = postalcode;
+    this.stall = stall;
+    this.buzzer = buzzer;
+  }
+}
+
 
 export default class userPage extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      reservations: [] //to populate with userregistration objects
+    }
+  }
+
+  componentDidMount(){
+    axios.post('/getreservations', {})
+    .then((res) => {
+      console.log(res);
+    })
   }
 
   render() {

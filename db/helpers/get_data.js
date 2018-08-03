@@ -26,7 +26,9 @@ function removeBookedSpots(bookings, parkingspots) {
   return spots
 }
 
+
 module.exports = {
+  
   getAvailableSpots: function(startTimeUNIX, endTimeUNIX) {
     // Debugging to verify filter is working
     console.log(`******************************STARTTIME = ${startTimeUNIX} ///// ENDTIME = ${endTimeUNIX}******************************`);
@@ -48,5 +50,35 @@ module.exports = {
           reject(`Error in finding data ${error}`);
         })
     })
+  },
+
+  getReservations: function(userid){
+    var arrayofreservations = [];
+    var userregistration = {};
+    return new Promise((resolve, reject) => {
+      console.log("begin getres")
+      console.log(userid);
+      knex('reservations')
+      .where({ clientid: userid })
+      .then((res) => {
+        console.log(res);
+        resolve(res);
+      })
+      .catch((err) => {
+          console.log(err);
+          reject(err);
+      })
+    })
+  }
+}
+
+
+class userregistration{
+  constructor(address, city, postalcode, stall, buzzer){
+    this.address = address;
+    this.city = city;
+    this.postalcode = postalcode;
+    this.stall = stall;
+    this.buzzer = buzzer;
   }
 }

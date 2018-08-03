@@ -52,6 +52,19 @@ app.get('/*', function(req, res) {
   })
 })
 
+app.post('/getreservations', (req, res) => {
+  console.log("Retrieving reservations for ", req.session.user_id);
+  dbGet.getReservations(req.session.user_id)
+  .then((result) => {
+    console.log(result);
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    console.log("error retrieving client reservations");
+    res.status(404).send(err);
+  })
+});
+
 // route for user logout
 app.post('/logout', (req, res) => {
   console.log("Attempt logout");
