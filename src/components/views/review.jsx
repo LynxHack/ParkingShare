@@ -4,10 +4,11 @@ import React, { Component } from "react";
 import api from './../helpers/api.js'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
-export default class MyReservations extends Component {
+export default class Review extends Component {
   constructor(props){
     super(props);
     this.state = {
+        //temporary placeholders
         title: "A little rough but nice!",
         rating: 4,
         comment: "I booked this parking spot due to the convenient location. However, entering and exiting the space requires some skill.",
@@ -15,6 +16,17 @@ export default class MyReservations extends Component {
         author: "Lucky67",
         datecreated: "August 27, 2013"
     }
+  }
+
+  componentDidMount(){
+    this.setState({
+        title: this.props.title,
+        rating: this.props.rating,
+        comment: this.props.comment,
+        picture: this.props.picture,
+        author: this.props.author,
+        datecreated: this.props.datecreated
+    })
   }
 
   render() {

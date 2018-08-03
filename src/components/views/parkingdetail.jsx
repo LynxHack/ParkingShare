@@ -29,36 +29,36 @@ export default class ParkingDetail extends Component {
   render() {
     return (       
       <div className="parkingdetail">
-            <div class="bodyWrap">    
-            <div class="productStage">
+            <div className="bodyWrap">    
+            <div className="productStage">
                 
-                <div class="folderTab clearFix">
-            <div class="breadCrumbs">
+                <div className="folderTab clearFix">
+            <div className="breadCrumbs">
               Parking Spot Detail
             </div>
             </div>
       
-          <div class="botBorder clearFix">
-              <div class="productImage">
+          <div className="botBorder clearFix">
+              <div className="productImage">
                 <img src="http://placehold.it/300x300"/>
-                  <ul class="imageList">
+                  <ul className="imageList">
                     <li><a href="#"><img src="http://placehold.it/92x92"/></a></li>
                     <li><a href="#"><img src="http://placehold.it/92x92"/></a></li>
                     <li><a href="#"><img src="http://placehold.it/92x92"/></a></li>
                   </ul>
                       <span><a href="#"><b>View More</b></a></span>
               </div>
-              <div class="overview">
+              <div className="overview">
                 <h1>{this.state.address}}</h1>
                 <h2>{this.state.city}, {this.state.province}}</h2>
-                <span class="rating">
+                <span className="rating">
                   <img src={this.state.picture}/>
                 </span>
                 <h3>${this.state.price} per hour</h3>
                 <span>3 spots available</span>
-                <span class="description">{this.state.description}</span>
+                <span className="description">{this.state.description}</span>
         
-                  <select class="prodSelect">
+                  <select className="prodSelect">
                     <option selected>Parking Spot Selection</option>
                     <option>Spot 1</option>
                     <option>Spot 2</option>
@@ -66,14 +66,14 @@ export default class ParkingDetail extends Component {
                     <option>Spot 4</option>
                   </select>
         
-                <div class="productbutton reserve">Reserve</div>
+                <div className="productbutton reserve">Reserve</div>
       
                            
               </div>
                 
-             <div class="info">
+             <div className="info">
                   <h3>Location Information</h3>
-                  <ul class="specs">
+                  <ul className="specs">
                     <li><h5>Host Name:</h5> {this.state.hostname}</li>
                     <li><h5>Car types:</h5> {this.state.cartypes}</li>
                     <li><h5>Stall:</h5> #{this.state.stall}</li>
@@ -82,77 +82,77 @@ export default class ParkingDetail extends Component {
                     <li><h5>MaxHeight:</h5> {this.state.maxheight}cm</li>
                   </ul>
                 
-                <div class="description">
+                <div className="description">
                  {this.state.description2} 
                  </div> 
                </div> 
                 
-              <div class="info">
+              <div className="info">
                   
                
-                <div class="review">
-                  <span class="title">Great space! 5/5
-                  <br/><img class="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
+                <div className="review">
+                  <span className="title">Great space! 5/5
+                  <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
                   
-                    <span class="comments">I reserved a spot here as I was struggling to find a spot for the beer festival happening downtown. It was at a convenient location. Terrific!</span>
-                  <span class="author">By lulu5156 on December 31, 2013</span>
-                    <div class="vote">
+                    <span className="comments">I reserved a spot here as I was struggling to find a spot for the beer festival happening downtown. It was at a convenient location. Terrific!</span>
+                  <span className="author">By lulu5156 on December 31, 2013</span>
+                    <div className="vote">
                      Was this review helpful?
                      <input type="submit" value="Yes"/>
                     </div>
                </div>
                   
-                    <div class="review">
-                      <span class="title">A little rough but nice! 4/5
-                          <br/><img class="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/4StarBlue09.gif"/></span>
+                    <div className="review">
+                      <span className="title">A little rough but nice! 4/5
+                          <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/4StarBlue09.gif"/></span>
         
-                        <span class="comments">I booked this parking spot due to the convenient location. However, entering and exiting the space requires some skill.</span>
-                      <span class="author">By Lucky67 on August 27, 2013</span>
+                        <span className="comments">I booked this parking spot due to the convenient location. However, entering and exiting the space requires some skill.</span>
+                      <span className="author">By Lucky67 on August 27, 2013</span>
                         
-                        <div class="vote">
+                        <div className="vote">
                          Was this review helpful?
                          <input type="submit" value="Yes"/>
                         </div>
                    </div>
                             
-                            <div class="productbutton submit blueSubmit left">Write a Review</div> 
+                            <div className="productbutton submit blueSubmit left">Write a Review</div> 
                    </div>                     
                   
                 </div>  
              </div>
             </div> 
               
-            <div class="sidebar slim">
-              <div class="folderTab sub clearFix">
+            <div className="sidebar slim">
+              <div className="folderTab sub clearFix">
                 <h3>Similar Items</h3>
               </div>
-              <div class="botBorder">
-                <div class="product vtop slim">
+              <div className="botBorder">
+                <div className="product vtop slim">
                     <a href="#">
-                       <div class="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span class="manuName">Product Group</span>
-                       <span class="prodName">Product Name</span>
+                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
+                       <span className="manuName">Product Group</span>
+                       <span className="prodName">Product Name</span>
                     </a>
                 </div>
-                  <div class="product vtop slim">
+                  <div className="product vtop slim">
                     <a href="#">
-                       <div class="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span class="manuName">Product Group</span>
-                       <span class="prodName">Product Name</span>
+                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
+                       <span className="manuName">Product Group</span>
+                       <span className="prodName">Product Name</span>
                     </a>
                 </div>
-                <div class="product vtop slim">
+                <div className="product vtop slim">
                     <a href="#">
-                       <div class="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span class="manuName">Product Group</span>
-                       <span class="prodName">Product Name</span>
+                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
+                       <span className="manuName">Product Group</span>
+                       <span className="prodName">Product Name</span>
                     </a>
                 </div>
-                <div class="product vtop slim">
+                <div className="product vtop slim">
                     <a href="#">
-                       <div class="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span class="manuName">Product Group</span>
-                       <span class="prodName">Product Name</span>
+                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
+                       <span className="manuName">Product Group</span>
+                       <span className="prodName">Product Name</span>
                     </a>
                 </div>
               </div>
