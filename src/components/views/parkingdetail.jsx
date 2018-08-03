@@ -8,6 +8,21 @@ export default class ParkingDetail extends Component {
   constructor(props){
     super(props);
     this.state = {
+      //Currently these are placeholders, to be changed state for population db
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam elementum est, at vestibulum augue consequat at. Donec euismod convallis felis. Nam sed molestie dolor. Proin in tortor sed augue consequat viverra.",
+      description2: "Private area near the city center. Have easy access to nearby stores and fesitivities. Welcome!",
+      address: "3800 Capistrano Dr.",
+      city: "Kelowna",
+      province: "B.C.",
+      postalcode: "V6W 7U5",
+      price: "5.00",
+      picture: "http://www.jimmybeanswool.com/secure-html/onlineec/images/stars/4_5StarBlue09.gif",
+      
+      hostname: "John Smith",
+      stall: "5",
+      buzzer: "5010",
+      maxheight: "250", //in cm for now
+      cartypes: ["motorbike", "sedan/small pickup", "full pickup/SUV"]
     }
   }
 
@@ -34,14 +49,14 @@ export default class ParkingDetail extends Component {
                       <span><a href="#"><b>View More</b></a></span>
               </div>
               <div class="overview">
-                <h1>3800 Capistrano Dr.</h1>
-                <h2>Kelowna, B.C.</h2>
+                <h1>{this.state.address}}</h1>
+                <h2>{this.state.city}, {this.state.province}}</h2>
                 <span class="rating">
-                  <img src="http://www.jimmybeanswool.com/secure-html/onlineec/images/stars/4_5StarBlue09.gif"/>
+                  <img src={this.state.picture}/>
                 </span>
-                <h3>$5.00 per hour</h3>
+                <h3>${this.state.price} per hour</h3>
                 <span>3 spots available</span>
-                <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam elementum est, at vestibulum augue consequat at. Donec euismod convallis felis. Nam sed molestie dolor. Proin in tortor sed augue consequat viverra.</span>
+                <span class="description">{this.state.description}</span>
         
                   <select class="prodSelect">
                     <option selected>Parking Spot Selection</option>
@@ -59,17 +74,17 @@ export default class ParkingDetail extends Component {
              <div class="info">
                   <h3>Location Information</h3>
                   <ul class="specs">
-                    <li><h5>Host Name:</h5> John Smith</li>
-                    <li><h5>Car types:</h5> motorbike, sedan/small pickup, full pickup/SUV</li>
-                    <li><h5>Stall:</h5> #5</li>
-                    <li><h5>Buzzer:</h5> Ring 5101* to be let into gate</li>
-                    <li><h5>Address:</h5> 3800 Capistrano Dr., Kelowna, B.C., V7Y 5U9</li>
-                    <li><h5>MaxHeight:</h5> 250cm</li>
+                    <li><h5>Host Name:</h5> {this.state.hostname}</li>
+                    <li><h5>Car types:</h5> {this.state.cartypes}</li>
+                    <li><h5>Stall:</h5> #{this.state.stall}</li>
+                    <li><h5>Buzzer:</h5> {this.state.buzzer}</li>
+                    <li><h5>Address:</h5> {this.state.address}, {this.state.city}, {this.state.province}, {this.state.postalcode}</li>
+                    <li><h5>MaxHeight:</h5> {this.state.maxheight}cm</li>
                   </ul>
                 
                 <div class="description">
-                  Close to the downtown central area. Convenient access to nearby stores and festivities in town. Welcome.
-                </div> 
+                 {this.state.description2} 
+                 </div> 
                </div> 
                 
               <div class="info">
