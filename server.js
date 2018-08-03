@@ -56,59 +56,57 @@ app.get('/*', function(req, res) {
 app.post('/logout', (req, res) => {
   console.log("Attempt logout");
   if (req.session.user_id) {
-      req.session = null;
-      res.status(200).send("Successfully logout of session")
+    req.session = null;
+    res.status(200).send("Successfully logout of session")
   } else {
-      res.status(200).send("Successfully logged out. No cookies already.");
+    res.status(200).send("Successfully logged out. No cookies already.");
   }
 });
 
-app.post('/newspot', function(req, res){
+app.post('/newspot', function(req, res) {
   console.log("server received", req.body)
   dbPost.insertNewSpot(req.body);
 })
 
-app.post('/initiallog', function(req, res){
+app.post('/initiallog', function(req, res) {
   console.log(req.session.user_id);
-  if(!req.session.user_id){
+  if (!req.session.user_id) {
     res.status(401).send("failed")
   }
 
   dbPost.checkid(req.session.user_id)
-  .then((result) => {
-    if(result){
-      console.log(result);
-      res.status(200).send(result[0]);
-    }
-    else{
-      res.status(401).send(result[0]);
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(401).send("failed");
-  })
+    .then((result) => {
+      if (result) {
+        console.log(result);
+        res.status(200).send(result[0]);
+      } else {
+        res.status(401).send(result[0]);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(401).send("failed");
+    })
 })
 
-app.post('/login', function(req, res){
+app.post('/login', function(req, res) {
   dbPost.checkcredentials(req.body.email, req.body.password, "")
-  .then((result) => {
-    if(result){
-      console.log("Sending success to client");
-      req.session.user_id = result[0].id;
-      res.status(200).send(result);
-    }
-    else {
-      res.status(401).send(result);
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(401).send("failed");
-  })
+    .then((result) => {
+      if (result) {
+        console.log("Sending success to client");
+        req.session.user_id = result[0].id;
+        res.status(200).send(result);
+      } else {
+        res.status(401).send(result);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(401).send("failed");
+    })
 })
 
-app.post('/register', function(req, res){
+app.post('/register', function(req, res) {
   dbPost.registerUser(req.body);
   res.status(200).send("Add user successful!")
 })
