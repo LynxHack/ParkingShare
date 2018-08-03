@@ -7,6 +7,7 @@ import axios from 'axios';
 import Login from './views/login.jsx'
 import UserPage from './views/user.jsx';
 import MyReservations from './views/myreservations.jsx'
+import ParkingDetail from './views/parkingdetail.jsx'
 
 require('./../stylesheets/app.scss');
 
@@ -42,6 +43,7 @@ export default class App extends Component {
           <li><Link to="/newspot">Share A Spot</Link></li>
           <li><Link to="/myreservations">My Reservations</Link></li>
           <li><Link to="/user">Hi {this.state.userfirstname}!</Link></li>
+          <li><Link to="/parkingdetail">(Dev) Parking Detail</Link></li>
           <li onClick={this.attemptlogout.bind(this)}><Link to="/">Logout</Link></li>
         </ul>
       )
@@ -135,7 +137,7 @@ export default class App extends Component {
               </div>
           </div>
         </div>
-         
+
         <nav>
         <div>
           <Link to="/"><h1 className="logo">SpotSharer</h1></Link>
@@ -150,6 +152,8 @@ export default class App extends Component {
           <Route exact path="/user"            render ={(defprops) => <UserPage isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
           <Route exact path="/search"          render ={(defprops) => <MapContainer isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
           <Route exact path="/myreservations"  render ={(defprops) => <MyReservations isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          <Route exact path="/parkingdetail"   render ={(defprops) => <ParkingDetail isLoggedIn = {this.state.isLoggedIn} {...defprops} /> } />
+          
         </main>
       </Router>
     );
