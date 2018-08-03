@@ -117,7 +117,7 @@ export default class App extends Component {
     if(this.state.showLoginform)
       return(<div>
         <Login attemptlogin={this.attemptlogin} />
-        <a class="backdrop" onClick={this.closeLogin}></a>
+        <a className="backdrop" onClick={this.closeLogin}></a>
       </div>)
   }
   
