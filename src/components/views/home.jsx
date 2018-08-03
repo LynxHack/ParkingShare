@@ -17,8 +17,8 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: moment(),
-      endDate: moment().add(1, 'd'),
+      startDate: null,
+      endDate: null,
       date: moment(),
       focusedInput: null,
       startDateId: 'startdate',
@@ -27,10 +27,10 @@ export default class Home extends Component {
       results: [],
       fireRedirect: false
     }
-    this.handleChangeStart = this.handleChangeStart.bind(this);
-    this.handleChangeEnd = this.handleChangeEnd.bind(this);
     this.onText = this.onText.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.setStateAsync = this.setStateAsync.bind(this);
+    this.pushToResults = this.pushToResults.bind(this);
   }
 
 
@@ -59,9 +59,10 @@ export default class Home extends Component {
       startDate: date
     });
   }
-  handleChangeEnd(date) {
-    this.setState({
-      endDate: date
+
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
     });
   }
 
@@ -71,11 +72,22 @@ export default class Home extends Component {
     });
   }
 
+  pushToResults() {
+    this.setState({
+      results: [...this.state.results, arguments[0], arguments[1]]
+    })
+  }
+
   submitForm(evt) {
+    const { searchValue, startDate, endDate} = this.state;
     evt.preventDefault();
-    api.getMapData(this.state.searchValue)
-      .then((data) => {
-        this.setState(data);
+    api.getMapData(searchValue)
+      .then(async (data) => {
+        await this.setStateAsync(data)
+        await this.pushToResults(startDate.unix(), endDate.unix())
+        this.setState({
+          fireRedirect: true
+        })
       })
       .catch((error) => console.log(error));
   }

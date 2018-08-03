@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
-import styled from 'styled-components';
 import { getSpots } from "./../helpers/mapData.js";
 require('./../../stylesheets/map.scss');
 
@@ -13,6 +12,8 @@ class MapContainer extends Component {
     this.state = {
       longitude: this.props.location.state[0],
       latitude: this.props.location.state[1],
+      startdate: this.props.location.state[2],
+      enddate: this.props.location.state[3],
       mapBounds: {},
       searchText: ''
     }
@@ -21,7 +22,7 @@ class MapContainer extends Component {
     this.searchText = this.searchText.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     //Initailiasing map in component
     mapboxgl.accessToken = "pk.eyJ1Ijoiam9yZGFuYW5kZXJzIiwiYSI6ImNqanN0dXJxNzQ2Nm8zcHJtY29ubmNlNjgifQ.OHKZuM9qFqHmJGWEgKXy6w";
 
@@ -32,9 +33,9 @@ class MapContainer extends Component {
       style: "mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
     });
 
+const { startdate, enddate } = this.state;
 
-
-    await getSpots()
+    await getSpots(startdate, enddate)
       .then((res) => {
         res.data.map(spot => {
           features.push({
@@ -125,7 +126,7 @@ class MapContainer extends Component {
 
 
   filter = () => {
-    
+
     var value = this.state.searchText.trim().toLowerCase();
 
     // Filter visible features that don't match the input value.

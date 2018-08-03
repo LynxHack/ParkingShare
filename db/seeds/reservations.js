@@ -1,10 +1,11 @@
+const moment = require('moment');
+
 exports.seed = function(knex, Promise) {
   return knex('reservations').del()
-    .then(function () {
+    .then(function() {
       return Promise.all([
-      knex('reservations').insert({starttime: '2018-08-01 10:00:00 -8:00',endtime: '2018-08-01 12:00:00 -8:00'}),
-      knex('reservations').insert({starttime: '2018-08-01 14:00:00 -8:00',endtime: '2018-08-01 16:00:00 -8:00'}),
+        knex('reservations').insert({ parkingid: 1, hostid: 1, clientid: 2, starttimeunix: moment().unix(), endtimeunix: moment().add(2, 'd').unix() }),
+        knex('reservations').insert({ parkingid: 1, hostid: 1, clientid: 2, starttimeunix: moment().add(4, 'd').unix(), endtimeunix: moment().add(5, 'd').unix() }),
       ]);
     });
 };
-  
