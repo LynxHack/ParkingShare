@@ -6,13 +6,12 @@
   }
 
 .fulllogin{
-    display: inline;
     position: absolute;
-    left: 50px;
     bottom: 100px;
     top: 50px;
-    right: 50px;
+    left: 25vw;
     z-index: 2;
+    height: 75vh;
 }
 
   .fulllogin input, button {
@@ -84,7 +83,7 @@
     width: $inputW;
     height: $btnH;
     border-radius: 30px;
-    color: #fff;
+    
     font-size: 15px;
     cursor: pointer;
     margin-top: 15px;
@@ -255,13 +254,14 @@
   }
 
   .submit {
+    background: lightblue;
     margin-top: 40px;
     margin-bottom: 20px;
-    background: #542189;
     text-transform: uppercase;
   }
 
   .fb-btn {
+    background-color: rgb(59, 89, 152);
     border: 2px solid #d3dae9;
     color: darken(#d3dae9, 20%);
 
