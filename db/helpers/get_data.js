@@ -6,7 +6,7 @@ const knex = require("knex")(knexConfig[ENV]);
 const moment = require('moment');
 var bcrypt = require('bcryptjs');
 
-
+// not sure if this works
 function uniq(a) {
   var seen = {};
   return a.filter(function(item) {
@@ -28,6 +28,7 @@ function removeBookedSpots(bookings, parkingspots) {
 
 module.exports = {
   getAvailableSpots: function(startTimeUNIX, endTimeUNIX) {
+    // Debugging to verify filter is working
     console.log(`******************************STARTTIME = ${startTimeUNIX} ///// ENDTIME = ${endTimeUNIX}******************************`);
 
     return new Promise((resolve, reject) => {
@@ -35,7 +36,7 @@ module.exports = {
         .where('starttimeunix', '<', endTimeUNIX)
         .andWhere('endtimeunix', '>', startTimeUNIX)
         .then(function(result) {
-          return uniq(result)
+          return result
         })
       let promisedParkingSpots = knex('parkingspots')
 

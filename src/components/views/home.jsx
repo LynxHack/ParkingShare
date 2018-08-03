@@ -17,8 +17,8 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: null,
-      endDate: null,
+      startDate: moment(),
+      endDate: moment().add(1, 'd'),
       date: moment(),
       focusedInput: null,
       startDateId: 'startdate',
