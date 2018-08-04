@@ -51,7 +51,7 @@ module.exports = {
         })
     })
   },
-
+  
   getReservations: function(userid){
     var arrayofreservations = [];
     var userregistration = {};
@@ -59,7 +59,8 @@ module.exports = {
       console.log("begin getres")
       console.log(userid);
       knex('reservations')
-      .where({ clientid: userid })
+      .join('parkingspots', {'reservations.parkingid': 'parkingspots.id'})
+      .where({ clientid: 2})//userid }) //to be added back after testing
       .then((res) => {
         console.log(res);
         resolve(res);

@@ -3,17 +3,6 @@ import React, { Component } from "react";
 import axios from 'axios';
 
 
-class userregistration{
-  constructor(address, city, postalcode, stall, buzzer){
-    this.address = address;
-    this.city = city;
-    this.postalcode = postalcode;
-    this.stall = stall;
-    this.buzzer = buzzer;
-  }
-}
-
-
 export default class userPage extends Component {
   constructor(props){
     super(props);
@@ -25,8 +14,44 @@ export default class userPage extends Component {
   componentDidMount(){
     axios.post('/getreservations', {})
     .then((res) => {
-      console.log(res);
+      for(let i = 0; i < res.data.length; i++){
+        this.setState((prevState) => {
+          reservations: prevState.reservations.push({
+            resnum: i,
+            address: res.data[i].address,
+            city: res.data[i].city,
+            postalcode: res.data[i].postalcode,
+            stall: res.data[i].stall,
+            buzzer: res.data[i].buzzer,
+            starttime: res.data[i].startimeunix,
+            endtime: res.data[i].endtimeunix
+          })
+        })
+      }
     })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  generatereservationcard(res){
+    console.log(res);
+    return(
+      <article className="new-tweet-article">
+      <header>
+        <h3>Reservation {res.resnum}</h3>
+        <h5> {res.starttime} - {res.endtime} </h5>
+     </header>
+      <div className="tweet-body">
+      <p className ="message">     
+       <p className ="">Address : {res.address} </p>
+      <p className ="">City : {res.city}</p>
+      <p className ="">Postal Code : {res.postalcode}</p>
+      <p className ="">Stall #  : {res.stall}</p>
+      <p className ="">Buzzer #  : {res.buzzer}</p></p>
+      </div>
+    </article>
+    )
   }
 
   render() {
@@ -35,51 +60,7 @@ export default class userPage extends Component {
 <section className="reservations">
 <h3> Your Reservations </h3>
 <div id="container">            
-
-       <article class="new-tweet-article">
-      <header>
-        <h3>Reservation 1 </h3>
-        <h5> Start Time - End Time </h5>
-     </header>
-      <div class="tweet-body">
-      <p class ="message">     
-       <p class ="">Address : </p>
-      <p class ="">City : </p>
-      <p class ="">Postal Code : </p>
-      <p class ="">Stall #  : </p>
-      <p class ="">Buzzer #  : </p></p>
-      </div>
-    </article>
-
-       <article class="new-tweet-article">
-      <header>
-        <h3>Reservation 2 </h3>
-        <h5> Start Time - End Time </h5>
-     </header>
-      <div class="tweet-body">
-      <p class ="message">     
-       <p class ="">Address : </p>
-      <p class ="">City : </p>
-      <p class ="">Postal Code : </p>
-      <p class ="">Stall #  : </p>
-      <p class ="">Buzzer #  : </p></p>
-      </div>
-    </article>
-
-        <article class="new-tweet-article">
-      <header>
-        <h3>Reservation 3 </h3>
-        <h5> Start Time - End Time </h5>
-     </header>
-      <div class="tweet-body">
-      <p class ="message">     
-       <p class ="">Address : </p>
-      <p class ="">City : </p>
-      <p class ="">Postal Code : </p>
-      <p class ="">Stall #  : </p>
-      <p class ="">Buzzer #  : </p></p>
-      </div>
-    </article>
+{this.generatereservationcard(this.state.reservations)}
 
 </div> 
 
