@@ -28,7 +28,7 @@ function removeBookedSpots(bookings, parkingspots) {
 
 
 module.exports = {
-  
+
   getAvailableSpots: function(startTimeUNIX, endTimeUNIX) {
     // Debugging to verify filter is working
     console.log(`******************************STARTTIME = ${startTimeUNIX} ///// ENDTIME = ${endTimeUNIX}******************************`);
@@ -51,31 +51,28 @@ module.exports = {
         })
     })
   },
-  
-  getReservations: function(userid){
+
+  getReservations: function(userid) {
     var arrayofreservations = [];
     var userregistration = {};
     return new Promise((resolve, reject) => {
-      console.log("begin getres")
-      console.log(userid);
       knex('reservations')
-      .join('parkingspots', {'reservations.parkingid': 'parkingspots.id'})
-      .where({ clientid: 2})//userid }) //to be added back after testing
-      .then((res) => {
-        console.log(res);
-        resolve(res);
-      })
-      .catch((err) => {
+        .join('parkingspots', { 'reservations.parkingid': 'parkingspots.id' })
+        .where({ clientid: 2 }) //userid }) //to be added back after testing
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
           console.log(err);
           reject(err);
-      })
+        })
     })
   }
 }
 
 
-class userregistration{
-  constructor(address, city, postalcode, stall, buzzer){
+class userregistration {
+  constructor(address, city, postalcode, stall, buzzer) {
     this.address = address;
     this.city = city;
     this.postalcode = postalcode;

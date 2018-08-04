@@ -53,10 +53,8 @@ app.get('/*', function(req, res) {
 })
 
 app.post('/getreservations', (req, res) => {
-  console.log("Retrieving reservations for ", req.session.user_id);
   dbGet.getReservations(req.session.user_id)
   .then((result) => {
-    console.log(result);
     res.status(200).send(result);
   })
   .catch((err) => {
