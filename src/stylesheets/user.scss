@@ -1,33 +1,78 @@
 .userSection {
   margin-top: 50px;
   margin-left: 4.5%;
-  background-color: green;
+  display: flex;
+  
 
 }
+.sidebar{
+  margin-top: 30px;
+}
+.sidebar img {
+  width: 150px;
+  margin-top: 30px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 20px;
 
+  object-fit: cover;
+  object-position: center right;
+}
 .userSection h3 {
   font-family: sans-serif;
   padding: 10px;
   font-style: oblique;
   text-decoration: underline;
+  color : white ;
 }
-
+.spots {
+  border: 1px solid white;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 400px;
+  height: 500px;
+  margin-top: 25px;
+}
 
 .reservations {
   border: 1px solid white;
   border-radius: 25px;
-  background: #fc644def;
+  background:rgba(0, 0, 0, 0.5);
   text-align: center;
   width: 400px;
   height: 500px;
+  margin-top: 25px;
+}
+.spots {
+  border: 1px solid white;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 570px;
+  height: 260px;
+  margin-top: 25px;
+  margin-left: 25px;
 }
 
 #container {
   border: 1px solid white;
   border-radius: 20px;
   width: 90%;
-  background-color: gainsboro;
+
   height: 85%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-left: 20px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.spots #container {
+  border: 1px solid white;
+  border-radius: 20px;
+  width: 90%;
+  background: rgba(0, 0, 0, 0.5);
+  height: 65%;
   overflow-y: scroll;
   overflow-x: hidden;
   margin-left: 20px;
@@ -38,7 +83,7 @@
 }
 /*The following CSS helps style the containers that hold the tweets*/
 .userSection  .new-tweet-article {
-  height: 210px;
+  
   background-color: white;
   border: 1px solid #d0d0d0;
   margin-top: 15px;
@@ -69,23 +114,24 @@
 }
 
 .userSection  .new-tweet-article header h3 {
+
   float: left ;
   padding-left: 10px;
   margin-top: 10px;
-  color: grey ;
+  color: #D15153 ;
  }
 
  .userSection  .new-tweet-article header h5 {
   float: right ;
   margin-right: 10px;
-  color: grey ;
+  color: white ;
   margin-top: 50px;
  }
 .userSection  .new-tweet-article:hover h3{
     float: left ;
   padding-left: 10px;
   margin-top: 10px;
-  color: black ;
+  color: whitesmoke ;
 }
 
 
@@ -132,4 +178,21 @@
 .userSection  .new-tweet-article footer p {
   font-size: smaller ;
   font-weight: bold;
+}
+.sidebar h3 {
+  color: white;
+  text-align: center;
+  text-decoration: wavy;
+}
+
+.sidebar h4 {
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.reservations h3,.spots h3 {
+  color: #D15153;
+
 }
