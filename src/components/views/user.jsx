@@ -2,37 +2,47 @@ require('./../../stylesheets/user.scss');
 import React, { Component } from "react";
 import axios from 'axios';
 import { resCard } from './_resCard.jsx';
+import { parkingCard } from './_parkingspot.jsx';
 
 export default class userPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      parkingspots: [],
       reservations: [],  //to populate with userregistration objects
-      loading: true
+      reservationsloading: true,
+      userspotsloading: true
     }
   }
   componentDidMount() {
     this.setState({
-      loading: true
+      reservationsloading: true,
+      userspotsloading: true
     })
     axios.post('/getreservations', {})
       .then((res) => {
         this.setState({
-          reservations: res.data
-        })
-      })
-      .then(() => {
-        this.setState({
-          loading: false
+          reservations: res.data,
+          reservationsloading: false
         })
       })
       .catch((err) => {
         console.log(err);
       })
+    axios.get(`/db/spots/user`)
+      .then((result) => {
+        this.setState({
+          parkingspots: result.data,
+          userspotsloading: false
+        })
+      })
+      .catch((err) => {
+        console.log(`Error retrieving user parking spots ${err}`);
+      })
   }
 
   render() {
-    const { reservations } = this.state;
+    const { reservations, parkingspots } = this.state;
     return (
       <div className="userSection">
         <section className="sidebar">
@@ -46,7 +56,7 @@ export default class userPage extends Component {
         <section className="reservations">
           <h3> Your Reservations </h3>
           <div id="container">
-            {!this.state.loading && reservations.map((e) => {
+            {!this.state.reservationsloading && reservations.map((e) => {
               return resCard(e);
             })}
           </div>
@@ -54,39 +64,9 @@ export default class userPage extends Component {
         <section className="spots">
           <h3> Your Parking Spots </h3>
           <div id="container">
-            <article className="new-tweet-article">
-              <header>
-                <h3>Spot ID: </h3>
-              </header>
-              <div className="tweet-body">
-                <p className="message"></p>
-                <p className="">Address : </p>
-                <p className="">City : </p>
-                <p className="">Postal Code : </p>
-              </div>
-            </article>
-            <article className="new-tweet-article">
-              <header>
-                <h3>Spot ID: </h3>
-              </header>
-              <div className="tweet-body">
-                <p className="message"></p>
-                <p className="">Address : </p>
-                <p className="">City : </p>
-                <p className="">Postal Code : </p>
-              </div>
-            </article>
-            <article className="new-tweet-article">
-              <header>
-                <h3>Spot ID: </h3>
-              </header>
-              <div className="tweet-body">
-                <p className="message"></p>
-                <p className="">Address : </p>
-                <p className="">City : </p>
-                <p className="">Postal Code : </p>
-              </div>
-            </article>
+            {!this.state.userspotsloading && parkingspots.map((e) => {
+              return parkingCard(e);
+            })}
           </div>
         </section>
       </div>

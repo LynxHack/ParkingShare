@@ -39,8 +39,16 @@ app.get('/db/spots', async function(req, res) {
   res.json(results);
 })
 
+app.get('/db/spots/user', async function(req, res) {
+  let results = await dbGet.getUserSpots(req.session.user_id)
+  if (results) {
+    res.status(200).json(results)
+  } else {
+    res.status(404).send('Unable to retrienve any parking spots associated to user')
+  }
+})
+
 app.get('/', function(req, res) {
-  console.log(req.session.user_id);
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
@@ -54,18 +62,17 @@ app.get('/*', function(req, res) {
 
 app.post('/getreservations', (req, res) => {
   dbGet.getReservations(req.session.user_id)
-  .then((result) => {
-    res.status(200).send(result);
-  })
-  .catch((err) => {
-    console.log("error retrieving client reservations");
-    res.status(404).send(err);
-  })
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      console.log("error retrieving client reservations");
+      res.status(404).send(err);
+    })
 });
 
 // route for user logout
 app.post('/logout', (req, res) => {
-  console.log("Attempt logout");
   if (req.session.user_id) {
     req.session = null;
     res.status(200).send("Successfully logout of session")
@@ -75,12 +82,10 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/newspot', function(req, res) {
-  console.log("server received", req.body)
   dbPost.insertNewSpot(req.body);
 })
 
 app.post('/initiallog', function(req, res) {
-  console.log(req.session.user_id);
   if (!req.session.user_id) {
     res.status(401).send("failed")
   }
@@ -88,7 +93,6 @@ app.post('/initiallog', function(req, res) {
   dbPost.checkid(req.session.user_id)
     .then((result) => {
       if (result) {
-        console.log(result);
         res.status(200).send(result[0]);
       } else {
         res.status(401).send(result[0]);
@@ -104,7 +108,6 @@ app.post('/login', function(req, res) {
   dbPost.checkcredentials(req.body.email, req.body.password, "")
     .then((result) => {
       if (result) {
-        console.log("Sending success to client");
         req.session.user_id = result[0].id;
         res.status(200).send(result);
       } else {

@@ -93,7 +93,6 @@ export default class App extends Component {
     axios.post('/initiallog', {})
       .then((result) => {
         if (result.status === 200) {
-          console.log(result)
           this.setState({ isLoggedIn: true })
           this.setState({ userfirstname: result.data.firstname })
         }

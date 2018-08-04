@@ -3,10 +3,8 @@ import moment from 'moment';
 
 module.exports = {
   resCard: function (props) {
-    console.log(props);
-    
     return (
-      <article className="new-tweet-article">
+      <article className="new-tweet-article" key={`res${moment().valueOf()}`}>
         <header>
           <h3>Reservation {props.resnum}</h3>
           <h5> {moment.unix(props.starttimeunix).format("MM/DD/YYYY")} / {moment.unix(props.endtimeunix).format("MM/DD/YYYY")} </h5>

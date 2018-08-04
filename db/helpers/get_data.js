@@ -29,6 +29,15 @@ function removeBookedSpots(bookings, parkingspots) {
 
 module.exports = {
 
+  getUserSpots: function(userId) {
+    return knex('parkingspots')
+      .where('hostid', '=', userId)
+      .catch((err) => {
+        console.log(`Error getUserSpots ${err}`);
+        
+      })
+  },
+
   getAvailableSpots: function(startTimeUNIX, endTimeUNIX) {
     // Debugging to verify filter is working
     console.log(`******************************STARTTIME = ${startTimeUNIX} ///// ENDTIME = ${endTimeUNIX}******************************`);
