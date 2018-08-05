@@ -9,6 +9,7 @@ import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 import api from './../helpers/api.js';
 import { Redirect } from 'react-router';
+import { clickMe } from './_btn';
 
 require('./../../stylesheets/map.scss');
 
@@ -41,7 +42,7 @@ class MapContainer extends Component {
     // this.populateMap = this.populateMap.bind(this);
     // this.renderListings = this.renderListings.bind(this);
     this.geolookup = {}
-    this.currselected = 0;
+    this.clickMe = this.clickMe.bind(this);
 
   }
 
@@ -85,7 +86,8 @@ class MapContainer extends Component {
           address: spot.address,
           city: spot.city,
           postalcode: spot.postalcode,
-          maxheight: spot.maxheight
+          maxheight: spot.maxheight,
+          id: spot.id
         },
       })
     });
@@ -96,33 +98,26 @@ class MapContainer extends Component {
     }
 
 
-    geojson.features.forEach((marker) => {
-      var self = this;
+    geojson.features.forEach(async (marker) => {
       // create a HTML element for each feature
       var el = document.createElement('div');
       el.className = `${marker.id}`;
       this.geolookup[marker.id] = marker; //populate info lookup table
 
-      // make a marker for each feature and add to the map
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .addTo(this.map);
-
-      new mapboxgl.Marker(el)
+      var popup = await new mapboxgl.Marker(el)
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-          .setHTML('<h3>' + marker.properties.address + '</h3><p>' + marker.properties.description + '</p>'))
-        .addTo(this.map);
-
-
-      el.addEventListener('click', function(e){
-        const markerid = e.target.className.split(" ")[0];
-        self.currselected = markerid;
-        self.setState({redirect: true});
-        console.log(self.geolookup[markerid]);
-      })
+          .setHTML(`<h3>${marker.properties.address}</h3>
+                    <p>${marker.properties.description}</p>
+                    <a href='/parkingdetail' class='btn btn-outline-primary'>Reserve</a>
+                    `))
+          .addTo(this.map);
 
     });
+  }
+
+  clickMe = function () {
+    console.log(clicked);
   }
 
   // renderListings = (features) => {
@@ -204,11 +199,7 @@ class MapContainer extends Component {
   }
 
   render() {
-    if (this.state.redirect)
-            return (<Redirect to={{
-                pathname: '/parkingdetail',
-                state: { data: this.geolookup[this.currselected]}
-    }} />)
+    if (this.state.redirect) { return (<Redirect to={{ pathname: '/parkingdetail', state: { data: this.geolookup[this.currselected] } }} />) }
     return (
       <section>
         <div id="map">

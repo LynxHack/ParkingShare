@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './views/home.jsx';
 import MapContainer from './views/mapContainer.jsx';
 import Newspot from './views/newspot.jsx';
