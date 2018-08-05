@@ -1,9 +1,9 @@
 #map {
   position: absolute;
-  left: 0%;
+  left: 25VW;
   top: 0;
   bottom: 0;
-  width: 100%;
+  width: 75VW;
   z-index: 0;
   section {
     position: fixed;
@@ -11,6 +11,63 @@
   }
 }
 
+.mapboxgl-popup .mapboxgl-popup-anchor-top {
+  z-index: 50;
+}
+
+.btn-outline-primary {
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+#list-group {
+  width: 25VW;
+  max-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: whitesmoke;
+  section.searchmap {
+    z-index: 10;
+    .search-container {
+      top: 40px;
+      left: 1vw;
+      position: absolute;
+      width: 23vw;
+    }
+  }
+}
+
+#featurelist {
+  margin-top: 143px;
+  .list-group-item {
+    border: 1px solid black;
+    border-radius: 3px;
+    a {
+      color: black;
+      text-decoration: none;
+    }
+  }
+}
+
+#dateselectmap {
+  z-index: 10;
+  top: 88px;
+  position: absolute;
+  left: 60px;
+}
 
 .mapboxgl-marker {
   background-image: url("https://cdn2.iconfinder.com/data/icons/vehicle-type/1024/hatchback-512.png");
@@ -75,7 +132,7 @@
   max-height: 100%;
 }
 
-.map-overlay .listing > * {
+.map-overlay .listing>* {
   display: block;
   padding: 5px 10px;
   margin: 0;

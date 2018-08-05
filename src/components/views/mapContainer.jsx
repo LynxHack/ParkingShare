@@ -9,7 +9,7 @@ import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 import api from './../helpers/api.js';
 import { Redirect } from 'react-router';
-import { clickMe } from './_btn';
+import { FeatureListItem } from './_featureListItem.jsx';
 
 require('./../../stylesheets/map.scss');
 
@@ -20,7 +20,6 @@ class MapContainer extends Component {
     super(props);
     this.map;
     this.state = {
-      date: moment(),
       focusedInput: null,
       startDateId: 'startdate',
       endDateId: 'enddate',
@@ -28,10 +27,11 @@ class MapContainer extends Component {
       results: [],
       longitude: this.props.location.state[0],
       latitude: this.props.location.state[1],
-      startdate: this.props.location.state[2],
-      enddate: this.props.location.state[3],
+      startdate: moment(this.props.location.state[2]),
+      enddate: moment(this.props.location.state[3]),
       mapBounds: {},
       searchText: '',
+      featuresLoading: true,
       redirect: false
     }
     // this.renderListings = this.renderListings.bind(this);
@@ -42,7 +42,6 @@ class MapContainer extends Component {
     // this.populateMap = this.populateMap.bind(this);
     // this.renderListings = this.renderListings.bind(this);
     this.geolookup = {}
-    this.clickMe = this.clickMe.bind(this);
 
   }
 
@@ -63,10 +62,6 @@ class MapContainer extends Component {
       .then((res) => {
         this.populateMap(res.data)
       })
-
-    this.map.on('load', () => {
-      // this.renderListings(features);
-    })
   }
 
   populateMap = (data) => {
@@ -104,20 +99,20 @@ class MapContainer extends Component {
       el.className = `${marker.id}`;
       this.geolookup[marker.id] = marker; //populate info lookup table
 
-      var popup = await new mapboxgl.Marker(el)
+      await new mapboxgl.Marker(el)
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
           .setHTML(`<h3>${marker.properties.address}</h3>
                     <p>${marker.properties.description}</p>
-                    <a href='/parkingdetail' class='btn btn-outline-primary'>Reserve</a>
+                    <a href='/parkingdetail' class='btn-outline-primary'>Reserve</a>
                     `))
-          .addTo(this.map);
+        .addTo(this.map);
 
     });
-  }
 
-  clickMe = function () {
-    console.log(clicked);
+    this.setState({
+      featuresLoading: false
+    })
   }
 
   // renderListings = (features) => {
@@ -202,32 +197,32 @@ class MapContainer extends Component {
     if (this.state.redirect) { return (<Redirect to={{ pathname: '/parkingdetail', state: { data: this.geolookup[this.currselected] } }} />) }
     return (
       <section>
-        <div id="map">
-          <section className="search">
+        <div id="map"></div>
+        <div id="list-group">
+          <section className="searchmap">
             <form className="search-container" onSubmit={this.submitForm}>
               <input type="text" id="search-bar" placeholder="Search for available locations here" onKeyDown={this.onText} />
               <img className="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" />
             </form>
-            <div id="dateselect">
+            <div id="dateselectmap">
               <DateRangePicker
-                startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                startDate={this.state.startdate} // momentPropTypes.momentObj or null,
                 startDateId={this.state.startDateId} // PropTypes.string.isRequired,
-                endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                endDate={this.state.enddate} // momentPropTypes.momentObj or null,
                 endDateId={this.state.endDateId} // PropTypes.string.isRequired,
-                onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                onDatesChange={({ startDate, endDate }) => this.setState({ startdate, enddate })} // PropTypes.func.isRequired,
                 focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
                 regular={true}
               />
             </div>
           </section>
+          <div id="featurelist">
+            {!this.state.featuresLoading && features.map((e) => {
+              return FeatureListItem(e)
+            })}
+          </div>
         </div>
-        {/* <div className='map-overlay'>
-          <fieldset onChange={this.searchText} onKeyDown={this.filter}>
-            <input id='feature-filter' type='text' placeholder='Filter results by name' />
-          </fieldset>
-          <div id='feature-listing' className='listing'></div>
-        </div> */}
       </section>
     )
   }

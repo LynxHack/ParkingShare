@@ -63,7 +63,7 @@ export default class Home extends Component {
     api.getMapData(searchValue)
       .then(async (data) => {
         await this.setStateAsync(data)
-        await this.pushToResults(startDate.unix(), endDate.unix())
+        await this.pushToResults(startDate.valueOf(), endDate.valueOf())
         this.setState({
           fireRedirect: true
         })
