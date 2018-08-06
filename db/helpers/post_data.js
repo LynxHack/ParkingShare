@@ -76,7 +76,7 @@ module.exports = {
       .where({ email: formdata.email })
       .then((result) => {
         if (result.length === 0) {
-          bcrypt.hash(formdata.password, 10, function(err, hash) {
+          bcrypt.hash(formdata.password, 2, function(err, hash) {
             knex('users')
               .insert({
                 firstname: formdata.firstname,
