@@ -47,7 +47,7 @@ module.exports = {
           });
         })
         .catch((err) => {
-          console.log(err);
+          console.log(`Error checkcredentials: ${err}`);
           return null;
         })
     })

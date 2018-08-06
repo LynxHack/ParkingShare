@@ -103,7 +103,6 @@ app.post('/initiallog', function(req, res) {
     })
     .catch((err) => {
       console.log(err);
-      res.status(401).send("failed");
     })
 })
 

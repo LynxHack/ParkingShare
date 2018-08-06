@@ -62,6 +62,10 @@ export default class Login extends React.Component {
       })
       .then((response) => {
         console.log(response);
+        
+        if (response.status == 200) {
+          this.props.attemptlogin(this.state.reg_email, this.state.reg_password)
+        }
       })
       .catch((err) => {
         console.log(err);

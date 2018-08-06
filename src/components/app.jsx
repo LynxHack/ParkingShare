@@ -59,6 +59,8 @@ export default class App extends Component {
   }
 
   attemptlogin = (email, password) => {
+    console.log(`FROM ATTEMPT LOGIN ${email}/${password}`);
+    
     axios.post('/login', { email: email, password: password })
       .then((response) => {
         if (response.status === 200) {
