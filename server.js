@@ -35,7 +35,10 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use('/public', express.static('public'));
 
 app.get('/db/spots', async function(req, res) {
-  const results = await dbGet.getAvailableSpots(req.query.starttime, req.query.endtime);
+let bounds = JSON.parse(req.query.bounds);
+console.log(`To server ${bounds}`);
+
+  const results = await dbGet.getAvailableSpots(bounds, req.query.starttime, req.query.endtime);
   res.json(results);
 })
 

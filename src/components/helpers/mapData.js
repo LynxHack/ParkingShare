@@ -2,14 +2,13 @@ import axios from 'axios';
 
 
 module.exports = {
-  getSpots(startdate, enddate) {
+  getSpots(bounds, startdate, enddate) {
     return new Promise((resolve, reject) => {
 
       const ax = axios.create({
         baseURL: "http://localhost:8080"
       })
-
-      ax.get(`/db/spots?starttime=${startdate}&endtime=${enddate}`)
+      ax.get(`/db/spots?bounds=${bounds}&starttime=${startdate}&endtime=${enddate}`)
         .then((response) => {
           return resolve(response);
         })
