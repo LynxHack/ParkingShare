@@ -60,6 +60,17 @@ app.get('/*', function(req, res) {
   })
 })
 
+app.post('/getreviews', (req, res) => {
+  console.log('Server retrieving reviews for parkingid', req.body.parkingid);
+  dbGet.getReviews(req.body.parkingid)
+  .then((result) => {
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+})
+
 app.post('/getreservations', (req, res) => {
   dbGet.getReservations(req.session.user_id)
     .then((result) => {

@@ -102,7 +102,7 @@ class MapContainer extends Component {
       var el = document.createElement('div');
       el.className = `${marker.id}`;
       this.geolookup[marker.id] = marker; //populate info lookup table
-
+      this.geolookup[marker.id]["parkingid"] = marker.id;
       // make a marker for each feature and add to the map
       new mapboxgl.Marker(el)
         .setLngLat(marker.geometry.coordinates)

@@ -2,6 +2,7 @@ require('./../../stylesheets/parkingdetail.scss');
 import axios from 'axios';
 import React, { Component } from "react";
 import api from './../helpers/api.js'
+
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 export default class ParkingDetail extends Component {
@@ -9,6 +10,7 @@ export default class ParkingDetail extends Component {
     super(props);
     this.state = {
       //Currently these are placeholders, to be changed state for population db
+      parkingid: 1,
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam elementum est, at vestibulum augue consequat at. Donec euismod convallis felis. Nam sed molestie dolor. Proin in tortor sed augue consequat viverra.",
       description2: "Private area near the city center. Have easy access to nearby stores and fesitivities. Welcome!",
       address: "3800 Capistrano Dr.",
@@ -24,11 +26,14 @@ export default class ParkingDetail extends Component {
       maxheight: "250", //in cm for now
       cartypes: ["motorbike", "sedan/small pickup", "full pickup/SUV"]
     }
+    this.returnreviews = this.returnreviews.bind(this);
   }
 
   componentDidMount(){
     try{
+      console.log(this.props.location.state.data.properties);
       this.setState({
+        parkingid : this.props.location.state.data.properties.id,
         address: this.props.location.state.data.properties.address,
         buzzer: this.props.location.state.data.properties.buzzer,
         city: this.props.location.state.data.properties.city,
@@ -42,6 +47,27 @@ export default class ParkingDetail extends Component {
     catch(err){
       console.log("error, no state passed in, loading default placeholder");
     }
+  }
+
+  returnreviews(parkingid){
+    axios.post('/getreviews', {parkingid: parkingid})
+    .then((result) => {
+      for(let i = 0; i < result.data.length; i++){
+      return(
+        <div className="review">
+        <span className="title">{result.data[i].rating}/5
+        <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
+        
+          <span className="comments">{result.data[i].description}</span>
+        <span className="author">By {result.data[i].firstname} {result.data[i].lastname}} on {result.data[i].created_at}</span>
+          <div className="vote">
+           Was this review helpful?
+           <input type="submit" value="Yes"/>
+          </div>
+     </div>
+      )
+    }
+    })
   }
 
   render() {
@@ -108,32 +134,9 @@ export default class ParkingDetail extends Component {
               <div className="info">
                   
                
-                <div className="review">
-                  <span className="title">Great space! 5/5
-                  <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
-                  
-                    <span className="comments">I reserved a spot here as I was struggling to find a spot for the beer festival happening downtown. It was at a convenient location. Terrific!</span>
-                  <span className="author">By lulu5156 on December 31, 2013</span>
-                    <div className="vote">
-                     Was this review helpful?
-                     <input type="submit" value="Yes"/>
-                    </div>
-               </div>
-                  
-                    <div className="review">
-                      <span className="title">A little rough but nice! 4/5
-                          <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/4StarBlue09.gif"/></span>
-        
-                        <span className="comments">I booked this parking spot due to the convenient location. However, entering and exiting the space requires some skill.</span>
-                      <span className="author">By Lucky67 on August 27, 2013</span>
-                        
-                        <div className="vote">
-                         Was this review helpful?
-                         <input type="submit" value="Yes"/>
-                        </div>
-                   </div>
+              {this.returnreviews(this.state.parkingid)}
                             
-                            <div className="productbutton submit blueSubmit left">Write a Review</div> 
+                    <div className="productbutton submit blueSubmit left">Write a Review</div> 
                    </div>                     
                   
                 </div>  
