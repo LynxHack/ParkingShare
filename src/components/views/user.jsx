@@ -7,8 +7,10 @@ export default class userPage extends Component {
   constructor(props){
     super(props);
     this.state = {
-      reservations: [] //to populate with userregistration objects
+      reservations: [],
+      openModal: false //to populate with userregistration objects
     }
+    this.openModal = this.openModal.bind(this)
   }
 
   componentDidMount(){
@@ -54,14 +56,22 @@ export default class userPage extends Component {
     )
   }
 
+  openModal() {
+    this.setState(prevState => ({
+      openModal: !prevState.openModal
+      
+    }));
+    console.log("HEYYYYYYYYYY")
+  }
+
   render() {
+    if(this.state.openModal === false) {
     return (
+
+      
 <div className="userSection">
 <section className="sidebar">
-
-
   <img src="https://i.kinja-img.com/gawker-media/image/upload/gd8ljenaeahpn0wslmlz.jpg" class="image--cover"/>
-
   <h3> Welcome User </h3>
   <h4>Email : </h4>
   <h4>User@example.com</h4>
@@ -138,8 +148,60 @@ export default class userPage extends Component {
 
 
 
-</div>
 
-    );
+
+<section className="cars">
+<h3> Your Vehicles </h3>
+<input class="button" type="button" value="Add A Vehicle" onClick={this.openModal}/>
+<div id="container">            
+
+       <article class="new-tweet-article">
+      <header>
+        <h3>Vehicle ID: </h3>
+
+     </header>
+      <div class="tweet-body">
+      <p class ="message">     
+       <p class ="">Make : </p>
+      <p class ="">Model : </p>
+      <p class ="">Color : </p>
+      <p class ="">License Plate : </p>
+      </p>
+      </div>
+    </article>
+
+       <article class="new-tweet-article">
+      <header>
+        <h3>Vehicle ID: </h3>
+
+     </header>
+      <div class="tweet-body">
+      <p class ="message">     
+       <p class ="">Make : </p>
+      <p class ="">Model : </p>
+      <p class ="">Color : </p>
+      <p class ="">License Plate : </p>
+      </p>
+      </div>
+    </article>
+
+</div> 
+</section>
+</div>
+    );} else {
+  return (
+<form >        
+<div id="carform">
+          <h1 className="fs-title">Add A Vehicle</h1>
+          <input type="text" name="make" placeholder="Make" />
+          <input type="text" name="model" placeholder="Model"/>
+          <input type="text" name="color" placeholder="Color"/>
+         
+          <input type="text" name="plateNumber" placeholder="License Plate #"/>
+          <input type="button" name="next" className="action-button" value="Next" onClick={this.openModal}/>
+        </div>
+      </form>
+  );
+    }
   }
 }
