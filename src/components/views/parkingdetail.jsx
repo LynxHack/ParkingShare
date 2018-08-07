@@ -97,6 +97,17 @@ export default class ParkingDetail extends Component {
     )
   }
 
+  reserve(){
+    console.log()
+    axios.post('/reserve', {parkingid: self.state.parkingid})
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   render() {
     return (       
       <div className="parkingdetail">
@@ -137,7 +148,7 @@ export default class ParkingDetail extends Component {
                     <option>Spot 4</option>
                   </select>
         
-                <div className="productbutton reserve">Reserve</div>
+                <div className="productbutton reserve" onClick={this.reserve}>Reserve</div>
       
                            
               </div>

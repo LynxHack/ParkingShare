@@ -100,5 +100,32 @@ module.exports = {
           console.log("Registeruser: user not created since there is a duplicate email in db")
         }
       })
+  },
+
+  makereservation: function(parkingid, userid) {
+    return new Promise((resolve, reject) => {
+      knex('parkingspots')
+      .where({id: parkingid})
+      .then((result) => {
+        var hostid = result[0].hostid;
+        knex('reservations')
+        .insert({
+          parkingid: parkingid, 
+          hostid: hostid, 
+          clientid: userid, 
+          starttimeunix: null, 
+          endtimeunix: null 
+        })
+        .then(() => {
+          resolve("successfully added new reservation to db")
+        })
+        .catch((err) => {
+          reject(err);
+        })
+      })
+      .catch((err)=>{
+        reject(err);
+      })
+    })
   }
 }

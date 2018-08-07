@@ -70,6 +70,18 @@ app.post('/parkingid', (req, res) => {
   })
 })
 
+app.post('/reserve', (req, res) => {
+  console.log("Making reservation for user", req.session.user_id)
+  dbPost.makereservation(req.body.parkingid, req.session.user_id)
+  .then((result) => {
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(403).send(err);
+  })
+});
+
 app.post('/getreviews', (req, res) => {
   console.log('Server retrieving reviews for parkingid', req.body.parkingid);
   dbGet.getReviews(req.body.parkingid)
