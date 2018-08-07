@@ -1,6 +1,7 @@
 const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const webpack = require('webpack');
 const config = require('./webpack.config.dev.js');
 const app = express();
@@ -22,6 +23,8 @@ app.use(cookieSession({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(fileUpload());
+
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
@@ -32,8 +35,8 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use('/public', express.static('public'));
 
 app.get('/db/spots', async function(req, res) {
-let bounds = JSON.parse(req.query.bounds);
-console.log(`To server ${bounds}`);
+  let bounds = JSON.parse(req.query.bounds);
+  console.log(`To server ${bounds}`);
 
   const results = await dbGet.getAvailableSpots(bounds, req.query.starttime, req.query.endtime);
   res.json(results);
@@ -158,6 +161,21 @@ app.post('/login', function(req, res) {
 app.post('/register', function(req, res) {
   dbPost.registerUser(req.body);
   res.status(200).send("Add user successful!")
+})
+
+app.post('/upload/userspot', (req, res, next) => {
+  console.log(req.files);
+  
+  let imageFile = req.files.file;
+
+  imageFile.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    res.json({ file: `public/${req.body.filename}.jpg` });
+  });
+
 })
 
 app.listen(process.env.PORT || 8080, function(err) {
