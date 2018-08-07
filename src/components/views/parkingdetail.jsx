@@ -24,50 +24,77 @@ export default class ParkingDetail extends Component {
       stall: "5",
       buzzer: "5010",
       maxheight: "250", //in cm for now
-      cartypes: ["motorbike", "sedan/small pickup", "full pickup/SUV"]
+      cartypes: ["motorbike", "sedan/small pickup", "full pickup/SUV"],
+
+      reviews: []
     }
-    this.returnreviews = this.returnreviews.bind(this);
+    self = this;
   }
 
   componentDidMount(){
-    try{
-      console.log(this.props.location.state.data.properties);
-      this.setState({
-        parkingid : this.props.location.state.data.properties.id,
-        address: this.props.location.state.data.properties.address,
-        buzzer: this.props.location.state.data.properties.buzzer,
-        city: this.props.location.state.data.properties.city,
-        maxheight: this.props.location.state.data.properties.maxheight,
-        picture: this.props.location.state.data.properties.picture,
-        postalcode: this.props.location.state.data.properties.postalcode,
-        stall: this.props.location.state.data.properties.stall,
-        description: this.props.location.state.data.properties.description
-      });
-    }
-    catch(err){
-      console.log("error, no state passed in, loading default placeholder");
-    }
+    
+    var query = this.props.location;
+    var params = {query}
+    var parkingid = params.query.search.slice(1).split('%')[0].split('=')[1];
+    console.log("The id of parking lot is", parkingid);
+    axios.post('/parkingid', {parkingid: parkingid})
+    .then((result) => {
+      console.log(result);
+      this.setState((prevState, props) => {
+        return { parkingid: result.data[0].id,
+          description: result.data[0].description,
+          address: result.data[0].address,
+          city: result.data[0].city,
+          postalcode: result.data[0].postalcode,
+          picture: result.data[0].picture,
+          stall: result.data[0].stall,
+          buzzer: result.data[0].buzzer,
+          maxheight: result.data[0].maxheight};
+          
+          axios.post('/getreviews', {parkingid: parkingid})
+          .then((result) => {
+            console.log(result);
+            // for(let i = 0; i < result.data.length; i++){
+              this.setState((prevstate) => {
+                reviews : prevstate.reviews.push(result.data);
+              })
+          // }
+          })
+        }
+      
+    );
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   returnreviews(parkingid){
     axios.post('/getreviews', {parkingid: parkingid})
     .then((result) => {
-      for(let i = 0; i < result.data.length; i++){
-      return(
-        <div className="review">
-        <span className="title">{result.data[i].rating}/5
-        <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
-        
-          <span className="comments">{result.data[i].description}</span>
-        <span className="author">By {result.data[i].firstname} {result.data[i].lastname}} on {result.data[i].created_at}</span>
-          <div className="vote">
-           Was this review helpful?
-           <input type="submit" value="Yes"/>
-          </div>
-     </div>
-      )
-    }
+      console.log(result);
+      // for(let i = 0; i < result.data.length; i++){
+        this.setState((prevstate) => {
+          reviews : prevstate.reviews.push(result.data);
+        })
+    // }
     })
+  }
+
+  generatereviews(review){
+    return(
+      <div className="review">
+      <span className="title">{review.rating}/5
+      <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
+      
+        <span className="comments">{review.description}</span>
+      <span className="author">By {review.firstname} {review.lastname}} on {review.created_at}</span>
+        <div className="vote">
+         Was this review helpful?
+         <input type="submit" value="Yes"/>
+        </div>
+   </div>
+    )
   }
 
   render() {
@@ -132,9 +159,8 @@ export default class ParkingDetail extends Component {
                </div> 
                 
               <div className="info">
-                  
-               
-              {this.returnreviews(this.state.parkingid)}
+
+              {this.state.reviews && this.generatereviews(this.state.reviews)}
                             
                     <div className="productbutton submit blueSubmit left">Write a Review</div> 
                    </div>                     
@@ -179,8 +205,6 @@ export default class ParkingDetail extends Component {
               </div>
             </div>
         </div>
-        
-  
     );
   }
 }

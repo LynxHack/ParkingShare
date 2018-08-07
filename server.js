@@ -35,7 +35,10 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use('/public', express.static('public'));
 
 app.get('/db/spots', async function(req, res) {
-  const results = await dbGet.getAvailableSpots(req.query.starttime, req.query.endtime);
+let bounds = JSON.parse(req.query.bounds);
+console.log(`To server ${bounds}`);
+
+  const results = await dbGet.getAvailableSpots(bounds, req.query.starttime, req.query.endtime);
   res.json(results);
 })
 
@@ -60,14 +63,25 @@ app.get('/*', function(req, res) {
   })
 })
 
-app.post('/getreviews', (req, res) => {
-  console.log('Server retrieving reviews for parkingid', req.body.parkingid);
-  dbGet.getReviews(req.body.parkingid)
+app.post('/parkingid', (req, res) => {
+  dbGet.getParkingDetails(req.body.parkingid)
   .then((result) => {
     res.status(200).send(result);
   })
   .catch((err) => {
-    console.log(err);
+    res.status(404).send(err);
+  })
+})
+
+app.post('/getreviews', (req, res) => {
+  console.log('Server retrieving reviews for parkingid', req.body.parkingid);
+  dbGet.getReviews(req.body.parkingid)
+  .then((result) => {
+    console.log(result);
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    res.status(404).send(err);
   })
 })
 

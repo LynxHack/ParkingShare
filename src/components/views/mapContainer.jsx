@@ -9,17 +9,18 @@ import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 import api from './../helpers/api.js';
 import { Redirect } from 'react-router';
+import { FeatureListItem } from './_featureListItem.jsx';
 
 require('./../../stylesheets/map.scss');
 
-var features = [];
+let features = [];
+let bounds = [];
 class MapContainer extends Component {
 
   constructor(props) {
     super(props);
     this.map;
     this.state = {
-      date: moment(),
       focusedInput: null,
       startDateId: 'startdate',
       endDateId: 'enddate',
@@ -27,22 +28,17 @@ class MapContainer extends Component {
       results: [],
       longitude: this.props.location.state[0],
       latitude: this.props.location.state[1],
-      startdate: this.props.location.state[2],
-      enddate: this.props.location.state[3],
+      startdate: moment(this.props.location.state[2]),
+      enddate: moment(this.props.location.state[3]),
       mapBounds: {},
       searchText: '',
+      featuresLoading: true,
       redirect: false
     }
-    // this.renderListings = this.renderListings.bind(this);
-    // this.filter = this.filter.bind(this);
-    // this.searchText = this.searchText.bind(this);
     this.onText = this.onText.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    // this.populateMap = this.populateMap.bind(this);
-    // this.renderListings = this.renderListings.bind(this);
-    this.geolookup = {}
-    this.currselected = 0;
-
+    this.geolookup = {};
+    var self = this;
   }
 
   componentDidMount = async () => {
@@ -56,19 +52,38 @@ class MapContainer extends Component {
       style: "mapbox://styles/jordananders/cjk7bfdek7ceu2rlkbyq440qp"
     });
 
-    const { startdate, enddate } = this.state;
-
-    await getSpots(startdate, enddate)
+    bounds = await this.map.getBounds().toArray()
+    let { startdate, enddate } = this.state;
+    await getSpots(JSON.stringify(bounds), startdate, enddate)
       .then((res) => {
         this.populateMap(res.data)
       })
 
-    this.map.on('load', () => {
-      // this.renderListings(features);
+    this.map.on('moveend', async (e) => {
+      bounds = await this.map.getBounds().toArray();
+      getSpots(JSON.stringify(bounds), this.state.startdate, this.state.enddate)
+        .then((res) => {
+          this.populateMap(res.data);
+        })
     })
   }
 
-  populateMap = (data) => {
+  populateMap = async (data) => {
+
+    var listItems = Array.prototype.slice.call(document.querySelectorAll('.list-group-item'));
+    listItems.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+
+    var mapMarkers = Array.prototype.slice.call(document.querySelectorAll('div.mapboxgl-marker'));
+    console.log(mapMarkers);
+    
+    mapMarkers.forEach(function (item) {
+      console.log(`remove${item}`);
+      
+      item.parentNode.removeChild(item);
+    });
+
     data.map((spot) => {
       features.push({
         "id": spot.id,
@@ -85,7 +100,8 @@ class MapContainer extends Component {
           address: spot.address,
           city: spot.city,
           postalcode: spot.postalcode,
-          maxheight: spot.maxheight
+          maxheight: spot.maxheight,
+          id: spot.id
         },
       })
     });
@@ -96,92 +112,46 @@ class MapContainer extends Component {
     }
 
 
-    geojson.features.forEach((marker) => {
-      var self = this;
+    geojson.features.forEach(async (marker) => {
       // create a HTML element for each feature
       var el = document.createElement('div');
       el.className = `${marker.id}`;
-      this.geolookup[marker.id] = marker; //populate info lookup table
-      this.geolookup[marker.id]["parkingid"] = marker.id;
-      // make a marker for each feature and add to the map
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .addTo(this.map);
+      // this.geolookup[marker.id] = marker; //populate info lookup table
 
-      new mapboxgl.Marker(el)
+      var str = ``;
+      for (var key in marker) {
+          if (str != ``) {
+              str += `&`;
+          }
+          str += key + `=` + marker[key];
+      }
+
+      await new mapboxgl.Marker(el)
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-          .setHTML('<h3>' + marker.properties.address + '</h3><p>' + marker.properties.description + '</p>'))
+          .setHTML(`<h3>${marker.properties.address}</h3>
+                    <p>${marker.properties.description}</p>
+                    <a href='/parkingdetail?id=${marker.id} class='btn-outline-primary'>Reserve</a>
+                    `))
         .addTo(this.map);
-
-
-      el.addEventListener('click', function(e){
-        const markerid = e.target.className.split(" ")[0];
-        self.currselected = markerid;
-        self.setState({redirect: true});
-        console.log(self.geolookup[markerid]);
-      })
-
     });
+  
+    this.setState({
+      featuresLoading: false
+    })
+
   }
 
-  // renderListings = (features) => {
-  //   var filterEl = document.getElementById('feature-filter');
-  //   var listingEl = document.getElementById('feature-listing');
-  //   // Clear any existing listings
-  //   listingEl.innerHTML = '';
-  //   if (features.length) {
-  //     features.forEach(function (feature) {
-  //       var prop = feature.properties;
-  //       var item = document.createElement('a');
-  //       // SET HREF TO LISTING PAGE WHEN READY
-  //       item.href = "#";
-  //       item.target = '_blank';
-  //       item.textContent = prop.address;
-  //       listingEl.appendChild(item);
-  //     });
-
-  //     // Show the filter input
-  //     filterEl.parentNode.style.display = 'block';
-  //   } else {
-  //     var empty = document.createElement('p');
-  //     empty.textContent = 'Drag the map to populate results';
-  //     listingEl.appendChild(empty);
-
-  //     // Hide the filter input
-  //     filterEl.parentNode.style.display = 'none';
-
-  //     // remove features filter
-  //     this.map.setFilter('parkingSpots');
-  //   }
-  // }
-
-
-  // async searchText(data, evt) {
-  //   await this.setState({
-  //     searchText: data.target.value
-  //   });
-  // }
-
-
-  // filter = () => {
-
-  //   var value = this.state.searchText.trim().toLowerCase();
-
-  //   // Filter visible features that don't match the input value.
-  //   var filtered = features.filter(function (feature) {
-  //     var name = feature.properties.address.trim().toLowerCase();
-  //     return name.indexOf(value) > -1;
-  //   });
-
-  //   // Populate the sidebar with filtered results
-  //   this.renderListings(filtered);
-
-  //   // Set the filter to populate features into the layer.
-  //   this.map.setFilter('parkingSpots', filtered.map((feature) => {
-  //     return feature.address
-  //   }));
-  // }
+  serialize(obj){
+    var str = ``;
+    for (var key in obj) {
+        if (str != ``) {
+            str += `&`;
+        }
+        str += key + `=` + encodeURIComponent(obj[key]);
+    }
+    return str;
+  }
 
   onText(evt) {
     this.setState({
@@ -192,51 +162,52 @@ class MapContainer extends Component {
   submitForm = async (evt) => {
     evt.preventDefault();
     const { searchValue } = this.state;
-    api.getMapData(searchValue)
+    await api.getMapData(searchValue)
       .then((data) => {
         this.map.flyTo({ center: [data.results[0], data.results[1]], zoom: 12 })
       })
       .catch((error) => console.log(error));
-    getSpots(this.state.startdate, this.state.enddate)
-      .then((res) => {
-        this.populateMap(res.data)
-      })
   }
 
+  // .then(async () => {
+  //   return getSpots(JSON.stringify(bounds), this.state.startdate, this.state.enddate)
+  // })
+  // .then((res) => {
+  //   console.log(res.data);
+  // })
+
   render() {
-    if (this.state.redirect)
-            return (<Redirect to={{
-                pathname: '/parkingdetail',
-                state: { data: this.geolookup[this.currselected]}
-    }} />)
+    // console.log(this.geolookup);
+    // if (this.state.redirect) { return (<Redirect to={{ pathname: '/parkingdetail', state: { data: this.geolookup[this.currselected] } }} />) }
+
     return (
       <section>
-        <div id="map">
-          <section className="search">
+        <div id="map"></div>
+        <div id="list-group">
+          <section className="searchmap">
             <form className="search-container" onSubmit={this.submitForm}>
               <input type="text" id="search-bar" placeholder="Search for available locations here" onKeyDown={this.onText} />
               <img className="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" />
             </form>
-            <div id="dateselect">
+            <div id="dateselectmap">
               <DateRangePicker
-                startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                startDate={this.state.startdate} // momentPropTypes.momentObj or null,
                 startDateId={this.state.startDateId} // PropTypes.string.isRequired,
-                endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                endDate={this.state.enddate} // momentPropTypes.momentObj or null,
                 endDateId={this.state.endDateId} // PropTypes.string.isRequired,
-                onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                onDatesChange={({ startDate, endDate }) => this.setState({ startdate, enddate })} // PropTypes.func.isRequired,
                 focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
                 regular={true}
               />
             </div>
           </section>
+          <div id="featurelist">
+            {!this.state.featuresLoading && features.map((e) => {
+              return FeatureListItem(e)
+            })}
+          </div>
         </div>
-        {/* <div className='map-overlay'>
-          <fieldset onChange={this.searchText} onKeyDown={this.filter}>
-            <input id='feature-filter' type='text' placeholder='Filter results by name' />
-          </fieldset>
-          <div id='feature-listing' className='listing'></div>
-        </div> */}
       </section>
     )
   }
