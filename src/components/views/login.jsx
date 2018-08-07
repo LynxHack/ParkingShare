@@ -27,6 +27,7 @@ export default class Login extends React.Component {
     this.register = this.register.bind(this);
     this.editregistration = this.editregistration.bind(this);
     this.closeModal = this.closeModal.bind(this)
+    this.setloginform = this.setloginform.bind(this);
   }
 
   closeModal() {
@@ -62,7 +63,7 @@ export default class Login extends React.Component {
       })
       .then((response) => {
         console.log(response);
-        
+
         if (response.status == 200) {
           this.props.attemptlogin(this.state.reg_email, this.state.reg_password)
         }
@@ -90,14 +91,14 @@ export default class Login extends React.Component {
             <h2>Welcome back,</h2>
             <label>
               <span>Email</span>
-              <input type="email" className="input1" onChange={this.setloginform.bind(this)} />
+              <input type="email" className="input1" onChange={this.setloginform} />
             </label>
             <label>
               <span>Password</span>
-              <input type="password" onChange={this.setloginform.bind(this)} />
+              <input type="password" onChange={this.setloginform} />
             </label>
             <p className="forgot-pass">Forgot password?</p>
-            <button type="button" className="submit" onClick={this.props.attemptlogin.bind(null, this.state.email, this.state.password)}>
+            <button type="button" className="submit" onClick={this.props.attemptlogin.bind(this, this.state.email, this.state.password)}>
               Sign In
                   </button>
             <button type="button" className="fb-btn">Connect with <span>facebook</span></button>

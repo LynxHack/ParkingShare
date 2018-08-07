@@ -45,13 +45,11 @@ export default class userPage extends Component {
     const { reservations, parkingspots } = this.state;
     return (
       <div className="userSection">
-        <section className="sidebar">
-          <img src="https://i.kinja-img.com/gawker-media/image/upload/gd8ljenaeahpn0wslmlz.jpg" className="image--cover" />
-          <h3> Welcome User </h3>
-          <h4>Email : </h4>
-          <h4>User@example.com</h4>
-          <h4>Phone Number</h4><i className="fa fa-phone" aria-hidden="true"></i>
-          <h4>1-(800)-000-1234</h4>
+        <section className="usersidebar">
+          <img src={this.props.userpicture} className="image--cover" />
+          <h3> {this.props.userfirstname} {this.props.userlastname}</h3>
+          <h4>{this.props.useremail} </h4>
+          <h4>{this.props.userphonenumber}</h4>
         </section>
         <section className="reservations">
           <h3> Your Reservations </h3>
