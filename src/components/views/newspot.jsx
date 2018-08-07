@@ -40,19 +40,23 @@ export default class Newspot extends Component {
   submitform(e) {
     e.preventDefault();
     api.getMapData(this.state.address + " " + this.state.city)
-      .then(async (data) => {
+      .then((data) => {
         let postdata = Object.assign({}, this.state);
         postdata["longitude"] = data.results[0];
         postdata["latitude"] = data.results[1];
-        await axios.post('/newspot', postdata)
+        axios.post('/newspot', postdata)
+          .then((result) => {
+            if (result.status == 200) {
+              this.setState({
+                newspotposted: true
+              })
+            }
+          })
           .catch(function (err) {
             console.log(`Error posting new parking spot: ${err}`);
           })
       })
       .catch((err) => console.log(err))
-    this.setState({
-      newspotposted: true
-    })
   }
 
   editform(e) {
