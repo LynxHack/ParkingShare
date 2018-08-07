@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { Component } from "react";
 import api from './../helpers/api.js'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { ImageSource } from 'mapbox-gl';
 
 
 export default class Newspot extends Component {
@@ -105,6 +106,7 @@ export default class Newspot extends Component {
               <div>
                 <button className="action-button" >Upload</button>
               </div>
+              { this.state.uploadStatus && <img src="https://cdn2.iconfinder.com/data/icons/weby-flat-vol-1/512/1_Approved-check-checkbox-confirm-green-success-tick-512.png" />}
             </div>
           </form>
         </div>
