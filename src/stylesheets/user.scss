@@ -269,37 +269,37 @@ $button-border-color: #166E84;
 
 }
 #carform fieldset {
-	background: white;
-	border: 0 none;
-	border-radius: 3px;
-	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
-	box-sizing: border-box;
-	width: 80%;
-	margin: 0 10%;
-	top: 75px;
-	position: relative;
+  background: white;
+  border: 0 none;
+  border-radius: 3px;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0 10%;
+  top: 75px;
+  position: relative;
 }
 
 /*Hide all except first fieldset*/
 #carform fieldset:not(:first-of-type) {
-	display: none;
+  display: none;
 }
 /*inputs*/
 #carform input, #carform textarea {
-	padding: 12px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  font-size: 13px;
 }
 /*buttons*/
 #carform .action-button {
-	margin-top: 30px;
+  margin-top: 30px;
     width: 100px;
     background: #27AE60;
     font-weight: bold;
@@ -310,5 +310,5 @@ $button-border-color: #166E84;
 }
 
 #carform .action-button:hover, #carform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+  box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
 }

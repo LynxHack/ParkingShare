@@ -1,6 +1,7 @@
 const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const webpack = require('webpack');
 const config = require('./webpack.config.dev.js');
 const app = express();
@@ -8,9 +9,6 @@ const compiler = webpack(config);
 
 const dbGet = require('./db/helpers/get_data.js');
 const dbPost = require('./db/helpers/post_data.js');
-
-var bcrypt = require('bcryptjs');
-const saltRounds = 10;
 
 var cookieSession = require('cookie-session')
 app.use(cookieSession({
@@ -25,6 +23,8 @@ app.use(cookieSession({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(fileUpload());
+
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
@@ -35,12 +35,23 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use('/public', express.static('public'));
 
 app.get('/db/spots', async function(req, res) {
-  const results = await dbGet.getAvailableSpots(req.query.starttime, req.query.endtime);
+  let bounds = JSON.parse(req.query.bounds);
+  console.log(`To server ${bounds}`);
+
+  const results = await dbGet.getAvailableSpots(bounds, req.query.starttime, req.query.endtime);
   res.json(results);
 })
 
+app.get('/db/spots/user', async function(req, res) {
+  let results = await dbGet.getUserSpots(req.session.user_id)
+  if (results) {
+    res.status(200).json(results)
+  } else {
+    res.status(404).send('Unable to retrienve any parking spots associated to user')
+  }
+})
+
 app.get('/', function(req, res) {
-  console.log(req.session.user_id);
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
@@ -52,22 +63,41 @@ app.get('/*', function(req, res) {
   })
 })
 
-app.post('/getreservations', (req, res) => {
-  console.log("Retrieving reservations for ", req.session.user_id);
-  dbGet.getReservations(req.session.user_id)
+app.post('/parkingid', (req, res) => {
+  dbGet.getParkingDetails(req.body.parkingid)
+  .then((result) => {
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    res.status(404).send(err);
+  })
+})
+
+app.post('/getreviews', (req, res) => {
+  console.log('Server retrieving reviews for parkingid', req.body.parkingid);
+  dbGet.getReviews(req.body.parkingid)
   .then((result) => {
     console.log(result);
     res.status(200).send(result);
   })
   .catch((err) => {
-    console.log("error retrieving client reservations");
     res.status(404).send(err);
   })
+})
+
+app.post('/getreservations', (req, res) => {
+  dbGet.getReservations(req.session.user_id)
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      console.log("error retrieving client reservations");
+      res.status(404).send(err);
+    })
 });
 
 // route for user logout
 app.post('/logout', (req, res) => {
-  console.log("Attempt logout");
   if (req.session.user_id) {
     req.session = null;
     res.status(200).send("Successfully logout of session")
@@ -77,12 +107,12 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/newspot', function(req, res) {
-  console.log("server received", req.body)
   dbPost.insertNewSpot(req.body);
+  res.status(200).send("Ok");
+
 })
 
 app.post('/initiallog', function(req, res) {
-  console.log(req.session.user_id);
   if (!req.session.user_id) {
     res.status(401).send("failed")
   }
@@ -90,7 +120,6 @@ app.post('/initiallog', function(req, res) {
   dbPost.checkid(req.session.user_id)
     .then((result) => {
       if (result) {
-        console.log(result);
         res.status(200).send(result[0]);
       } else {
         res.status(401).send(result[0]);
@@ -98,7 +127,6 @@ app.post('/initiallog', function(req, res) {
     })
     .catch((err) => {
       console.log(err);
-      res.status(401).send("failed");
     })
 })
 
@@ -106,7 +134,6 @@ app.post('/login', function(req, res) {
   dbPost.checkcredentials(req.body.email, req.body.password, "")
     .then((result) => {
       if (result) {
-        console.log("Sending success to client");
         req.session.user_id = result[0].id;
         res.status(200).send(result);
       } else {
@@ -122,6 +149,21 @@ app.post('/login', function(req, res) {
 app.post('/register', function(req, res) {
   dbPost.registerUser(req.body);
   res.status(200).send("Add user successful!")
+})
+
+app.post('/upload/userspot', (req, res, next) => {
+  console.log(req.files);
+  
+  let imageFile = req.files.file;
+
+  imageFile.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    res.json({ file: `public/${req.body.filename}.jpg` });
+  });
+
 })
 
 app.listen(process.env.PORT || 8080, function(err) {

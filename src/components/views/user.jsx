@@ -1,59 +1,47 @@
 require('./../../stylesheets/user.scss');
 import React, { Component } from "react";
 import axios from 'axios';
-
+import { resCard } from './_resCard.jsx';
+import { parkingCard } from './_parkingspot.jsx';
 
 export default class userPage extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       reservations: [],
-      openModal: false //to populate with userregistration objects
+      openModal: false, //to populate with userregistration objects
+      parkingspots: [],
+      reservations: [],  //to populate with userregistration objects
+      reservationsloading: true,
+      userspotsloading: true
     }
     this.openModal = this.openModal.bind(this)
   }
-
-  componentDidMount(){
+  componentDidMount() {
+    this.setState({
+      reservationsloading: true,
+      userspotsloading: true
+    })
     axios.post('/getreservations', {})
-    .then((res) => {
-      for(let i = 0; i < res.data.length; i++){
-        this.setState((prevState) => {
-          reservations: prevState.reservations.push({
-            resnum: i,
-            address: res.data[i].address,
-            city: res.data[i].city,
-            postalcode: res.data[i].postalcode,
-            stall: res.data[i].stall,
-            buzzer: res.data[i].buzzer,
-            starttime: res.data[i].startimeunix,
-            endtime: res.data[i].endtimeunix
-          })
+      .then((res) => {
+        this.setState({
+          reservations: res.data,
+          reservationsloading: false
         })
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-
-  generatereservationcard(res){
-    console.log(res);
-    return(
-      <article className="new-tweet-article">
-      <header>
-        <h3>Reservation {res.resnum}</h3>
-        <h5> {res.starttime} - {res.endtime} </h5>
-     </header>
-      <div className="tweet-body">
-      <p className ="message">     
-       <p className ="">Address : {res.address} </p>
-      <p className ="">City : {res.city}</p>
-      <p className ="">Postal Code : {res.postalcode}</p>
-      <p className ="">Stall #  : {res.stall}</p>
-      <p className ="">Buzzer #  : {res.buzzer}</p></p>
-      </div>
-    </article>
-    )
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    axios.get(`/db/spots/user`)
+      .then((result) => {
+        this.setState({
+          parkingspots: result.data,
+          userspotsloading: false
+        })
+      })
+      .catch((err) => {
+        console.log(`Error retrieving user parking spots ${err}`);
+      })
   }
 
   openModal() {
@@ -65,90 +53,33 @@ export default class userPage extends Component {
   }
 
   render() {
+    const { reservations, parkingspots } = this.state;
     if(this.state.openModal === false) {
-    return (
+      return (
 
-      
-<div className="userSection">
-<section className="sidebar">
-  <img src="https://i.kinja-img.com/gawker-media/image/upload/gd8ljenaeahpn0wslmlz.jpg" class="image--cover"/>
-  <h3> Welcome User </h3>
-  <h4>Email : </h4>
-  <h4>User@example.com</h4>
-  <h4>Phone Number</h4><i class="fa fa-phone" aria-hidden="true"></i>
-
-
-  <h4>1-(800)-000-1234</h4>
-
-
-
- </section>
-<section className="reservations">
-<h3> Your Reservations </h3>
-<div id="container">            
-{this.generatereservationcard(this.state.reservations)}
-
-</div> 
-
-</section>
-
-<section className="spots">
-<h3> Your Parking Spots </h3>
-<div id="container">            
-
-       <article class="new-tweet-article">
-      <header>
-        <h3>Spot ID: </h3>
-
-     </header>
-      <div class="tweet-body">
-      <p class ="message">     
-       <p class ="">Address : </p>
-      <p class ="">City : </p>
-      <p class ="">Postal Code : </p>
-      </p>
-      </div>
-    </article>
-
-       <article class="new-tweet-article">
-      <header>
-        <h3>Spot ID: </h3>
-
-     </header>
-      <div class="tweet-body">
-      <p class ="message">     
-       <p class ="">Address : </p>
-      <p class ="">City : </p>
-      <p class ="">Postal Code : </p>
-      </p>
-      </div>
-    </article>
-
-       <article class="new-tweet-article">
-      <header>
-        <h3>Spot ID: </h3>
-
-     </header>
-      <div class="tweet-body">
-      <p class ="message">     
-       <p class ="">Address : </p>
-      <p class ="">City : </p>
-      <p class ="">Postal Code : </p>
-      </p>
-      </div>
-    </article>
-
-</div> 
-
-
-
-</section>
-
-
-
-
-
-
+      <div className="userSection">
+        <section className="sidebar">
+          <img src={this.props.userpicture} className="image--cover" />
+          <h3> {this.props.userfirstname} {this.props.userlastname}</h3>
+          <h4>{this.props.useremail} </h4>
+          <h4>{this.props.userphonenumber}</h4>
+        </section>
+        <section className="reservations">
+          <h3> Your Reservations </h3>
+          <div id="container">
+            {!this.state.reservationsloading && reservations.map((e) => {
+              return resCard(e);
+            })}
+          </div>
+        </section>
+        <section className="spots">
+          <h3> Your Parking Spots </h3>
+          <div id="container">
+            {!this.state.userspotsloading && parkingspots.map((e) => {
+              return parkingCard(e);
+            })}
+          </div>
+        </section>
 
 <section className="cars">
 <h3> Your Vehicles </h3>
@@ -185,10 +116,19 @@ export default class userPage extends Component {
       </div>
     </article>
 
-</div> 
-</section>
-</div>
-    );} else {
+      </div> 
+      </section>
+
+
+
+
+
+
+
+
+
+      </div>
+ );} else {
   return (
 <form >        
 <div id="carform">

@@ -9,6 +9,7 @@ module.exports = {
     console.log(formdata);
     knex('parkingspots')
       .insert({
+        hostid: formdata.userid,
         longitude: formdata.longitude,
         latitude: formdata.latitude,
         picture: formdata.picture,
@@ -18,10 +19,15 @@ module.exports = {
         address: formdata.address,
         city: formdata.city,
         postalcode: formdata.postalcode,
-        maxheight: formdata.maxheight
+        maxheight: formdata.maxheight,
+        picture: formdata.imageURL
       })
-      .then(function(result) {
-        res.json({ success: true, message: 'ok' });
+      .catch(err => {
+        console.log(`insertNewSpot Error: ${err}`);
+
+      })
+      .finally((result) => {
+        return true;
       })
   },
 
@@ -47,7 +53,7 @@ module.exports = {
           });
         })
         .catch((err) => {
-          console.log(err);
+          console.log(`Error checkcredentials: ${err}`);
           return null;
         })
     })
@@ -76,7 +82,7 @@ module.exports = {
       .where({ email: formdata.email })
       .then((result) => {
         if (result.length === 0) {
-          bcrypt.hash(formdata.password, 10, function(err, hash) {
+          bcrypt.hash(formdata.password, 2, function(err, hash) {
             knex('users')
               .insert({
                 firstname: formdata.firstname,
