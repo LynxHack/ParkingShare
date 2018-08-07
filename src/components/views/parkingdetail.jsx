@@ -50,16 +50,6 @@ export default class ParkingDetail extends Component {
           stall: result.data[0].stall,
           buzzer: result.data[0].buzzer,
           maxheight: result.data[0].maxheight};
-          
-          axios.post('/getreviews', {parkingid: parkingid})
-          .then((result) => {
-            console.log(result);
-            // for(let i = 0; i < result.data.length; i++){
-              this.setState((prevstate) => {
-                reviews : prevstate.reviews.push(result.data);
-              })
-          // }
-          })
         }
       
     );
@@ -82,6 +72,7 @@ export default class ParkingDetail extends Component {
   }
 
   generatereviews(review){
+    console.log(review);
     return(
       <div className="review">
       <span className="title">{review.rating}/5
