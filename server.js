@@ -83,6 +83,8 @@ app.post('/logout', (req, res) => {
 
 app.post('/newspot', function(req, res) {
   dbPost.insertNewSpot(req.body);
+  res.status(200).send("Ok");
+
 })
 
 app.post('/initiallog', function(req, res) {

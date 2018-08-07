@@ -17,6 +17,7 @@ export default class App extends Component {
     this.state = {
       isLoggedIn: false,
       showLoginform: false,
+      userid: "",
       userfirstname: "",
       userlastname: "",
       useremail: "",
@@ -67,6 +68,7 @@ export default class App extends Component {
         if (response.status === 200) {
           this.setState((prevState) => ({
             isLoggedIn: true,
+            userid: response.data[0].id,
             userfirstname: response.data[0].firstname,
             userlastname: response.data[0].lastname,
             useremail: response.data[0].email,
@@ -104,6 +106,7 @@ export default class App extends Component {
         if (result.status === 200) {
           this.setState({
             isLoggedIn: true,
+            userid: result.data.id,
             userfirstname: result.data.firstname,
             userlastname: result.data.lastname,
             useremail: result.data.email,
@@ -154,13 +157,22 @@ export default class App extends Component {
           <Route exact path="/search" component={MapContainer} key="search" />
 
           <Route exact path="/" render={(defprops) => <Home isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
-          <Route exact path="/newspot" render={(defprops) => <Newspot isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
-          <Route exact path="/user" render={(defprops) => <UserPage isLoggedIn={this.state.isLoggedIn} 
-                                                                    userfirstname={this.state.userfirstname}
-                                                                    userlastname={this.state.userlastname}
-                                                                    useremail={this.state.useremail}
-                                                                    userphonenumber={this.state.userphonenumber}
-                                                                    userpicture={this.state.userpicture} />} />
+          <Route exact path="/newspot" render={(defprops) => <Newspot 
+            isLoggedIn={this.state.isLoggedIn}
+            userid={this.state.userid}
+            userfirstname={this.state.userfirstname}
+            userlastname={this.state.userlastname}
+            useremail={this.state.useremail}
+            userphonenumber={this.state.userphonenumber}
+            userpicture={this.state.userpicture} />} />
+          <Route exact path="/user" render={(defprops) => <UserPage 
+            isLoggedIn={this.state.isLoggedIn} 
+            userid={this.state.userid}
+            userfirstname={this.state.userfirstname}
+            userlastname={this.state.userlastname}
+            useremail={this.state.useremail}
+            userphonenumber={this.state.userphonenumber}
+            userpicture={this.state.userpicture} />} />
           {/* <Route exact path="/myreservations" render={(defprops) => <MyReservations isLoggedIn={this.state.isLoggedIn} {...defprops} />} /> */}
           <Route exact path="/parkingdetail" render={(defprops) => <ParkingDetail isLoggedIn={this.state.isLoggedIn} {...defprops} />} />
           {this.checkLogin()}

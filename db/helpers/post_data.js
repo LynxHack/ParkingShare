@@ -6,9 +6,10 @@ const knex = require("knex")(knexConfig[ENV]);
 var bcrypt = require('bcryptjs');
 module.exports = {
   insertNewSpot: function(formdata) {
-    console.log(formdata);
+    // console.log(formdata);
     knex('parkingspots')
       .insert({
+        hostid: formdata.userid,
         longitude: formdata.longitude,
         latitude: formdata.latitude,
         picture: formdata.picture,
@@ -20,8 +21,12 @@ module.exports = {
         postalcode: formdata.postalcode,
         maxheight: formdata.maxheight
       })
-      .then(function(result) {
-        res.json({ success: true, message: 'ok' });
+      .catch(err => {
+        console.log(`insertNewSpot Error: ${err}`);
+
+      })
+      .finally((result) => {
+        return true;
       })
   },
 
