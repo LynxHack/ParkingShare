@@ -9,9 +9,6 @@ const compiler = webpack(config);
 const dbGet = require('./db/helpers/get_data.js');
 const dbPost = require('./db/helpers/post_data.js');
 
-var bcrypt = require('bcryptjs');
-const saltRounds = 10;
-
 var cookieSession = require('cookie-session')
 app.use(cookieSession({
   httpOnly: false,
@@ -108,6 +105,8 @@ app.post('/logout', (req, res) => {
 
 app.post('/newspot', function(req, res) {
   dbPost.insertNewSpot(req.body);
+  res.status(200).send("Ok");
+
 })
 
 app.post('/initiallog', function(req, res) {
@@ -125,7 +124,6 @@ app.post('/initiallog', function(req, res) {
     })
     .catch((err) => {
       console.log(err);
-      res.status(401).send("failed");
     })
 })
 
