@@ -63,6 +63,28 @@ app.get('/*', function(req, res) {
   })
 })
 
+app.post('/parkingid', (req, res) => {
+  dbGet.getParkingDetails(req.body.parkingid)
+  .then((result) => {
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    res.status(404).send(err);
+  })
+})
+
+app.post('/getreviews', (req, res) => {
+  console.log('Server retrieving reviews for parkingid', req.body.parkingid);
+  dbGet.getReviews(req.body.parkingid)
+  .then((result) => {
+    console.log(result);
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    res.status(404).send(err);
+  })
+})
+
 app.post('/getreservations', (req, res) => {
   dbGet.getReservations(req.session.user_id)
     .then((result) => {

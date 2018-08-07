@@ -95,6 +95,33 @@ module.exports = {
           reject(err);
         })
     })
+  },
+
+  getReviews: function(parkingid){
+    return new Promise((resolve, reject) => {
+      knex('reviews')
+      .join('users', {'reviews.userid': 'users.id'})
+      .where({parkingid: parkingid})
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    })
+  },
+
+  getParkingDetails: function(parkingid){
+    return new Promise((resolve, rject) => {
+      knex('parkingspots')
+      .where({id: parkingid})
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    })
   }
 }
 

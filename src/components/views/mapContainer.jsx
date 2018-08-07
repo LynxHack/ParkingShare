@@ -37,7 +37,8 @@ class MapContainer extends Component {
     }
     this.onText = this.onText.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    this.geolookup = {}
+    this.geolookup = {};
+    var self = this;
   }
 
   componentDidMount = async () => {
@@ -117,20 +118,39 @@ class MapContainer extends Component {
       el.className = `${marker.id}`;
       // this.geolookup[marker.id] = marker; //populate info lookup table
 
+      var str = ``;
+      for (var key in marker) {
+          if (str != ``) {
+              str += `&`;
+          }
+          str += key + `=` + marker[key];
+      }
+
       await new mapboxgl.Marker(el)
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
           .setHTML(`<h3>${marker.properties.address}</h3>
                     <p>${marker.properties.description}</p>
-                    <a href='/parkingdetail' class='btn-outline-primary'>Reserve</a>
+                    <a href='/parkingdetail?id=${marker.id} class='btn-outline-primary'>Reserve</a>
                     `))
         .addTo(this.map);
-
     });
-
+  
     this.setState({
       featuresLoading: false
     })
+
+  }
+
+  serialize(obj){
+    var str = ``;
+    for (var key in obj) {
+        if (str != ``) {
+            str += `&`;
+        }
+        str += key + `=` + encodeURIComponent(obj[key]);
+    }
+    return str;
   }
 
   onText(evt) {
@@ -156,12 +176,9 @@ class MapContainer extends Component {
   //   console.log(res.data);
   // })
 
-
-
-
-
   render() {
-    if (this.state.redirect) { return (<Redirect to={{ pathname: '/parkingdetail', state: { data: this.geolookup[this.currselected] } }} />) }
+    // console.log(this.geolookup);
+    // if (this.state.redirect) { return (<Redirect to={{ pathname: '/parkingdetail', state: { data: this.geolookup[this.currselected] } }} />) }
 
     return (
       <section>
