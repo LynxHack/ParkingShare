@@ -11,12 +11,11 @@ module.exports = {
           <h3>{props.id} </h3>
         </header>
         <div className="tweet-body">
-          <img src={props.picture} className="parkingspot-img" />
-          <p className="">{props.address}</p>
-          <p className="">{props.city}</p>
-          <p className="">{props.stall}</p>
-          <p className="">{props.maxheight}</p>
-          <p className="">{props.description}</p>
+          <p className="">Address : {props.address}</p>
+          <p className="">City : {props.city}</p>
+          <p className="">Stall #{props.stall}</p>
+    <p className="">Max Height : {props.maxheight} inches </p>
+          <p className="">Description : {props.description}</p>
         </div>
       </article>
     )
