@@ -94,7 +94,7 @@ export default class Newspot extends Component {
 
     return (
       <div>
-        <div className="file-upload">
+        <div id="pictureupload" className="file-upload">
           <form onSubmit={this.handleUploadImage}>
             <div className="form-group">
               <input className="form-control" ref={(ref) => { this.uploadInput = ref; }} type="file" />
@@ -102,7 +102,9 @@ export default class Newspot extends Component {
 
             <div className="form-group">
               <input className="form-control" ref={(ref) => { this.fileName = ref; }} type="text" placeholder="Optional name for the file" />
-              <button className="action-button" >Upload</button>
+              <div>
+                <button className="action-button" >Upload</button>
+              </div>
             </div>
           </form>
         </div>
