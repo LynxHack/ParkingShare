@@ -77,7 +77,7 @@ app.post('/getvehicles', (req, res) => {
 });
 
 app.post('/addvehicle', (req, res) => {
-  dbPost.addvehicle(req.body.make,req.body.model,req.body.color,req.body.licenseplate)
+  dbPost.addvehicle(req.body.make,req.body.model,req.body.color,req.body.licenseplate, req.session.user_id)
   .then((result) => {
     res.status(200).send(result);
   })

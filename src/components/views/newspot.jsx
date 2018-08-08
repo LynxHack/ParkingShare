@@ -78,9 +78,9 @@ export default class Newspot extends Component {
     await data.append('file', this.uploadInput.files[0]);
     await data.append('filename', this.fileName.value);
 
-    axios.post('http://localhost:8080/upload/userspot', data)
+    axios.post(`http://${window.location.hostname}:8080/upload/userspot`, data)
       .then((response) => {
-        this.setState({ imageURL: `http://localhost:8080/${response.data.file}`, uploadStatus: true });
+        this.setState({ imageURL: `http://${window.location.hostname}:8080/${response.data.file}`, uploadStatus: true });
       })
       .catch((error) => {
         console.log(error);

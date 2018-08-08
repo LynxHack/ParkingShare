@@ -108,8 +108,8 @@ export default class ParkingDetail extends Component {
   }
 
   reserve = () => {
-    let starttime = this.getUrlParameter('starttime')
-    let endtime = this.getUrlParameter('endtime')
+    let starttime = this.getUrlParameter('starttime').slice(0, 10)
+    let endtime = this.getUrlParameter('endtime').slice(0, 10)
     axios.post('/reserve', { parkingid: self.state.parkingid, starttime: starttime, endtime: endtime })
       .then((result) => {
         console.log(result);

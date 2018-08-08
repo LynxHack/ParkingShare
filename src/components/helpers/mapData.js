@@ -4,9 +4,10 @@ import axios from 'axios';
 module.exports = {
   getSpots(bounds, startdate, enddate) {
     return new Promise((resolve, reject) => {
-
+      console.log(window.location.hostname);
+      
       const ax = axios.create({
-        baseURL: "http://localhost:8080"
+        baseURL: `http://${window.location.hostname}:8080`
       })
       ax.get(`/db/spots?bounds=${bounds}&starttime=${startdate}&endtime=${enddate}`)
         .then((response) => {

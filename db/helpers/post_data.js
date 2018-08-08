@@ -149,7 +149,7 @@ module.exports = {
   },
 
 
-  addvehicle: function(make, model, color, licenseplate){
+  addvehicle: function(make, model, color, licenseplate, userid){
     return new Promise((resolve, reject) => {
       knex('vehicles')
       .insert({
@@ -157,7 +157,7 @@ module.exports = {
         model: model,
         color: color,
         licenseplate: licenseplate,
-        userid : 1
+        userid : userid
       })
       .then(() => {
         resolve("successfully added new vehicle to db");
