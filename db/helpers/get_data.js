@@ -25,6 +25,7 @@ function removeBookedSpots(bookings, parkingspots) {
   }
   return spots;
 }
+
 function removeUniqueFromArrays(array1, array2) {
   let output = [];
   let a1 = array1;
@@ -38,7 +39,6 @@ function removeUniqueFromArrays(array1, array2) {
   }
   return output;
 }
-
 
 module.exports = {
 
@@ -61,6 +61,7 @@ module.exports = {
         .then(function(result) {
           return result
         })
+        
       // .where(knex.raw(`latitude Between ${bounds[0][1]} And ${bounds[1][1]} And longitude Between ${bounds[0][0]} And ${bounds[1][0]}`))
 
       let promisedParkingSpotsByLongitude = knex('parkingspots')
@@ -125,7 +126,6 @@ module.exports = {
     })
   }
 }
-
 
 class userregistration {
   constructor(address, city, postalcode, stall, buzzer) {

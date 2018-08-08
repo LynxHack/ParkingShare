@@ -29,9 +29,12 @@ export default class ParkingDetail extends Component {
       curruserreview: "",
       reviews: [],
       
+
+      returntouserpage: false,
       totalstars: 0
     }
     self = this;
+    this.reserve = this.reserve.bind(this);
   }
 
   componentDidMount(){
@@ -91,6 +94,10 @@ export default class ParkingDetail extends Component {
     axios.post('/reserve', {parkingid: self.state.parkingid})
     .then((result) => {
       console.log(result);
+      self.setState(prevstate =>{
+        returntouserpage: true;
+      })
+      console.log(self.state);
     })
     .catch((err) => {
       console.log(err);
@@ -160,7 +167,8 @@ export default class ParkingDetail extends Component {
   }
 
   renderstars(){
-    const numstar = this.getaveragerating();
+    let numstar = this.getaveragerating();
+    numstar = Math.floor(numstar);
     console.log(numstar);
     const numstarstr = numstar.toString();
     console.log(numstarstr);
@@ -182,6 +190,8 @@ export default class ParkingDetail extends Component {
   }
 
   render() {
+    console.log(this.state);
+    {this.state.returntouserpage && (<Redirect to={{ pathname: '/user' }} />)}
     return (       
       <div className="parkingdetail">
             <div className="bodyWrap">    
@@ -200,10 +210,10 @@ export default class ParkingDetail extends Component {
               <div className="overview">
                 <h1>{this.state.address}</h1>
                 <h2>{this.state.city}, {this.state.province}</h2>
-                <span className="rating">
+                <div className="rating">
                   {this.renderstars.bind(this)()} 
                   {/* <img src={this.state.picture}/> */}
-                </span>
+                </div>
                 <br/>
                 {/* <span> 3 spots available</span> */}
                 <div className="description">Description:<br/>{this.state.description}</div>
