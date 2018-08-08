@@ -35,14 +35,23 @@ export default class ParkingDetail extends Component {
     }
     self = this;
     this.reserve = this.reserve.bind(this);
+    this.getUrlParameter = this.getUrlParameter.bind(this);
   }
 
   componentDidMount() {
-    var query = this.props.location;
-    var params = { query }
-    var parkingid = params.query.search.slice(1).split('%')[0].split('=')[1];
-    console.log("The id of parking lot is", parkingid);
-    axios.post('/parkingid', { parkingid: parkingid })
+    // var query = this.props.location;
+    // console.log(query);
+    
+    // var params = { query }
+    let id = this.getUrlParameter('id')
+    
+    // console.log(id);
+    
+    
+    
+    // var parkingid = params.query.search.slice(1).split('%')[0].split('=')[1];
+    // console.log("The id of parking lot is", parkingid);
+    axios.post('/parkingid', { parkingid: id })
       .then((result) => {
         console.log(result);
         this.setState({
@@ -61,6 +70,13 @@ export default class ParkingDetail extends Component {
         console.log(err);
       })
   }
+
+  getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
 
   returnreviews(parkingid) {
     axios.post('/getreviews', { parkingid: parkingid })
@@ -92,7 +108,9 @@ export default class ParkingDetail extends Component {
   }
 
   reserve = () => {
-    axios.post('/reserve', { parkingid: self.state.parkingid })
+    let starttime = this.getUrlParameter('starttime')
+    let endtime = this.getUrlParameter('endtime')
+    axios.post('/reserve', { parkingid: self.state.parkingid, starttime: starttime, endtime: endtime })
       .then((result) => {
         console.log(result);
         this.setState({
@@ -136,12 +154,12 @@ export default class ParkingDetail extends Component {
           <textarea name="review" onChange={this.updatereview.bind(this)} placeholder="Write a review" />
           <div className="productbutton submit blueSubmit left" onClick={this.submitreview.bind(this)}>Submit Review</div>
 
-          <fieldset class="rating" onClick={this.updaterating.bind(this)}>
-            <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
-            <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
-            <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
-            <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-            <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+          <fieldset className="rating" onClick={this.updaterating.bind(this)}>
+            <input type="radio" id="star5" name="rating" value="5" /><label className="full" for="star5" title="Awesome - 5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label className="full" for="star4" title="Pretty good - 4 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label className="full" for="star3" title="Meh - 3 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label className="full" for="star2" title="Kinda bad - 2 stars"></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label className="full" for="star1" title="Sucks big time - 1 star"></label>
           </fieldset>
         </div>
       )

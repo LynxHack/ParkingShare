@@ -126,20 +126,13 @@ class MapContainer extends Component {
       el.className = `${marker.id}`;
       // this.geolookup[marker.id] = marker; //populate info lookup table
 
-      var str = ``;
-      for (var key in marker) {
-        if (str != ``) {
-          str += `&`;
-        }
-        str += key + `=` + marker[key];
-      }
 
       await new mapboxgl.Marker(el)
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
           .setHTML(`<h3>${marker.properties.address}</h3>
                     <p>${marker.properties.description}</p>
-                    <a href='/parkingdetail?id=${marker.id} class='btn-outline-primary'>Reserve</a>
+                    <a href='/parkingdetail?id=${marker.id}&starttime=${this.state.startdate}&endtime=${this.state.enddate}&success=${this.state.endDateId} class='btn-outline-primary'>Reserve</a>
                     `))
         .addTo(this.map);
     });
