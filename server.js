@@ -63,6 +63,31 @@ app.get('/*', function(req, res) {
   })
 })
 
+
+
+app.post('/getvehicles', (req, res) => {
+  dbGet.getVehicles(req.session.user_id)
+    .then((result) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      console.log("error retrieving client vehicles");
+      res.status(404).send(err);
+    })
+});
+
+app.post('/addvehicle', (req, res) => {
+  dbPost.addvehicle(req.body.make,req.body.model,req.body.color,req.body.licenseplate)
+  .then((result) => {
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    console.log("error adding a client vehicle");
+    res.status(404).send(err);
+  })
+})
+
+
 app.post('/parkingid', (req, res) => {
   dbGet.getParkingDetails(req.body.parkingid)
   .then((result) => {

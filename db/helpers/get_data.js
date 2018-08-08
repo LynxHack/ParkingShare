@@ -42,6 +42,23 @@ function removeUniqueFromArrays(array1, array2) {
 
 module.exports = {
 
+  getVehicles: function(userId) {
+    return new Promise((resolve, reject) => {
+      knex('vehicles')
+      .where('userid', '=', userId)
+      .catch((err) => {
+        
+        console.log(`Error getUserSpots ${err}`);
+         reject(err)
+      })        .then(function(result) {
+        console.log(result, "this is in get data")
+         resolve(result)
+      })
+
+    }) 
+    
+  },
+
   getUserSpots: function(userId) {
     return knex('parkingspots')
       .where('hostid', '=', userId)

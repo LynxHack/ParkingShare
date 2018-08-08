@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { resCard } from './_resCard.jsx';
 import { parkingCard } from './_parkingspot.jsx';
+import { vehicle } from './_vehicles.jsx';
 
 export default class userPage extends Component {
   constructor(props) {
@@ -13,8 +14,16 @@ export default class userPage extends Component {
       parkingspots: [],
       reservations: [],  //to populate with userregistration objects
       reservationsloading: true,
-      userspotsloading: true
+      userspotsloading: true,
+      vehiclesloading: true,
+      vehicles: [],
+      make : '',
+      model : '',
+      color : '',
+      licenseplate : ''
+
     }
+    self = this;
     this.openModal = this.openModal.bind(this)
   }
   componentDidMount() {
@@ -42,7 +51,45 @@ export default class userPage extends Component {
       .catch((err) => {
         console.log(`Error retrieving user parking spots ${err}`);
       })
+      axios.post('/getVehicles', {})
+      .then((res) => {
+        console.log("hi", res.data)
+        this.setState({
+          vehicles: res.data,
+          vehiclesloading: false
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
+
+
+  editMake(e){
+    this.setState({make : e.target.value})
+  }
+  editModel(e){
+    this.setState({model : e.target.value})
+  }
+  editColor(e){
+    this.setState({color : e.target.value})
+  }
+  editLicensePlate(e){
+    this.setState({licenseplate : e.target.value})
+  }
+  submitform = () => {
+    axios.post('/addvehicle',{make: self.state.make, model : self.state.model, color : self.state.color, licenseplate : self.state.licenseplate})
+    .then((res) => {
+      this.setState({openModal : false}, () =>{
+        this.componentDidMount()
+      })
+      console.log("result is", res)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
 
   openModal() {
     this.setState(prevState => ({
@@ -51,8 +98,10 @@ export default class userPage extends Component {
   }
 
   render() {
-    const { reservations, parkingspots } = this.state;
+    console.log(this.state.openModal,'STATEETETE')
+    const { reservations, parkingspots, vehicles } = this.state;
     if(this.state.openModal === false) {
+
       return (
 
       <div className="userSection">
@@ -87,21 +136,9 @@ export default class userPage extends Component {
 <h3> Your Vehicles </h3>
 <input class="button" type="button" value="Add A Vehicle" onClick={this.openModal}/>
 <div id="container">            
-
-       <article class="new-tweet-article">
-      <header>
-        <h3>Vehicle ID: </h3>
-
-     </header>
-      <div class="tweet-body">
-      <p class ="message">     
-       <p class ="">Make : </p>
-      <p class ="">Model : </p>
-      <p class ="">Color : </p>
-      <p class ="">License Plate : </p>
-      </p>
-      </div>
-    </article>
+    {!this.state.vehiclesloading && vehicles.map((e) => {
+              return vehicle(e);
+            })}     
       </div> 
       </section>
 </span>
@@ -110,14 +147,14 @@ export default class userPage extends Component {
  );} else {
   return (
 <form >        
-<div id="carform">
+          <div id="carform">
           <h1 className="fs-title">Add A Vehicle</h1>
-          <input type="text" name="make" placeholder="Make" />
-          <input type="text" name="model" placeholder="Model"/>
-          <input type="text" name="color" placeholder="Color"/>
+          <input type="text" name="make" placeholder="Make" onChange={this.editMake.bind(this)} />
+          <input type="text" name="model" placeholder="Model" onChange={this.editModel.bind(this)}/>
+          <input type="text" name="color" placeholder="Color" onChange={this.editColor.bind(this)}/>
          
-          <input type="text" name="plateNumber" placeholder="License Plate #"/>
-          <input type="button" name="next" className="action-button" value="Next" onClick={this.openModal}/>
+          <input type="text" name="plateNumber" placeholder="License Plate #" onChange={this.editLicensePlate.bind(this)}/>
+          <input type="button" name="next" className="action-button" value="Next" onClick={this.submitform}/>
         </div>
       </form>
   );

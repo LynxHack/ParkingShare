@@ -146,5 +146,26 @@ module.exports = {
         reject(err);
       })
     })
+  },
+
+
+  addvehicle: function(make, model, color, licenseplate){
+    return new Promise((resolve, reject) => {
+      knex('vehicles')
+      .insert({
+        make: make,
+        model: model,
+        color: color,
+        licenseplate: licenseplate,
+        userid : 1
+      })
+      .then(() => {
+        resolve("successfully added new vehicle to db");
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    })
   }
+
 }
