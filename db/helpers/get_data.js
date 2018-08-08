@@ -86,7 +86,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       knex('reservations')
         .join('parkingspots', { 'reservations.parkingid': 'parkingspots.id' })
-        .where({ clientid: 2 }) //userid }) //to be added back after testing
+        .where({ clientid: userid }) //userid }) //to be added back after testing
         .then((res) => {
           resolve(res);
         })
