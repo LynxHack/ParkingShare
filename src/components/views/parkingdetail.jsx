@@ -206,7 +206,7 @@ export default class ParkingDetail extends Component {
                 </span>
                 <br/>
                 {/* <span> 3 spots available</span> */}
-                <span className="description">Description:<br/>{this.state.description}</span>
+                <div className="description">Description:<br/>{this.state.description}</div>
 
                 <div className="productbutton reserve" onClick={this.reserve}>Reserve</div>         
               </div>
