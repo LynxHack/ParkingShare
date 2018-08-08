@@ -11,6 +11,7 @@
   }
 }
 
+
 .mapboxgl-popup .mapboxgl-popup-anchor-top {
   z-index: 50;
 }
@@ -33,9 +34,14 @@
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-#search-bar{
+#list-group .search-icon{
+  top: -52px;
+}
+
+#list-group #search-bar{
   position: relative;
-  right: 5px;
+  right: 10px;
+  zoom: 0.65;
 }
 
 #list-group {
@@ -69,11 +75,12 @@
   }
 }
 
-#dateselectmap {
+#list-group #dateselectmap {
   z-index: 10;
-  top: 88px;
-  position: absolute;
-  left: 60px;
+  top: 110px;
+  position: relative;
+  left: 12px;
+  zoom: 0.7
 }
 
 .mapboxgl-marker {

@@ -47,9 +47,7 @@ export default class userPage extends Component {
   openModal() {
     this.setState(prevState => ({
       openModal: !prevState.openModal
-      
     }));
-    console.log("HEYYYYYYYYYY")
   }
 
   render() {
@@ -72,6 +70,8 @@ export default class userPage extends Component {
             })}
           </div>
         </section>
+<div>
+        <span>
         <section className="spots">
           <h3> Your Parking Spots </h3>
           <div id="container">
@@ -80,7 +80,9 @@ export default class userPage extends Component {
             })}
           </div>
         </section>
+        </span>
 
+<span>
 <section className="cars">
 <h3> Your Vehicles </h3>
 <input class="button" type="button" value="Add A Vehicle" onClick={this.openModal}/>
@@ -102,15 +104,8 @@ export default class userPage extends Component {
     </article>
       </div> 
       </section>
-
-
-
-
-
-
-
-
-
+</span>
+</div>
       </div>
  );} else {
   return (
