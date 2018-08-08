@@ -41,9 +41,10 @@ export default class Home extends Component {
   }
 
   setStateAsync(state) {
-    return new Promise((resolve) => {
-      this.setState(state, resolve)
-    });
+    return new Promise((resolve, reject) => {
+      this.setState(state, resolve);
+      reject('new error');
+    })
   }
 
   onText(evt) {
@@ -59,7 +60,7 @@ export default class Home extends Component {
   }
 
   submitForm(evt) {
-    const { searchValue, startDate, endDate} = this.state;
+    const { searchValue, startDate, endDate } = this.state;
     evt.preventDefault();
     api.getMapData(searchValue)
       .then(async (data) => {

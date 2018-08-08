@@ -9,9 +9,11 @@ export default class userPage extends Component {
     super(props);
     this.state = {
       reservations: [],
+      reservationsincoming: [],
       openModal: false, //to populate with userregistration objects
       parkingspots: [],
       reservationsloading: true,
+      reservationsincomingloading: true,
       userspotsloading: true
     }
     this.openModal = this.openModal.bind(this)
@@ -21,6 +23,8 @@ export default class userPage extends Component {
       reservationsloading: true,
       userspotsloading: true
     })
+
+
     axios.post('/getreservations', {})
       .then((res) => {
         this.setState({
@@ -31,6 +35,8 @@ export default class userPage extends Component {
       .catch((err) => {
         console.log(err);
       })
+
+
     axios.get(`/db/spots/user`)
       .then((result) => {
         this.setState({
@@ -40,6 +46,18 @@ export default class userPage extends Component {
       })
       .catch((err) => {
         console.log(`Error retrieving user parking spots ${err}`);
+      })
+
+    axios.post('/reservations/incoming')
+      .then((res) => {
+        this.setState({
+          reservationsincoming: res.data,
+          reservationsincomingloading: false
+        })
+      })
+      .catch((err) => {
+        console.log(`Error getting incoming reservations ${err}`);
+
       })
   }
 
@@ -51,7 +69,7 @@ export default class userPage extends Component {
   }
 
   render() {
-    const { reservations, parkingspots } = this.state;
+    const { reservations, parkingspots, reservationsincoming } = this.state;
     if (this.state.openModal === false) {
       return (
 
@@ -62,12 +80,20 @@ export default class userPage extends Component {
             <h5>{this.props.useremail} </h5>
             <h6> Welcome to your page! Here you can browse your reservations, spots and vehicles. Happy Sharing.</h6>
           </section>
-          <section className="reservations">
-            <h3> Your Reservations </h3>
-            <div id="container">
-              {!this.state.reservationsloading && reservations.map((e) => { return resCard(e); })}
-            </div>
-          </section>
+          <span>
+            <section className="reservations">
+              <h3> Your Reservations Made </h3>
+              <div id="container">
+                {!this.state.reservationsloading && reservations.map((e) => { return resCard(e); })}
+              </div>
+            </section>
+            <section className="reservationsIncoming">
+              <h3> Incoming Reservations </h3>
+              <div id="container">
+                {!this.state.reservationsincomingloading && reservationsincoming.map((e) => { return resCard(e); })}
+              </div>
+            </section>
+          </span>
           <div>
             <span>
               <section className="spots">

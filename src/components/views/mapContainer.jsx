@@ -58,12 +58,20 @@ class MapContainer extends Component {
       .then((res) => {
         this.populateMap(res.data)
       })
+      .catch((err) => {
+        console.log(err);
+        
+      })
 
     this.map.on('moveend', async (e) => {
       bounds = await this.map.getBounds().toArray();
       getSpots(JSON.stringify(bounds), this.state.startdate, this.state.enddate)
         .then((res) => {
           this.populateMap(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          
         })
     })
   }

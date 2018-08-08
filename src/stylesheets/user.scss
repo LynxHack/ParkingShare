@@ -62,8 +62,19 @@
   background:rgba(0, 0, 0, 0.5);
   text-align: center;
   width: 400px;
-  height: 90vh;
+  height: 45vh;
   margin-top: 25px;
+}
+.reservationsIncoming {
+  border-radius: 12px;
+  background:rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 400px;
+  height: 45vh;
+  margin-top: 25px;
+  h3 {
+    float: left;
+  }
 }
 .spots {
   border-radius: 12px;
@@ -82,20 +93,17 @@
   background: rgba(0, 0, 0, 0.5);
   text-align: center;
   margin-right: 22px;
-  height: 39vh;
+  height: 41vh;
   position: relative;
   left: 10px;
   top: 10px;
-  // margin-top: 25px;
-
-  // top: 320px;
-  // left: 673px;
+  margin-top: 6px;
 }
 
 #container {
   border-radius: 12px;
   width: 90%;
-  height: 93%;
+  height: 87%;
   overflow-y: scroll;
   overflow-x: hidden;
   margin-left: 20px;
