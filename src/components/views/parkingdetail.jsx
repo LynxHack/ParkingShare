@@ -142,15 +142,18 @@ export default class ParkingDetail extends Component {
 
   getaveragerating(){
     console.log(self.state.reviews);
-
     if(self.state.reviews.length > 0){
-      const totalstars = self.state.reviews.reduce((a,b) => {
-        return Number(a.rating) + Number(b.rating)
-    })
-
-    return totalstars / self.state.reviews.length;
+    //   const totalstars = self.state.reviews.reduce((a,b) => {
+    //     return Number(a.rating) + Number(b.rating)
+    // })
+    let sum = 0;
+    console.log(typeof(self.state.reviews.rating));
+    for(let i = 0; i < self.state.reviews.length; i++){
+      sum += Number(self.state.reviews[i].rating);
+    } 
+    console.log(sum, self.state.reviews.length);
+    return sum / self.state.reviews.length;
     }
-
     else{
       return 0;
     }
@@ -161,7 +164,7 @@ export default class ParkingDetail extends Component {
     console.log(numstar);
     const numstarstr = numstar.toString();
     console.log(numstarstr);
-    if(numstar > 0){
+    if(Number(numstar) > 0){
       return(
         <div>
           <div class="rating-stars" data-rating={numstarstr.toString()}></div>
@@ -172,8 +175,8 @@ export default class ParkingDetail extends Component {
     else{
       return(
         <div>
-         <p> No reviews yet</p>
-         </div>
+          <p> No reviews yet</p>
+        </div>
       )
     }
   }
