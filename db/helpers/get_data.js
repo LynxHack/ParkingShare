@@ -103,6 +103,7 @@ module.exports = {
       .join('users', {'reviews.userid': 'users.id'})
       .where({parkingid: parkingid})
       .then((res) => {
+        console.log("Result for reviews of id", parkingid, "is", res);
         resolve(res);
       })
       .catch((err) => {

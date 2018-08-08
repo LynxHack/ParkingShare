@@ -40,8 +40,8 @@ export default class ParkingDetail extends Component {
     axios.post('/parkingid', {parkingid: parkingid})
     .then((result) => {
       console.log(result);
-      this.setState((prevState, props) => {
-        return { parkingid: result.data[0].id,
+      this.setState({
+        parkingid: result.data[0].id,
           description: result.data[0].description,
           address: result.data[0].address,
           city: result.data[0].city,
@@ -49,11 +49,9 @@ export default class ParkingDetail extends Component {
           picture: result.data[0].picture,
           stall: result.data[0].stall,
           buzzer: result.data[0].buzzer,
-          maxheight: result.data[0].maxheight};
-        }
-      
-    );
-    })
+          maxheight: result.data[0].maxheight}), self.returnreviews(parkingid)
+    
+        })
     .catch((err) => {
       console.log(err);
     })
@@ -62,18 +60,21 @@ export default class ParkingDetail extends Component {
   returnreviews(parkingid){
     axios.post('/getreviews', {parkingid: parkingid})
     .then((result) => {
+      console.log("Review results for ", parkingid)
       console.log(result);
-      // for(let i = 0; i < result.data.length; i++){
-        this.setState((prevstate) => {
-          reviews : prevstate.reviews.push(result.data);
-        })
-    // }
+      for(var i = 0; i < result.data.length; i++){
+        this.setState(prevState => ({
+          reviews: [...prevState.reviews, result.data[i]]
+        }))
+    }
     })
   }
 
   generatereviews(review){
+    console.log("generating review card for");
     console.log(review);
     return(
+      // <Review rating={review.rating} comment={review.description} author={`${review.firstname} ${review.lastname}`} datecreated={review.created_at}/>
       <div className="review">
       <span className="title">{review.rating}/5
       <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
@@ -100,6 +101,7 @@ export default class ParkingDetail extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (       
       <div className="parkingdetail">
             <div className="bodyWrap">    
@@ -161,8 +163,9 @@ export default class ParkingDetail extends Component {
                </div> 
                 
               <div className="info">
-
-              {this.state.reviews && this.generatereviews(this.state.reviews)}
+              {this.state.reviews && this.state.reviews.map(this.generatereviews)}
+{/*               
+              this.generatereviews(this.state.reviews) */}
                             
                     <div className="productbutton submit blueSubmit left">Write a Review</div> 
                    </div>                     
