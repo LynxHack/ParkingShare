@@ -72,10 +72,11 @@ export default class ParkingDetail extends Component {
     return(
       // <Review rating={review.rating} comment={review.description} author={`${review.firstname} ${review.lastname}`} datecreated={review.created_at}/>
       <div className="review">
-      <span className="title">{review.rating}/5
-      <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
-      <br/>
+      <span className="title">Given Rating - {review.rating}/5 </span>
+     <br/>
+     <br/>
         <span className="comments">{review.description}</span>
+      <br/>
       <span className="author">By {review.firstname} {review.lastname} on {review.created_at.split('T')[0]}</span>
         <div className="vote">
          Was this review helpful?
@@ -118,8 +119,8 @@ export default class ParkingDetail extends Component {
                   <img src={this.state.picture}/>
                 </span> */}
                 <br/>
-                <span> 3 spots available</span>
-                <span className="description">{this.state.description}</span>
+                {/* <span> 3 spots available</span> */}
+                <span className="description">Description:<br/>{this.state.description}</span>
         
                   {/* <select className="prodSelect">
                     <option selected>Parking Spot Selection</option>
@@ -155,7 +156,6 @@ export default class ParkingDetail extends Component {
               {this.state.reviews && this.state.reviews.map(this.generatereviews)}
 {/*               
               this.generatereviews(this.state.reviews) */}
-                            
                     <div className="productbutton submit blueSubmit left">Write a Review</div> 
                    </div>                     
                   

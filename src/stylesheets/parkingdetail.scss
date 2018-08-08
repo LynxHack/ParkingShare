@@ -323,11 +323,12 @@ text-decoration: none;
   border-radius: 4px;
   margin-bottom: 15px;
   float: left;
+  width: 100%
 }
 
-.review span{
-  float: left;
-}
+// .review span{
+//   float: left;
+// }
 
 .review:hover .vote{
   opacity: 1;
