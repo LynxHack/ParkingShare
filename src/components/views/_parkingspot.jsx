@@ -8,10 +8,9 @@ module.exports = {
     return (
       <article className="new-tweet-article" key={`ps${props.id}`}>
         <header>
-          <h3>{props.id} </h3>
+          <h3>{props.address}</h3>
         </header>
         <div className="tweet-body">
-          <p className="">Address : {props.address}</p>
           <p className="">City : {props.city}</p>
           <p className="">Stall #{props.stall}</p>
     <p className="">Max Height : {props.maxheight} inches </p>

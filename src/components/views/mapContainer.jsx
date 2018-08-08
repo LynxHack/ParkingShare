@@ -60,7 +60,7 @@ class MapContainer extends Component {
       })
       .catch((err) => {
         console.log(err);
-        
+
       })
 
     this.map.on('moveend', async (e) => {
@@ -71,7 +71,7 @@ class MapContainer extends Component {
         })
         .catch((err) => {
           console.log(err);
-          
+
         })
     })
   }
@@ -189,19 +189,19 @@ class MapContainer extends Component {
             <form className="search-container" onSubmit={this.submitForm}>
               <input type="text" id="search-bar" placeholder="Search for available locations here" onKeyDown={this.onText} />
               <img className="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" />
-              <div id="dateselectmap">
-                <DateRangePicker
-                  startDate={this.state.startdate} // momentPropTypes.momentObj or null,
-                  startDateId={this.state.startDateId} // PropTypes.string.isRequired,
-                  endDate={this.state.enddate} // momentPropTypes.momentObj or null,
-                  endDateId={this.state.endDateId} // PropTypes.string.isRequired,
-                  onDatesChange={({ startDate, endDate }) => this.setState({ startdate, enddate })} // PropTypes.func.isRequired,
-                  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                  regular={true}
-                />
-              </div>
             </form>
+            <div id="dateselectmap">
+              <DateRangePicker
+                startDate={this.state.startdate} // momentPropTypes.momentObj or null,
+                startDateId={this.state.startDateId} // PropTypes.string.isRequired,
+                endDate={this.state.enddate} // momentPropTypes.momentObj or null,
+                endDateId={this.state.endDateId} // PropTypes.string.isRequired,
+                onDatesChange={({ startDate, endDate }) => this.setState({ startdate, enddate })} // PropTypes.func.isRequired,
+                focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                regular={true}
+              />
+            </div>
           </section>
           <div id="featurelist">
             {!this.state.featuresLoading && features.map((e) => {

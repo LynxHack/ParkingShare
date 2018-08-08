@@ -41,7 +41,7 @@
 #list-group #search-bar{
   position: relative;
   right: 10px;
-  zoom: 0.65;
+  
 }
 
 #list-group {
@@ -50,13 +50,13 @@
   overflow-y: scroll;
   overflow-x: hidden;
   // background-color: whitesmoke;
-  background-color: blanchedalmond;
+  background-color: rgb(243, 243, 243);
   font-family: sans-serif;
 
   section.searchmap {
     z-index: 10;
     .search-container {
-      top: 40px;
+      top: 45px;
       left: 1vw;
       position: absolute;
       width: 23vw;
@@ -83,10 +83,10 @@
 
 #list-group #dateselectmap {
   z-index: 10;
-  top: 15px;
+  top: 11vh;
   position: relative;
-  left: 4vw;
-  zoom: 0.7
+  left: 3vw;
+  
 }
 
 .mapboxgl-marker {

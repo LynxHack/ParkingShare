@@ -261,12 +261,12 @@ export default class ParkingDetail extends Component {
                 </div>
               </div>
 
-              <div className="info">
-                {this.state.reviews && this.state.reviews.map(this.generatereviews)}
+              {/* <div className="info"> */}
+                {/* {this.state.reviews && this.state.reviews.map(this.generatereviews)} */}
                 {/*               
               this.generatereviews(this.state.reviews) */}
-                {this.checklogin.bind(this)()}
-              </div>
+                {/* {this.checklogin.bind(this)()} */}
+              {/* </div> */}
 
             </div>
           </div>
