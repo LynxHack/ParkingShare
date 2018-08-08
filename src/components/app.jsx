@@ -48,7 +48,7 @@ export default class App extends Component {
         <ul>
           <li><Link to="/user">Hi {this.state.userfirstname}!</Link></li>
           <li><Link to="/newspot">Share A Spot</Link></li>
-          <li><Link to="/parkingdetail">(Dev) Parking Detail</Link></li>
+          {/* <li><Link to="/parkingdetail">(Dev) Parking Detail</Link></li> */}
           <li onClick={this.attemptlogout.bind(this)}><Link to="/">Logout</Link></li>
         </ul>
       )

@@ -194,6 +194,7 @@
   border-radius: 10px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+  transition: background-color 0.2s ease-in-out
 }
 
 .userSection  .tweet-body p {
@@ -263,7 +264,7 @@ $button-border-color: #166E84;
   background: rgba(0, 0, 0, 0.5);
   border: none;
   margin-right: 30px;
-  border: 1px solid #eeeeee;
+  // border: 1px solid #eeeeee;
   color: white;
   font-family: sans-serif;
   font-weight: 400;
