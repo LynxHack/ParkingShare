@@ -78,7 +78,7 @@ export default class ParkingDetail extends Component {
       <div className="review">
       <span className="title">{review.rating}/5
       <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
-      
+      <br/>
         <span className="comments">{review.description}</span>
       <span className="author">By {review.firstname} {review.lastname}} on {review.created_at}</span>
         <div className="vote">
