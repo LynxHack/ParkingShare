@@ -110,24 +110,24 @@ export default class ParkingDetail extends Component {
           <div className="botBorder clearFix">
               <div className="productImage">
                 <img src="http://placehold.it/300x300"/>
-                      <span><a href="#"><b>View More</b></a></span>
               </div>
               <div className="overview">
-                <h1>{this.state.address}}</h1>
-                <h2>{this.state.city}, {this.state.province}}</h2>
-                <span className="rating">
+                <h1>{this.state.address}</h1>
+                <h2>{this.state.city}, {this.state.province}</h2>
+                {/* <span className="rating">
                   <img src={this.state.picture}/>
-                </span>
-                <span>3 spots available</span>
+                </span> */}
+                <br/>
+                <span> 3 spots available</span>
                 <span className="description">{this.state.description}</span>
         
-                  <select className="prodSelect">
+                  {/* <select className="prodSelect">
                     <option selected>Parking Spot Selection</option>
                     <option>Spot 1</option>
                     <option>Spot 2</option>
                     <option>Spot 3</option>
                     <option>Spot 4</option>
-                  </select>
+                  </select> */}
         
                 <div className="productbutton reserve" onClick={this.reserve}>Reserve</div>
       
@@ -136,6 +136,7 @@ export default class ParkingDetail extends Component {
                 
              <div className="info">
                   <h3>Location Information</h3>
+                  <br/>
                   <ul className="specs">
                     <li><h5>Host Name:</h5> {this.state.hostname}</li>
                     <li><h5>Car types:</h5> {this.state.cartypes.join(", ")}</li>

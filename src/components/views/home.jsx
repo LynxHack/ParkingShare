@@ -33,6 +33,7 @@ export default class Home extends Component {
     this.pushToResults = this.pushToResults.bind(this);
   }
 
+
   handleChangeStart(date) {
     this.setState({
       startDate: date

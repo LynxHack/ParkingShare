@@ -137,6 +137,9 @@ export default class App extends Component {
         </div>)
   }
 
+  refreshpage(){
+    window.location.reload()
+  }
 
   componentDidMount() {
     this.loadpagecookiecheck();
@@ -150,7 +153,7 @@ export default class App extends Component {
           <nav>
             <div>
             {/* <Link to="/"><h1 className="logo">Spotshare</h1> /></Link> */}
-              <Link to="/" style={{ textDecoration: 'none' }}><h1 className="logo">SpotSharer</h1></Link>
+              <Link to="/" onClick={this.refreshpage} style={{ textDecoration: 'none' }}><h1 className="logo">SpotSharer</h1></Link>
             </div>
             {this.navlogincheck()}
           </nav>
