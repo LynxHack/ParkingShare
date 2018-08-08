@@ -18,7 +18,7 @@ main {
 
 
 nav {
-  top: 0px;
+  top: 12px;
   flex: 1;
   font-family: sans-serif;
   z-index: 1;
@@ -114,6 +114,7 @@ nav ul li a::after {
   height: 2px;
   background: red;
   transition: .2s width ease-in-out;
+  
 }
 
 nav ul li a::before {

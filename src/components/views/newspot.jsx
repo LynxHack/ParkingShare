@@ -96,6 +96,7 @@ export default class Newspot extends Component {
     return (
       <div>
         <div id="pictureupload" className="file-upload">
+          <h2>Upload a picture</h2>
           <form onSubmit={this.handleUploadImage}>
             <div className="form-group">
               <input className="form-control" ref={(ref) => { this.uploadInput = ref; }} type="file" />
@@ -106,7 +107,7 @@ export default class Newspot extends Component {
               <div>
                 <button className="action-button" >Upload</button>
               </div>
-              { this.state.uploadStatus && <img src="https://cdn2.iconfinder.com/data/icons/weby-flat-vol-1/512/1_Approved-check-checkbox-confirm-green-success-tick-512.png" />}
+              {this.state.uploadStatus && <img src="https://cdn2.iconfinder.com/data/icons/weby-flat-vol-1/512/1_Approved-check-checkbox-confirm-green-success-tick-512.png" />}
             </div>
           </form>
         </div>
