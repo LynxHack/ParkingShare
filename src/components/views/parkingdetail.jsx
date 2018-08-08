@@ -76,7 +76,7 @@ export default class ParkingDetail extends Component {
       <br/><img className="stars" src="http://localhost.com/jblocal/secure-html/onlineec/images/stars/5StarBlue09.gif"/></span>
       <br/>
         <span className="comments">{review.description}</span>
-      <span className="author">By {review.firstname} {review.lastname}} on {review.created_at}</span>
+      <span className="author">By {review.firstname} {review.lastname} on {review.created_at.split('T')[0]}</span>
         <div className="vote">
          Was this review helpful?
          <input type="submit" value="Yes"/>
@@ -109,7 +109,7 @@ export default class ParkingDetail extends Component {
       
           <div className="botBorder clearFix">
               <div className="productImage">
-                <img src="http://placehold.it/300x300"/>
+                <img src={this.state.picture}/>
               </div>
               <div className="overview">
                 <h1>{this.state.address}</h1>

@@ -49,7 +49,10 @@
   max-height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: whitesmoke;
+  // background-color: whitesmoke;
+  background-color: blanchedalmond;
+  font-family: sans-serif;
+
   section.searchmap {
     z-index: 10;
     .search-container {
