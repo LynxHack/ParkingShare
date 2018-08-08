@@ -158,6 +158,17 @@ app.post('/login', function(req, res) {
     })
 })
 
+app.post('/addreview', function(req, res){
+  dbPost.addreview(req.body.rating, req.body.description, req.body.parkingid, req.session.user_id)
+  .then((result) => {
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(401).send("failed to add review");
+  })
+});
+
 app.post('/register', function(req, res) {
   dbPost.registerUser(req.body);
   res.status(200).send("Add user successful!")

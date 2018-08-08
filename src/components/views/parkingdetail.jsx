@@ -25,7 +25,8 @@ export default class ParkingDetail extends Component {
       buzzer: "5010",
       maxheight: "250", //in cm for now
       cartypes: ["motorbike", "sedan/small pickup", "full pickup/SUV"],
-
+      curruserrating: 0,
+      curruserreview: "",
       reviews: []
     }
     self = this;
@@ -96,6 +97,29 @@ export default class ParkingDetail extends Component {
     })
   }
 
+  updatereview(e){
+    console.log(e.target.value);
+    this.setState({curruserreview: e.target.value});
+  }
+
+  updaterating(e){
+    console.log(e.target.value)
+    this.setState({curruserrating: e.target.value});
+  }
+
+  submitreview(e){
+    axios.post('/addreview', {rating: this.state.curruserrating, parkingid: this.state.parkingid, description: this.state.curruserreview})
+    .then((result) => {
+      console.log(result);
+      this.setState({
+        reviews: []
+      }, this.returnreviews(this.state.parkingid))
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   render() {
     return (       
       <div className="parkingdetail">
@@ -156,8 +180,25 @@ export default class ParkingDetail extends Component {
               {this.state.reviews && this.state.reviews.map(this.generatereviews)}
 {/*               
               this.generatereviews(this.state.reviews) */}
-                    <div className="productbutton submit blueSubmit left">Write a Review</div> 
-                   </div>                     
+                    
+                    <div className="reviewsection"> 
+                      <textarea name="review" onChange={this.updatereview.bind(this)}  placeholder="Write a review"/>
+                      <div className="productbutton submit blueSubmit left" onClick={this.submitreview.bind(this)}>Submit Review</div> 
+                     
+                      <fieldset class="rating" onClick={this.updaterating.bind(this)}>
+                          <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                          <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                          <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                          <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                          <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                          <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                          <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                          <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                          <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                          <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                      </fieldset>
+                      </div>        
+                   </div>             
                   
                 </div>  
              </div>

@@ -128,5 +128,23 @@ module.exports = {
         reject(err);
       })
     })
+  },
+
+  addreview: function(rating, description, parkingid, user_id){
+    return new Promise((resolve, reject) => {
+      knex('reviews')
+      .insert({
+        rating: rating,
+        description: description,
+        parkingid: parkingid,
+        userid: user_id
+      })
+      .then(() => {
+        resolve("successfully added new review to db");
+      })
+      .catch((err) => {
+        reject(err);
+      })
+    })
   }
 }
