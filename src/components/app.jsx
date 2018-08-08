@@ -149,7 +149,8 @@ export default class App extends Component {
 
           <nav>
             <div>
-              <Link to="/"><img src={require('./../stylesheets/SpotSharer.png')} /></Link>
+            {/* <Link to="/"><h1 className="logo">Spotshare</h1> /></Link> */}
+              <Link to="/" style={{ textDecoration: 'none' }}><h1 className="logo">SpotSharer</h1></Link>
             </div>
             {this.navlogincheck()}
           </nav>

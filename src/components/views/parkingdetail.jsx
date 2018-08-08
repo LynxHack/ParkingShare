@@ -60,8 +60,6 @@ export default class ParkingDetail extends Component {
   returnreviews(parkingid){
     axios.post('/getreviews', {parkingid: parkingid})
     .then((result) => {
-      console.log("Review results for ", parkingid)
-      console.log(result);
       for(var i = 0; i < result.data.length; i++){
         this.setState(prevState => ({
           reviews: [...prevState.reviews, result.data[i]]
@@ -71,8 +69,6 @@ export default class ParkingDetail extends Component {
   }
 
   generatereviews(review){
-    console.log("generating review card for");
-    console.log(review);
     return(
       // <Review rating={review.rating} comment={review.description} author={`${review.firstname} ${review.lastname}`} datecreated={review.created_at}/>
       <div className="review">
@@ -90,7 +86,6 @@ export default class ParkingDetail extends Component {
   }
 
   reserve(){
-    console.log()
     axios.post('/reserve', {parkingid: self.state.parkingid})
     .then((result) => {
       console.log(result);
@@ -101,7 +96,6 @@ export default class ParkingDetail extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (       
       <div className="parkingdetail">
             <div className="bodyWrap">    
@@ -116,11 +110,6 @@ export default class ParkingDetail extends Component {
           <div className="botBorder clearFix">
               <div className="productImage">
                 <img src="http://placehold.it/300x300"/>
-                  <ul className="imageList">
-                    <li><a href="#"><img src="http://placehold.it/92x92"/></a></li>
-                    <li><a href="#"><img src="http://placehold.it/92x92"/></a></li>
-                    <li><a href="#"><img src="http://placehold.it/92x92"/></a></li>
-                  </ul>
                       <span><a href="#"><b>View More</b></a></span>
               </div>
               <div className="overview">
@@ -129,7 +118,6 @@ export default class ParkingDetail extends Component {
                 <span className="rating">
                   <img src={this.state.picture}/>
                 </span>
-                <h3>${this.state.price} per hour</h3>
                 <span>3 spots available</span>
                 <span className="description">{this.state.description}</span>
         
@@ -172,43 +160,7 @@ export default class ParkingDetail extends Component {
                   
                 </div>  
              </div>
-            </div> 
-              
-            <div className="sidebar slim">
-              <div className="folderTab sub clearFix">
-                <h3>Similar Items</h3>
-              </div>
-              <div className="botBorder">
-                <div className="product vtop slim">
-                    <a href="#">
-                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span className="manuName">Product Group</span>
-                       <span className="prodName">Product Name</span>
-                    </a>
-                </div>
-                  <div className="product vtop slim">
-                    <a href="#">
-                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span className="manuName">Product Group</span>
-                       <span className="prodName">Product Name</span>
-                    </a>
-                </div>
-                <div className="product vtop slim">
-                    <a href="#">
-                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span className="manuName">Product Group</span>
-                       <span className="prodName">Product Name</span>
-                    </a>
-                </div>
-                <div className="product vtop slim">
-                    <a href="#">
-                       <div className="smallBox"><img src="http://placehold.it/92x92"/></div>
-                       <span className="manuName">Product Group</span>
-                       <span className="prodName">Product Name</span>
-                    </a>
-                </div>
-              </div>
-            </div>
+            </div>   
         </div>
     );
   }

@@ -16,6 +16,7 @@ main {
   display: flex;
 }
 
+
 nav {
   height: 40px;
   top: -28px;
@@ -34,7 +35,7 @@ nav {
     li {
       border-bottom: 1px dotted #ddd;
       a {
-        color: black;
+        color: white;
         text-decoration: none;
         padding: .8rem 1rem;
         line-height: 1;
@@ -55,7 +56,17 @@ nav div:first-child {
   img {
     margin-inline-start: 15px;
     background-color: rgba(125, 125, 125, 0.49);
-    border-radius: 12px;
+    filter: hue-rotate(90deg) contrast(5.0);
+    position: relative;
+    top: 10px;
+
+  }
+  .logo {
+    position: relative;
+    top: 10px;
+    text-decoration:none;
+    margin-inline-start: 15px;
+    color: rgb(177, 11, 11)
   }
 }
 
@@ -78,7 +89,7 @@ nav div:first-child {
         a {
           padding: 0.5rem 1rem;
           background-color: rgba(125, 125, 125, 0.49);
-          border-radius: 12px;
+
         }
       }
     }

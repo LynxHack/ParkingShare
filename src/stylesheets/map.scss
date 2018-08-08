@@ -33,6 +33,11 @@
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+#search-bar{
+  position: relative;
+  right: 5px;
+}
+
 #list-group {
   width: 25VW;
   max-height: 100vh;
