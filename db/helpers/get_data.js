@@ -113,7 +113,7 @@ module.exports = {
   },
 
   getParkingDetails: function(parkingid){
-    return new Promise((resolve, rject) => {
+    return new Promise((resolve, reject) => {
       knex('parkingspots')
       .where({id: parkingid})
       .then((res) => {
