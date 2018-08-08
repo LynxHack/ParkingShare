@@ -10,9 +10,9 @@ export default class userPage extends Component {
     super(props);
     this.state = {
       reservations: [],
+      reservationsincoming: [],
       openModal: false, //to populate with userregistration objects
       parkingspots: [],
-      reservations: [],  //to populate with userregistration objects
       reservationsloading: true,
       userspotsloading: true,
       vehiclesloading: true,
@@ -20,8 +20,10 @@ export default class userPage extends Component {
       make : '',
       model : '',
       color : '',
-      licenseplate : ''
+      licenseplate : '',
 
+      reservationsincomingloading: true,
+      userspotsloading: true
     }
     self = this;
     this.openModal = this.openModal.bind(this)
@@ -31,6 +33,8 @@ export default class userPage extends Component {
       reservationsloading: true,
       userspotsloading: true
     })
+
+
     axios.post('/getreservations', {})
       .then((res) => {
         this.setState({
@@ -41,6 +45,8 @@ export default class userPage extends Component {
       .catch((err) => {
         console.log(err);
       })
+
+
     axios.get(`/db/spots/user`)
       .then((result) => {
         this.setState({
@@ -88,6 +94,18 @@ export default class userPage extends Component {
     .catch((err) => {
       console.log(err);
     })
+
+    axios.post('/reservations/incoming')
+      .then((res) => {
+        this.setState({
+          reservationsincoming: res.data,
+          reservationsincomingloading: false
+        })
+      })
+      .catch((err) => {
+        console.log(`Error getting incoming reservations ${err}`);
+
+      })
   }
 
 
@@ -99,37 +117,43 @@ export default class userPage extends Component {
 
   render() {
     console.log(this.state.openModal,'STATEETETE')
-    const { reservations, parkingspots, vehicles } = this.state;
+    const { reservations, parkingspots, vehicles, reservationsincoming } = this.state;
     if(this.state.openModal === false) {
 
       return (
 
-      <div className="userSection">
-        <section className="sidebar">
-          <img src={this.props.userpicture} className="image--cover" />
-          <h3> {this.props.userfirstname} {this.props.userlastname}</h3>
-          <h5>{this.props.useremail} </h5>
-          <h6> Welcome to your page! Here you can browse your reservations, spots and vehicles. Happy Sharing.</h6>
-        </section>
-        <section className="reservations">
-          <h3> Your Reservations </h3>
-          <div id="container">
-            {!this.state.reservationsloading && reservations.map((e) => {
-              return resCard(e);
-            })}
-          </div>
-        </section>
-<div>
-        <span>
-        <section className="spots">
-          <h3> Your Parking Spots </h3>
-          <div id="container">
-            {!this.state.userspotsloading && parkingspots.map((e) => {
-              return parkingCard(e);
-            })}
-          </div>
-        </section>
-        </span>
+        <div className="userSection">
+          <section className="sidebar">
+            <img src={this.props.userpicture} className="image--cover" />
+            <h3> {this.props.userfirstname} {this.props.userlastname}</h3>
+            <h5>{this.props.useremail} </h5>
+            <h6> Welcome to your page! Here you can browse your reservations, spots and vehicles. Happy Sharing.</h6>
+          </section>
+          <span>
+            <section className="reservations">
+              <h3> Your Reservations Made </h3>
+              <div id="container">
+                {!this.state.reservationsloading && reservations.map((e) => { return resCard(e); })}
+              </div>
+            </section>
+            <section className="reservationsIncoming">
+              <h3> Incoming Reservations </h3>
+              <div id="container">
+                {!this.state.reservationsincomingloading && reservationsincoming.map((e) => { return resCard(e); })}
+              </div>
+            </section>
+          </span>
+          <div>
+            <span>
+              <section className="spots">
+                <h3> Your Parking Spots </h3>
+                <div id="container">
+                  {!this.state.userspotsloading && parkingspots.map((e) => {
+                    return parkingCard(e);
+                  })}
+                </div>
+              </section>
+            </span>
 
 <span>
 <section className="cars">
@@ -156,8 +180,9 @@ export default class userPage extends Component {
           <input type="text" name="plateNumber" placeholder="License Plate #" onChange={this.editLicensePlate.bind(this)}/>
           <input type="button" name="next" className="action-button" value="Next" onClick={this.submitform}/>
         </div>
-      </form>
-  );
+      );
+        </form>
+      );
     }
   }
 }

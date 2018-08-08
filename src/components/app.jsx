@@ -138,7 +138,7 @@ export default class App extends Component {
   }
 
   refreshpage(){
-    window.location.reload()
+    this.context.refreshpage()
   }
 
   componentDidMount() {

@@ -203,6 +203,7 @@ clear: both;
 
 .rating{
   color: #FC913A;
+  zoom: 1.3;
 }
 
 .info{
@@ -223,7 +224,7 @@ clear: both;
 }
 
 .description{
-  display: inline-block;
+  // display: inline-block;
   margin: 10px 0 20px 0;
 }
 
@@ -433,7 +434,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 .rating { 
   border: none;
-  float: left;
+  // float: left;
 }
 
 .rating > input { display: none; } 
@@ -465,3 +466,30 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+
+
+
+.rating-stars[data-rating="1"]::after {
+  content: "★☆☆☆☆";
+  color: #fa2;
+}
+
+.rating-stars[data-rating="2"]::after {
+  content: "★★☆☆☆";
+  color: #fa2;
+}
+
+.rating-stars[data-rating="3"]::after {
+  content: "★★★☆☆";
+  color: #fa2;
+}
+
+.rating-stars[data-rating="4"]::after {
+  content: "★★★★☆";
+  color: #fa2;
+}
+
+.rating-stars[data-rating="5"]::after {
+  content: "★★★★★";
+  color: #fa2;
+}

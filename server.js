@@ -133,6 +133,17 @@ app.post('/getreservations', (req, res) => {
     })
 });
 
+app.post('/reservations/incoming', (req, res) => {
+  dbGet.getIncomingReservations(req.session.user_id)
+  .then((result) => {
+    res.status(200).send(result);
+  })
+  .catch((err) => {
+    console.log(`Error getting incoming reservations ${err}`);
+    res.status(404).send(err)
+  })
+})
+
 // route for user logout
 app.post('/logout', (req, res) => {
   if (req.session.user_id) {

@@ -58,12 +58,20 @@ class MapContainer extends Component {
       .then((res) => {
         this.populateMap(res.data)
       })
+      .catch((err) => {
+        console.log(err);
+        
+      })
 
     this.map.on('moveend', async (e) => {
       bounds = await this.map.getBounds().toArray();
       getSpots(JSON.stringify(bounds), this.state.startdate, this.state.enddate)
         .then((res) => {
           this.populateMap(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          
         })
     })
   }
@@ -77,10 +85,10 @@ class MapContainer extends Component {
 
     var mapMarkers = Array.prototype.slice.call(document.querySelectorAll('div.mapboxgl-marker'));
     console.log(mapMarkers);
-    
+
     mapMarkers.forEach(function (item) {
       console.log(`remove${item}`);
-      
+
       item.parentNode.removeChild(item);
     });
 
@@ -120,10 +128,10 @@ class MapContainer extends Component {
 
       var str = ``;
       for (var key in marker) {
-          if (str != ``) {
-              str += `&`;
-          }
-          str += key + `=` + marker[key];
+        if (str != ``) {
+          str += `&`;
+        }
+        str += key + `=` + marker[key];
       }
 
       await new mapboxgl.Marker(el)
@@ -135,20 +143,20 @@ class MapContainer extends Component {
                     `))
         .addTo(this.map);
     });
-  
+
     this.setState({
       featuresLoading: false
     })
 
   }
 
-  serialize(obj){
+  serialize(obj) {
     var str = ``;
     for (var key in obj) {
-        if (str != ``) {
-            str += `&`;
-        }
-        str += key + `=` + encodeURIComponent(obj[key]);
+      if (str != ``) {
+        str += `&`;
+      }
+      str += key + `=` + encodeURIComponent(obj[key]);
     }
     return str;
   }
@@ -188,19 +196,19 @@ class MapContainer extends Component {
             <form className="search-container" onSubmit={this.submitForm}>
               <input type="text" id="search-bar" placeholder="Search for available locations here" onKeyDown={this.onText} />
               <img className="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png" />
+              <div id="dateselectmap">
+                <DateRangePicker
+                  startDate={this.state.startdate} // momentPropTypes.momentObj or null,
+                  startDateId={this.state.startDateId} // PropTypes.string.isRequired,
+                  endDate={this.state.enddate} // momentPropTypes.momentObj or null,
+                  endDateId={this.state.endDateId} // PropTypes.string.isRequired,
+                  onDatesChange={({ startDate, endDate }) => this.setState({ startdate, enddate })} // PropTypes.func.isRequired,
+                  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                  regular={true}
+                />
+              </div>
             </form>
-            <div id="dateselectmap">
-              <DateRangePicker
-                startDate={this.state.startdate} // momentPropTypes.momentObj or null,
-                startDateId={this.state.startDateId} // PropTypes.string.isRequired,
-                endDate={this.state.enddate} // momentPropTypes.momentObj or null,
-                endDateId={this.state.endDateId} // PropTypes.string.isRequired,
-                onDatesChange={({ startDate, endDate }) => this.setState({ startdate, enddate })} // PropTypes.func.isRequired,
-                focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                regular={true}
-              />
-            </div>
           </section>
           <div id="featurelist">
             {!this.state.featuresLoading && features.map((e) => {

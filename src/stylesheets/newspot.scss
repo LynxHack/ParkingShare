@@ -8,7 +8,8 @@
   text-align: center;
   position: relative;
   // position: absolute;
-  left: 30px;
+  left: 9vw;
+  top: 9vh;
 }
 
 #msform fieldset {
@@ -150,6 +151,7 @@ textarea{
 
 #pictureupload {
   font-size: 20px;
+  top: 37%;
   .action-button {
     margin-top: 30px;
     width: 100px;
@@ -163,6 +165,8 @@ textarea{
   }
   .form-control {
     width: 100%;
+  }
+  h2 {
     color: white;
   }
 }
