@@ -25,6 +25,7 @@ function removeBookedSpots(bookings, parkingspots) {
   }
   return spots;
 }
+
 function removeUniqueFromArrays(array1, array2) {
   let output = [];
   let a1 = array1;
@@ -65,7 +66,7 @@ module.exports = {
 
       let promisedParkingSpotsByLongitude = knex('parkingspots')
         .whereBetween('longitude', [bounds[0][0], bounds[1][0]])
-      
+
       let promisedParkingSpotsByLatitude = knex('parkingspots')
         .whereBetween('latitude', [bounds[0][1], bounds[1][1]])
 
@@ -97,31 +98,46 @@ module.exports = {
     })
   },
 
-  getReviews: function(parkingid){
+  getIncomingReservations: function(userid) {
     return new Promise((resolve, reject) => {
-      knex('reviews')
-      .join('users', {'reviews.userid': 'users.id'})
-      .where({parkingid: parkingid})
-      .then((res) => {
-        console.log("Result for reviews of id", parkingid, "is", res);
-        resolve(res);
-      })
-      .catch((err) => {
-        reject(err);
-      })
+      knex('reservations')
+        .join('parkingspots', { 'reservations.parkingid': 'parkingspots.id' })
+        .where({ 'reservations.hostid': userid })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          console.log(`Error dbGet getIncomingReservations: ${err}`);
+          reject(err);
+        })
     })
   },
 
-  getParkingDetails: function(parkingid){
+  getReviews: function(parkingid) {
+    return new Promise((resolve, reject) => {
+      knex('reviews')
+        .join('users', { 'reviews.userid': 'users.id' })
+        .where({ parkingid: parkingid })
+        .then((res) => {
+          console.log("Result for reviews of id", parkingid, "is", res);
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+    })
+  },
+
+  getParkingDetails: function(parkingid) {
     return new Promise((resolve, rject) => {
       knex('parkingspots')
-      .where({id: parkingid})
-      .then((res) => {
-        resolve(res);
-      })
-      .catch((err) => {
-        reject(err);
-      })
+        .where({ id: parkingid })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        })
     })
   }
 }
