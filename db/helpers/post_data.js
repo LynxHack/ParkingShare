@@ -103,7 +103,7 @@ module.exports = {
       })
   },
 
-  makereservation: function(parkingid, userid) {
+  makereservation: function(parkingid, userid, startime, endtime) {
     return new Promise((resolve, reject) => {
       knex('parkingspots')
       .where({id: parkingid})
@@ -114,8 +114,8 @@ module.exports = {
           parkingid: parkingid, 
           hostid: hostid, 
           clientid: userid, 
-          starttimeunix: null, 
-          endtimeunix: null 
+          starttimeunix: startime, 
+          endtimeunix: endtime
         })
         .then(() => {
           resolve("successfully added new reservation to db")

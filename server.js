@@ -75,7 +75,7 @@ app.post('/parkingid', (req, res) => {
 
 app.post('/reserve', (req, res) => {
   console.log("Making reservation for user", req.session.user_id)
-  dbPost.makereservation(req.body.parkingid, req.session.user_id)
+  dbPost.makereservation(req.body.parkingid, req.session.user_id, req.body.starttime, req.body.endtime)
   .then((result) => {
     res.status(200).send(result);
   })
