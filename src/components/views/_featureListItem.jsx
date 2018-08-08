@@ -6,7 +6,7 @@ module.exports = {
       <div className="list-group-item">
         <a href="">
           <span>
-            <img src="http://greport.gru.edu/wp-content/uploads/2013/12/parkingspot.jpg" alt="Image" />
+            <img src={props.properties.picture} alt="Image" />
           </span>
           <h5 >{props.properties.address}</h5>
           <small></small>
