@@ -17,10 +17,10 @@ export default class userPage extends Component {
       userspotsloading: true,
       vehiclesloading: true,
       vehicles: [],
-      make : '',
-      model : '',
-      color : '',
-      licenseplate : '',
+      make: '',
+      model: '',
+      color: '',
+      licenseplate: '',
 
       reservationsincomingloading: true,
       userspotsloading: true
@@ -57,9 +57,8 @@ export default class userPage extends Component {
       .catch((err) => {
         console.log(`Error retrieving user parking spots ${err}`);
       })
-      axios.post('/getVehicles', {})
+    axios.post('/getVehicles', {})
       .then((res) => {
-        console.log("hi", res.data)
         this.setState({
           vehicles: res.data,
           vehiclesloading: false
@@ -68,32 +67,42 @@ export default class userPage extends Component {
       .catch((err) => {
         console.log(err);
       })
+
+    axios.post('/reservations/incoming')
+      .then((res) => {
+        this.setState({
+          reservationsincoming: res.data,
+          reservationsincomingloading: false
+        })
+      })
+      .catch((err) => {
+        console.log(`Error getting incoming reservations ${err}`);
+      })
   }
 
 
-  editMake(e){
-    this.setState({make : e.target.value})
+  editMake(e) {
+    this.setState({ make: e.target.value })
   }
-  editModel(e){
-    this.setState({model : e.target.value})
+  editModel(e) {
+    this.setState({ model: e.target.value })
   }
-  editColor(e){
-    this.setState({color : e.target.value})
+  editColor(e) {
+    this.setState({ color: e.target.value })
   }
-  editLicensePlate(e){
-    this.setState({licenseplate : e.target.value})
+  editLicensePlate(e) {
+    this.setState({ licenseplate: e.target.value })
   }
   submitform = () => {
-    axios.post('/addvehicle',{make: self.state.make, model : self.state.model, color : self.state.color, licenseplate : self.state.licenseplate})
-    .then((res) => {
-      this.setState({openModal : false}, () =>{
-        this.componentDidMount()
+    axios.post('/addvehicle', { make: self.state.make, model: self.state.model, color: self.state.color, licenseplate: self.state.licenseplate })
+      .then((res) => {
+        this.setState({ openModal: false }, () => {
+          this.componentDidMount()
+        })
       })
-      console.log("result is", res)
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .catch((err) => {
+        console.log(err);
+      })
 
     axios.post('/reservations/incoming')
       .then((res) => {
@@ -116,9 +125,8 @@ export default class userPage extends Component {
   }
 
   render() {
-    console.log(this.state.openModal,'STATEETETE')
     const { reservations, parkingspots, vehicles, reservationsincoming } = this.state;
-    if(this.state.openModal === false) {
+    if (this.state.openModal === false) {
 
       return (
 
@@ -155,32 +163,33 @@ export default class userPage extends Component {
               </section>
             </span>
 
-<span>
-<section className="cars">
-<h3> Your Vehicles </h3>
-<input class="button" type="button" value="Add A Vehicle" onClick={this.openModal}/>
-<div id="container">            
-    {!this.state.vehiclesloading && vehicles.map((e) => {
-              return vehicle(e);
-            })}     
-      </div> 
-      </section>
-</span>
-</div>
-      </div>
- );} else {
-  return (
-<form >        
-          <div id="carform">
-          <h1 className="fs-title">Add A Vehicle</h1>
-          <input type="text" name="make" placeholder="Make" onChange={this.editMake.bind(this)} />
-          <input type="text" name="model" placeholder="Model" onChange={this.editModel.bind(this)}/>
-          <input type="text" name="color" placeholder="Color" onChange={this.editColor.bind(this)}/>
-         
-          <input type="text" name="plateNumber" placeholder="License Plate #" onChange={this.editLicensePlate.bind(this)}/>
-          <input type="button" name="next" className="action-button" value="Next" onClick={this.submitform}/>
+            <span>
+              <section className="cars">
+                <h3> Your Vehicles </h3>
+                <input className="button" type="button" value="Add A Vehicle" onClick={this.openModal} />
+                <div id="container">
+                  {!this.state.vehiclesloading && vehicles.map((e) => {
+                    return vehicle(e);
+                  })}
+                </div>
+              </section>
+            </span>
+          </div>
         </div>
       );
+    } else {
+      return (
+        <form >
+          <div id="carform">
+            <h1 className="fs-title">Add A Vehicle</h1>
+            <input type="text" name="make" placeholder="Make" onChange={this.editMake.bind(this)} />
+            <input type="text" name="model" placeholder="Model" onChange={this.editModel.bind(this)} />
+            <input type="text" name="color" placeholder="Color" onChange={this.editColor.bind(this)} />
+
+            <input type="text" name="plateNumber" placeholder="License Plate #" onChange={this.editLicensePlate.bind(this)} />
+            <input type="button" name="next" className="action-button" value="Next" onClick={this.submitform} />
+          </div>
+          );
         </form>
       );
     }
