@@ -6,7 +6,7 @@ import api from './../helpers/api.js'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 export default class ParkingDetail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       //Currently these are placeholders, to be changed state for population db
@@ -19,7 +19,7 @@ export default class ParkingDetail extends Component {
       postalcode: "V6W 7U5",
       price: "5.00", //hourly
       picture: "http://www.jimmybeanswool.com/secure-html/onlineec/images/stars/4_5StarBlue09.gif",
-      
+
       hostname: "John Smith",
       stall: "5",
       buzzer: "5010",
@@ -28,7 +28,7 @@ export default class ParkingDetail extends Component {
       curruserrating: 0,
       curruserreview: "",
       reviews: [],
-      
+
 
       returntouserpage: false,
       totalstars: 0
@@ -37,16 +37,16 @@ export default class ParkingDetail extends Component {
     this.reserve = this.reserve.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     var query = this.props.location;
-    var params = {query}
+    var params = { query }
     var parkingid = params.query.search.slice(1).split('%')[0].split('=')[1];
     console.log("The id of parking lot is", parkingid);
-    axios.post('/parkingid', {parkingid: parkingid})
-    .then((result) => {
-      console.log(result);
-      this.setState({
-        parkingid: result.data[0].id,
+    axios.post('/parkingid', { parkingid: parkingid })
+      .then((result) => {
+        console.log(result);
+        this.setState({
+          parkingid: result.data[0].id,
           description: result.data[0].description,
           address: result.data[0].address,
           city: result.data[0].city,
@@ -54,134 +54,135 @@ export default class ParkingDetail extends Component {
           picture: result.data[0].picture,
           stall: result.data[0].stall,
           buzzer: result.data[0].buzzer,
-          maxheight: result.data[0].maxheight}), self.returnreviews(parkingid)
-        })
-    .catch((err) => {
-      console.log(err);
-    })
+          maxheight: result.data[0].maxheight
+        }), self.returnreviews(parkingid)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
-  returnreviews(parkingid){
-    axios.post('/getreviews', {parkingid: parkingid})
+  returnreviews(parkingid) {
+    axios.post('/getreviews', { parkingid: parkingid })
       .then((result) => {
-        for(var i = 0; i < result.data.length; i++){
+        for (var i = 0; i < result.data.length; i++) {
           this.setState(prevState => ({
             reviews: [...prevState.reviews, result.data[i]]
           }))
-      }
-    })
+        }
+      })
   }
 
-  generatereviews(review){
-    return(
+  generatereviews(review) {
+    return (
       // <Review rating={review.rating} comment={review.description} author={`${review.firstname} ${review.lastname}`} datecreated={review.created_at}/>
       <div className="review">
-      <span className="title">Given Rating - {review.rating}/5 </span>
-     <br/>
-     <br/>
+        <span className="title">Given Rating - {review.rating}/5 </span>
+        <br />
+        <br />
         <span className="comments">{review.description}</span>
-      <br/>
-      <span className="author">By {review.firstname} {review.lastname} on {review.created_at.split('T')[0]}</span>
+        <br />
+        <span className="author">By {review.firstname} {review.lastname} on {review.created_at.split('T')[0]}</span>
         <div className="vote">
-         Was this review helpful?
-         <input type="submit" value="Yes"/>
+          Was this review helpful?
+         <input type="submit" value="Yes" />
         </div>
-   </div>
+      </div>
     )
   }
 
-  reserve(){
-    axios.post('/reserve', {parkingid: self.state.parkingid})
-    .then((result) => {
-      console.log(result);
-      self.setState(prevstate =>{
-        returntouserpage: true;
+  reserve = () => {
+    axios.post('/reserve', { parkingid: self.state.parkingid })
+      .then((result) => {
+        console.log(result);
+        this.setState({
+          returntouserpage: true
+        })
+        console.log(self.state);
       })
-      console.log(self.state);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
-  updatereview(e){
+  updatereview(e) {
     console.log(e.target.value);
-    this.setState({curruserreview: e.target.value});
+    this.setState({ curruserreview: e.target.value });
   }
 
-  updaterating(e){
+  updaterating(e) {
     console.log(e.target.value)
-    this.setState({curruserrating: e.target.value});
+    this.setState({ curruserrating: e.target.value });
   }
 
-  submitreview(e){
-    axios.post('/addreview', {rating: this.state.curruserrating, parkingid: this.state.parkingid, description: this.state.curruserreview})
-    .then((result) => {
-      console.log(result);
-      this.setState({
-        reviews: []
-      }, this.returnreviews(this.state.parkingid))
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+  submitreview(e) {
+    axios.post('/addreview', { rating: this.state.curruserrating, parkingid: this.state.parkingid, description: this.state.curruserreview })
+      .then((result) => {
+        console.log(result);
+        this.setState({
+          reviews: []
+        }, this.returnreviews(this.state.parkingid))
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
-  checklogin(){
+  checklogin() {
     console.log(this.props);
-    if(this.props.isLoggedIn){
-      return(
-        <div className="reviewsection"> 
-        <textarea name="review" onChange={this.updatereview.bind(this)}  placeholder="Write a review"/>
-        <div className="productbutton submit blueSubmit left" onClick={this.submitreview.bind(this)}>Submit Review</div> 
-       
-        <fieldset class="rating" onClick={this.updaterating.bind(this)}>
-            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-        </fieldset>
-        </div>        
+    if (this.props.isLoggedIn) {
+      return (
+        <div className="reviewsection">
+          <textarea name="review" onChange={this.updatereview.bind(this)} placeholder="Write a review" />
+          <div className="productbutton submit blueSubmit left" onClick={this.submitreview.bind(this)}>Submit Review</div>
+
+          <fieldset class="rating" onClick={this.updaterating.bind(this)}>
+            <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+          </fieldset>
+        </div>
       )
     }
   }
 
-  getaveragerating(){
+  getaveragerating() {
     console.log(self.state.reviews);
-    if(self.state.reviews.length > 0){
-    //   const totalstars = self.state.reviews.reduce((a,b) => {
-    //     return Number(a.rating) + Number(b.rating)
-    // })
-    let sum = 0;
-    console.log(typeof(self.state.reviews.rating));
-    for(let i = 0; i < self.state.reviews.length; i++){
-      sum += Number(self.state.reviews[i].rating);
-    } 
-    console.log(sum, self.state.reviews.length);
-    return sum / self.state.reviews.length;
+    if (self.state.reviews.length > 0) {
+      //   const totalstars = self.state.reviews.reduce((a,b) => {
+      //     return Number(a.rating) + Number(b.rating)
+      // })
+      let sum = 0;
+      console.log(typeof (self.state.reviews.rating));
+      for (let i = 0; i < self.state.reviews.length; i++) {
+        sum += Number(self.state.reviews[i].rating);
+      }
+      console.log(sum, self.state.reviews.length);
+      return sum / self.state.reviews.length;
     }
-    else{
+    else {
       return 0;
     }
   }
 
-  renderstars(){
+  renderstars() {
     let numstar = this.getaveragerating();
     numstar = Math.floor(numstar);
     console.log(numstar);
     const numstarstr = numstar.toString();
     console.log(numstarstr);
-    if(Number(numstar) > 0){
-      return(
+    if (Number(numstar) > 0) {
+      return (
         <div>
           <div class="rating-stars" data-rating={numstarstr.toString()}></div>
           ({this.getaveragerating()}/5.00)
         </div>
       )
     }
-    else{
-      return(
+    else {
+      return (
         <div>
           <p> No reviews yet</p>
         </div>
@@ -191,64 +192,68 @@ export default class ParkingDetail extends Component {
 
   render() {
     console.log(this.state);
-    {this.state.returntouserpage && (<Redirect to={{ pathname: '/user' }} />)}
-    return (       
+    {
+      if (this.state.returntouserpage) {
+        return <Redirect to={{ pathname: '/user' }} />
+      }
+    }
+    return (
       <div className="parkingdetail">
-            <div className="bodyWrap">    
-            <div className="productStage">
-                
-                <div className="folderTab clearFix">
-            <div className="breadCrumbs">
-              Parking Spot Detail
+        <div className="bodyWrap">
+          <div className="productStage">
+
+            <div className="folderTab clearFix">
+              <div className="breadCrumbs">
+                Parking Spot Detail
             </div>
             </div>
-      
-          <div className="botBorder clearFix">
+
+            <div className="botBorder clearFix">
               <div className="productImage">
-                <img src={this.state.picture}/>
+                <img src={this.state.picture} />
               </div>
               <div className="overview">
                 <h1>{this.state.address}</h1>
                 <h2>{this.state.city}, {this.state.province}</h2>
                 <div className="rating">
-                  {this.renderstars.bind(this)()} 
+                  {this.renderstars.bind(this)()}
                   {/* <img src={this.state.picture}/> */}
                 </div>
-                <br/>
+                <br />
                 {/* <span> 3 spots available</span> */}
-                <div className="description">Description:<br/>{this.state.description}</div>
+                <div className="description">Description:<br />{this.state.description}</div>
 
-                <div className="productbutton reserve" onClick={this.reserve}>Reserve</div>         
+                <div className="productbutton reserve" onClick={this.reserve}>Reserve</div>
               </div>
-                
-             <div className="info">
-                  <h3>Location Information</h3>
-                  <br/>
-                  <ul className="specs">
-                    <li><h5>Host Name:</h5> {this.state.hostname}</li>
-                    <li><h5>Car types:</h5> {this.state.cartypes.join(", ")}</li>
-                    <li><h5>Stall:</h5> #{this.state.stall}</li>
-                    <li><h5>Buzzer:</h5> {this.state.buzzer}</li>
-                    <li><h5>Address:</h5> {this.state.address}, {this.state.city}, {this.state.province}, {this.state.postalcode}</li>
-                    <li><h5>MaxHeight:</h5> {this.state.maxheight}cm</li>
-                  </ul>
-                
-                <div className="description">
-                 {this.state.description2} 
-                 </div> 
-               </div> 
-                
+
               <div className="info">
-              {this.state.reviews && this.state.reviews.map(this.generatereviews)}
-{/*               
+                <h3>Location Information</h3>
+                <br />
+                <ul className="specs">
+                  <li><h5>Host Name:</h5> {this.state.hostname}</li>
+                  <li><h5>Car types:</h5> {this.state.cartypes.join(", ")}</li>
+                  <li><h5>Stall:</h5> #{this.state.stall}</li>
+                  <li><h5>Buzzer:</h5> {this.state.buzzer}</li>
+                  <li><h5>Address:</h5> {this.state.address}, {this.state.city}, {this.state.province}, {this.state.postalcode}</li>
+                  <li><h5>MaxHeight:</h5> {this.state.maxheight}cm</li>
+                </ul>
+
+                <div className="description">
+                  {this.state.description2}
+                </div>
+              </div>
+
+              <div className="info">
+                {this.state.reviews && this.state.reviews.map(this.generatereviews)}
+                {/*               
               this.generatereviews(this.state.reviews) */}
-                    {this.checklogin.bind(this)()}
-                   </div>             
-                  
-                </div>  
-             </div>
-            </div>   
+                {this.checklogin.bind(this)()}
+              </div>
+
+            </div>
+          </div>
         </div>
+      </div>
     );
   }
 }
