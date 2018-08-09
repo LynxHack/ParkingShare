@@ -1,10 +1,13 @@
 import axios from 'axios';
+import { moment } from 'moment';
 
 
 module.exports = {
   getSpots(bounds, startdate, enddate) {
     return new Promise((resolve, reject) => {
-      console.log(window.location.hostname);
+      // let sd = startdate.valueOf().slice(0, 10);
+      // let ed = enddate.slice(0, 10);
+      // console.log(sd);
       
       const ax = axios.create({
         baseURL: `http://${window.location.hostname}:8080`

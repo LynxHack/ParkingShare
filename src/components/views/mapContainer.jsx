@@ -53,8 +53,8 @@ class MapContainer extends Component {
     });
 
     bounds = await this.map.getBounds().toArray()
-    let { startdate, enddate } = this.state;
-    await getSpots(JSON.stringify(bounds), startdate, enddate)
+    
+    await getSpots(JSON.stringify(bounds), this.state.startdate, this.state.enddate)
       .then((res) => {
         this.populateMap(res.data)
       })

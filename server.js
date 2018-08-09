@@ -36,9 +36,10 @@ app.use('/public', express.static('public'));
 
 app.get('/db/spots', async function(req, res) {
   let bounds = JSON.parse(req.query.bounds);
-  console.log(`To server ${bounds}`);
+  let starttime = req.query.starttime.slice(0, 10);
+  let endtime = req.query.endtime.slice(0, 10);
 
-  const results = await dbGet.getAvailableSpots(bounds, req.query.starttime, req.query.endtime);
+  const results = await dbGet.getAvailableSpots(bounds, starttime, endtime);
   res.json(results);
 })
 
