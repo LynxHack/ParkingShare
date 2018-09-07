@@ -1,4 +1,4 @@
-#Spot Share Web App
+# Spot Share Web App
 
 Spot Share is a webapp concept written in react with express backend that allows p2p sharing of available parking spots. The available parking spots are then listed in location of the search for users to browse and book parking locations.
 
